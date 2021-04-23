@@ -2,9 +2,11 @@ package ferias;
 
 import java.time.LocalDate;
 
-public class FeriasVendida extends Ferias {
-	
+public class FeriasVendida extends Ferias implements IFeriasValidacoes, IFeriasSemDatas, IFeriasComVendas {
+
 	protected final short DIAS_MAXIMOS_A_VENDER = 30;
+	
+	protected short diasVendidos;
 
 	/**
 	 * Instancia um objeto FeriasVendida, que n�o tem data de inicio e data de fim;
@@ -12,18 +14,48 @@ public class FeriasVendida extends Ferias {
 	 * @author SPRINT 2
 	 * @param diasAVender - dias em creditos para f�rias
 	 */
-	public FeriasVendida(int diasAVender) {
-		//this.dataInicio = null;
-		//this.dataFim = null;
-		
+	public FeriasVendida(short diasAVender) {
 		this.setTipoFerias(TiposFerias.VENDIDA);
-		this.setDiasTotaisRequisitados(0);
-		
-		int diasVendidos = (diasAVender > DIAS_MAXIMOS_A_VENDER)?  DIAS_MAXIMOS_A_VENDER : diasAVender;
+
+		short diasVendidos = (diasAVender > DIAS_MAXIMOS_A_VENDER) ? DIAS_MAXIMOS_A_VENDER : diasAVender;
 		this.setDiasVendidos(diasVendidos);
 	}
-	
-	// Overload para impedir que os m�todos que usam datas de inicio/fim de f�rias criem excessoes
-	public void setDataInicio(LocalDate data) {}
-	public void setDataFim(LocalDate data) {}
+
+	public void setDiasVendidos(short valor) {
+		this.diasVendidos = valor;
+	}
+
+	public short getDiasVendidos() {
+		return this.diasVendidos;
+	}
+
+	// Das Interfaces:
+
+	public boolean verificarFerias() {
+		if (this.getDiasVendidos() > 0) {
+			return true;
+		}
+		setTipoFerias(TiposFerias.INVALIDA);
+		return false;
+	}
+
+	public short calcularDiasVendidos(short saldoDiasFerias) {
+		return (short) (saldoDiasFerias);
+	}
+
+	public TiposFerias classificarFerias(short saldoDiasFerias) {
+		if (saldoDiasFerias != 0) {
+			return TiposFerias.VENDIDA;
+		}
+		return TiposFerias.INVALIDA;
+	}
+
+	public short calcularPeriodoFerias(LocalDate dataInicioFerias, LocalDate dataFimFerias) {
+		if (Tratativas.periodoFeriasValido(dataInicioFerias, dataFimFerias)) {
+			return Tratativas.retornarIntervaloEmDiasEntreAsDatas(dataInicioFerias, dataFimFerias);
+		} else {
+			setTipoFerias(TiposFerias.INVALIDA);
+			return 0;
+		}
+	}
 }

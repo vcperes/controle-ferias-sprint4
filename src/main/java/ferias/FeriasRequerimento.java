@@ -5,18 +5,18 @@ import java.time.temporal.ChronoUnit;
 /**
  * 
  * @author Jonata e Leonardo Pereira 
- * A classe FeriasRequerimento é responsavel por verificar quantos 
- * dias o funcionario solicitou suas férias antes da data pretendida 
- * (não menor de 10 dias). 
- * Esta verificação é feita pelo metodo validacaoPrazoSolicitacaoDeFerias
- * e o calculo é feito pelo metodo retornarIntervaloEmDiasEntreAsDatas.
- * A classe também possui o metodo de trazer o estado da requisição 
+ * A classe FeriasRequerimento ï¿½ responsavel por verificar quantos 
+ * dias o funcionario solicitou suas fï¿½rias antes da data pretendida 
+ * (nï¿½o menor de 10 dias). 
+ * Esta verificaï¿½ï¿½o ï¿½ feita pelo metodo validacaoPrazoSolicitacaoDeFerias
+ * e o calculo ï¿½ feito pelo metodo retornarIntervaloEmDiasEntreAsDatas.
+ * A classe tambï¿½m possui o metodo de trazer o estado da requisiï¿½ï¿½o 
  * que podera ser EM_ANALISE, APROVADO, REPROVADO.
  */
 public class FeriasRequerimento {
-	private String identificadorUsuario; // FK Foreign Key do usuário
+	private String identificadorUsuario; // FK Foreign Key do usuï¿½rio
 	
-	private Ferias feriasRequisitada; // Instância de Férias
+	private Ferias feriasRequisitada; // Instï¿½ncia de Fï¿½rias
 	private EstadosRequisicao estadoRequisicao; // ENUM
 	private LocalDate dataSolicitacao;
 
@@ -24,7 +24,7 @@ public class FeriasRequerimento {
 		this.identificadorUsuario = identificadorUsuario;
 		this.feriasRequisitada = feriasRequisitada;
 		this.estadoRequisicao = EstadosRequisicao.EM_ANALISE;
-		this.dataSolicitacao = LocalDate.now(); // data de criação da solicitação
+		this.dataSolicitacao = LocalDate.now(); // data de criaï¿½ï¿½o da solicitaï¿½ï¿½o
 	}
 	
 	public String getIdentificadorUsuario() {
@@ -69,30 +69,30 @@ public class FeriasRequerimento {
 	}
 
 	/*
-	 * Atualiza o estado da requisição
+	 * Atualiza o estado da requisiï¿½ï¿½o
 	 * 
-	 * Verifica se o novoEstado está registrado nas ENUMS do sistema 
+	 * Verifica se o novoEstado estï¿½ registrado nas ENUMS do sistema 
 	 * Atualiza o estado do requerimento
 	 * 
-	 * @return true/false sucesso da operação.
+	 * @return true/false sucesso da operaï¿½ï¿½o.
 	 */
 	public void atualizarEstadoRequisicao(EstadosRequisicao novoEstado) {
 		// Verificar os estados dentro do ENUM);
-		// Futuramente fazer outras validações necessárias aqui. Por enquanto o método está redundante com o setEstadoRequisicao;
+		// Futuramente fazer outras validaï¿½ï¿½es necessï¿½rias aqui. Por enquanto o mï¿½todo estï¿½ redundante com o setEstadoRequisicao;
 		setEstadoRequisicao(novoEstado);
 	}
 
 	/**
 	 * Retorna quantidade de dias
 	 * 
-	 * Retorna a quantidade de dias em formato short, a partir das datas de início e
-	 * término informadas.
+	 * Retorna a quantidade de dias em formato short, a partir das datas de inï¿½cio e
+	 * tï¿½rmino informadas.
 	 * 
 	 * Diferente da funcao calcularPeriodoFerias da classe Ferias,
 	 * essa foi definida como static para nao depender de uma instancia da classe e poder ser usada como "ferramenta";
 	 * 
-	 * @param inicio  Data de início.
-	 * @param termino Data de término.
+	 * @param inicio  Data de inÃ­cio.
+	 * @param termino Data de tÃ©rmino.
 	 * 
 	 */
 	public static short retornarIntervaloEmDiasEntreAsDatas(LocalDate inicio, LocalDate termino) {
