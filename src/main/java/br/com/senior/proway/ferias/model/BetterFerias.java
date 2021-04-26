@@ -18,9 +18,9 @@ public class BetterFerias {
 	
 	private LocalDate dataInicio;
 	private LocalDate dataFim;
-	private short diasTotaisRequisitados;
-	private short diasVendidos;
-	private TiposFerias tipoFerias;
+	public short diasTotaisRequisitados; // passar para private/protected
+	public short diasVendidos;
+	public TiposFerias tipoFerias;
 
 	public BetterFerias(LocalDate dataInicio,
 						LocalDate dataFim,

@@ -9,7 +9,10 @@ import java.time.temporal.ChronoUnit;
 
 import org.junit.Test;
 
+import br.com.senior.proway.ferias.model.BetterFerias;
 import br.com.senior.proway.ferias.model.Ferias;
+import br.com.senior.proway.ferias.model.FeriasBuilder;
+import br.com.senior.proway.ferias.model.FeriasDirector;
 import br.com.senior.proway.ferias.model.FeriasVendida;
 import br.com.senior.proway.ferias.model.TiposFerias;
 
@@ -22,10 +25,13 @@ public class TesteFerias {
 		LocalDate data1 = LocalDate.of(2021, 4, 15);
 		LocalDate data2 = LocalDate.of(2021, 5, 15); // 30 dias
 		
-		Ferias ferias = new Ferias(data1, data2, 30); //30 creditos
-		assertTrue(ferias.checarValidade());
-		assertEquals(ferias.getTipo(), TiposFerias.TOTAL);
-		assertTrue(ferias.getDiasVendidos() == 0);
+		FeriasDirector feriasDirector = new FeriasDirector();
+		FeriasBuilder Bob = new FeriasBuilder();
+		feriasDirector.createFeriasTotal(Bob, LocalDate.now(), LocalDate.of(2021, 4, 28));
+		
+		BetterFerias ferias = Bob.build();
+		assertEquals(ferias.tipoFerias, TiposFerias.TOTAL);
+		assertTrue(ferias.diasVendidos == 0);
 	}
 	
 	@Test

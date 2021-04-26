@@ -15,10 +15,7 @@ public class Main {
 		// deu a ordem e ferramentas para o builder
 		feriasDirector.createFeriasTotal(fBuilder, LocalDate.now(), LocalDate.of(2021, 4, 28));
 		
-		
 		// trabalhador comeca
 		BetterFerias ft = fBuilder.build();
-		
-				
 	}
 }
