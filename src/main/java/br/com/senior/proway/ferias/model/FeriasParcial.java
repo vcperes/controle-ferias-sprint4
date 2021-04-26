@@ -1,6 +1,11 @@
-package ferias;
+package br.com.senior.proway.ferias.model;
 
 import java.time.LocalDate;
+
+import br.com.senior.proway.ferias.IFeriasComDatas;
+import br.com.senior.proway.ferias.IFeriasComVendas;
+import br.com.senior.proway.ferias.IFeriasValidacoes;
+import br.com.senior.proway.ferias.Tratativas;
 
 public class FeriasParcial extends Ferias implements IFeriasComDatas, IFeriasValidacoes, IFeriasComVendas {
 

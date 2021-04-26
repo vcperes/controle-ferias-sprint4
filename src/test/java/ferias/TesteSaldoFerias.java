@@ -6,11 +6,13 @@ import java.time.LocalDate;
 
 import org.junit.Test;
 
+import br.com.senior.proway.ferias.model.SaldoFerias;
+
 public class TesteSaldoFerias {
 
 	@Test
 	public void calculaProximasFeriasdoUsuario() {
-		SaldoFerias proximaFerias = new SaldoFerias(); //Aqui dentro, no consturtor proximasFerias é calculada
+		SaldoFerias proximaFerias = new SaldoFerias(); //Aqui dentro, no consturtor proximasFerias ï¿½ calculada
 		assertEquals(LocalDate.now().plusYears(1), proximaFerias.getProximasFerias());
 	}
 	

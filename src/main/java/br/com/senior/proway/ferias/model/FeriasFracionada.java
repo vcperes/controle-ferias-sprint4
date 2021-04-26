@@ -1,19 +1,22 @@
-package ferias;
+package br.com.senior.proway.ferias.model;
 
 import java.time.LocalDate;
 
-public class FeriasTotal extends Ferias implements IFeriasValidacoes, IFeriasComDatas {
+import br.com.senior.proway.ferias.IFeriasComDatas;
+import br.com.senior.proway.ferias.IFeriasValidacoes;
+import br.com.senior.proway.ferias.Tratativas;
+
+public class FeriasFracionada extends Ferias implements IFeriasValidacoes, IFeriasComDatas {
 
 	protected LocalDate dataInicio;
 	protected LocalDate dataFim;
 	protected short diasDeFeriasATirar;
 
-	public FeriasTotal(LocalDate dataInicio, LocalDate dataFim, short saldoDiasFerias) {
+	public FeriasFracionada(LocalDate dataInicio, LocalDate dataFim, short saldoDiasFerias) {
 		setDataInicio(dataInicio);
 		setDataFim(dataFim);
 
 		setDiasTotaisRequisitados(calcularPeriodoFerias(dataInicio, dataFim));
-
 		setTipoFerias(classificarFerias(saldoDiasFerias));
 	}
 
@@ -49,8 +52,8 @@ public class FeriasTotal extends Ferias implements IFeriasValidacoes, IFeriasCom
 	}
 
 	public TiposFerias classificarFerias(short saldoDiasFerias) {
-		if (this.getDiasTotaisRequisitados() == saldoDiasFerias) {
-			return TiposFerias.TOTAL;
+		if (saldoDiasFerias - this.getDiasTotaisRequisitados() <= CREDITOS_MINIMOS_FERIAS_FRACIONADAS) {
+			return TiposFerias.PARCIAL;
 		}
 		return TiposFerias.INVALIDA;
 	}

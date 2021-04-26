@@ -1,4 +1,6 @@
-package ferias;
+package br.com.senior.proway.ferias;
+
+import br.com.senior.proway.ferias.model.TiposFerias;
 
 public interface IFeriasValidacoes {
 	/**

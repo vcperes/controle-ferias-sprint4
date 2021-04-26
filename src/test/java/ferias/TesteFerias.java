@@ -9,10 +9,14 @@ import java.time.temporal.ChronoUnit;
 
 import org.junit.Test;
 
+import br.com.senior.proway.ferias.model.Ferias;
+import br.com.senior.proway.ferias.model.FeriasVendida;
+import br.com.senior.proway.ferias.model.TiposFerias;
+
 public class TesteFerias {
 	
 
-// Generalizar para a função receber faltasDoControleDePonto
+// Generalizar para a funï¿½ï¿½o receber faltasDoControleDePonto
 	@Test
 	public void feriasTotal() {
 		LocalDate data1 = LocalDate.of(2021, 4, 15);
@@ -29,7 +33,7 @@ public class TesteFerias {
 		LocalDate data1 = LocalDate.of(2021, 4, 15);
 		LocalDate data2 = LocalDate.of(2021, 5, 5); // 20 dias
 		// lembrando que CREDITOS_MINIMOS_FERIAS_FRACIONADAS = 15;
-		// Sobram menos do que 15 creditos, logo a ferias é parcial e os dias restantes serão vendidos;
+		// Sobram menos do que 15 creditos, logo a ferias ï¿½ parcial e os dias restantes serï¿½o vendidos;
 		
 		Ferias ferias = new Ferias(data1, data2, 30);
 		assertTrue(ferias.checarValidade());

@@ -7,6 +7,8 @@ import java.time.LocalDateTime;
 
 import org.junit.Test;
 
+import br.com.senior.proway.ferias.model.FeriasRequerimento;
+
 public class TesteFeriasRequerimento {
 
 	
