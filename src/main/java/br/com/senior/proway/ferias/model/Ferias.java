@@ -12,7 +12,7 @@ import java.time.temporal.ChronoUnit;
  * @author Sprint2
  *
  */
-public class Ferias {
+public class Ferias { // Generic?
 	protected String identificadorUsuario; // FK Foreign Key do usu�rio - Decidir quais classes tem
 	protected TiposFerias tipoFerias;
 

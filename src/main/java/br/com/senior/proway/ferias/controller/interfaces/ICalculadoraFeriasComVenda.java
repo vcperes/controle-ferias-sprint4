@@ -1,9 +1,8 @@
-package br.com.senior.proway.ferias;
+package br.com.senior.proway.ferias.controller.interfaces;
 
 import java.time.LocalDate;
 
-public interface IFeriasComVendas {
-
+public interface ICalculadoraFeriasComVenda {
 	/**
 	 * Calcula os dias a serem vendidos com base nos dias de f�rias dispon�veis ao
 	 * funcion�rio e no tipo de f�rias; Apenas os tipos PARCIAL e VENDIDA v�o ter
@@ -22,8 +21,4 @@ public interface IFeriasComVendas {
 	 * @return intervalo em dias entre as datas, -1 se inv�lido;
 	 */
 	public short calcularPeriodoFerias(LocalDate dataInicioFerias, LocalDate dataFimFerias);
-
-	public void setDiasVendidos(short valor);
-
-	public short getDiasVendidos();
 }

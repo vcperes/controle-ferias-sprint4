@@ -1,4 +1,4 @@
-package br.com.senior.proway.ferias;
+package br.com.senior.proway.ferias.controller;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
