@@ -1,7 +1,8 @@
 package br.com.senior.proway.ferias.controller.interfaces;
 
+import br.com.senior.proway.ferias.model.Ferias;
 import br.com.senior.proway.ferias.model.TiposFerias;
-import br.com.senior.proway.ferias.model.interfaces.IFeriasComDatas;
+import br.com.senior.proway.ferias.model.interfaces.IFerias;
 
 public interface IFeriasValidacoes {
 	/**
@@ -13,7 +14,7 @@ public interface IFeriasValidacoes {
 	 * 
 	 * @return true/false
 	 */
-	public boolean verificarFerias(IFeriasComDatas ferias);
+	public boolean checarValidade(Ferias ferias);
 
 	/**
 	 * Classifica o tipo de f�rias com base nos dias de f�rias dispon�veis ao
@@ -24,7 +25,7 @@ public interface IFeriasValidacoes {
 	 * @param saldoDiasFerias - vem da classe SaldoFerias
 	 * @return TiposFerias classifica��o
 	 */
-	public TiposFerias classificarFerias(IFeriasComDatas ferias , short saldoDiasFerias);
+	public TiposFerias classificarFerias(Ferias ferias , short saldoDiasFerias);
 	
 	
 }

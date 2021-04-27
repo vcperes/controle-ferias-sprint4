@@ -2,6 +2,8 @@ package br.com.senior.proway.ferias.model;
 
 import java.time.LocalDate;
 
+import br.com.senior.proway.ferias.model.interfaces.IFerias;
+
 /**
  * Classe que representa a estrutura de dados de uma "unidade" de F�rias.
  * Para instanciar uma nova F�rias, � necess�rio informar as datas de in�cio e fim da mesma.
@@ -11,16 +13,16 @@ import java.time.LocalDate;
  * @author Sprint2
  *
  */
-public class Ferias {
+public class Ferias implements IFerias {
 	private String identificadorUsuario; 
 	// FK Foreign Key do usu�rio - Decidir quais classes tem
 	// setar depois
 	
 	private LocalDate dataInicio;
 	private LocalDate dataFim;
-	public short diasTotaisRequisitados; // passar para private/protected
-	public short diasVendidos;
-	public TiposFerias tipoFerias;
+	private short diasTotaisRequisitados; // passar para private/protected
+	private short diasVendidos;
+	private TiposFerias tipoFerias;
 
 	public Ferias(LocalDate dataInicio,
 						LocalDate dataFim,
@@ -34,4 +36,21 @@ public class Ferias {
 		this.diasVendidos = diasVendidos;
 		this.tipoFerias = tipo;
 	}
+	
+	public void setIdentificadorUsuario(String valor) { this.identificadorUsuario = valor; }
+	public void setDataInicio(LocalDate data) {	this.dataInicio = data;	}
+	public void setDataFim(LocalDate data) { this.dataFim = data; }
+	public void setDiasTotaisRequisitados (short valor) {this.diasTotaisRequisitados = valor;}
+	public void setDiasVendidos(short valor) { this.diasVendidos = valor;}
+	public void setTipo(TiposFerias tipo) { this.tipoFerias = tipo; }
+	
+	// Getters
+	public String getIdentificadorUsuario() { return this.identificadorUsuario; }
+	public LocalDate getDataInicio() { return this.dataInicio; }
+	public LocalDate getDataFim() { return this.dataFim; }
+	public short getDiasTotaisRequisitados() {return this.diasTotaisRequisitados;}
+	public short getDiasVendidos() { return this.diasVendidos; }
+	public TiposFerias getTipo() { return this.tipoFerias; }
+
+
 }

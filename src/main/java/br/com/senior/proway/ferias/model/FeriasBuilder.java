@@ -113,21 +113,6 @@ public class FeriasBuilder implements IFeriasBuilder {
 		}
 	}
 
-	/**
-	 * Calcula os dias a serem vendidos com base nos dias de f�rias dispon�veis ao funcion�rio e no
-	 * tipo de f�rias; Apenas os tipos PARCIAL e VENDIDA v�o ter dias a serem vendidos.
-	 * 
-	 * @param diasDisponiveisParaFerias - vem da classe SaldoFerias
-	 * @return short dias a serem vendidos
-	 */
-	public short calcularDiasVendidos(short diasDisponiveisParaFerias) {
-		if (this.getTipo() == TiposFerias.PARCIAL || this.getTipo() == TiposFerias.VENDIDA) {
-			return (short) (diasDisponiveisParaFerias - this.getDiasTotaisRequisitados());
-		} else {
-			return 0;
-		}
-	}
-	
 	/** Verifica se o objeto de f�rias � valido, se falhar as checagens o tipo � alterado para INVALIDO.
 	 * 
 	 * uso : 
@@ -162,6 +147,21 @@ public class FeriasBuilder implements IFeriasBuilder {
 		setTipo(TiposFerias.INVALIDA);
 		return false;	 
 	 }
+	
+	/**
+	 * Calcula os dias a serem vendidos com base nos dias de f�rias dispon�veis ao funcion�rio e no
+	 * tipo de f�rias; Apenas os tipos PARCIAL e VENDIDA v�o ter dias a serem vendidos.
+	 * 
+	 * @param diasDisponiveisParaFerias - vem da classe SaldoFerias
+	 * @return short dias a serem vendidos
+	 */
+	public short calcularDiasVendidos(short diasDisponiveisParaFerias) {
+		if (this.getTipo() == TiposFerias.PARCIAL || this.getTipo() == TiposFerias.VENDIDA) {
+			return (short) (diasDisponiveisParaFerias - this.getDiasTotaisRequisitados());
+		} else {
+			return 0;
+		}
+	}
 	
 	/** Verifica se a data de inicio de f�rias vem antes da data de fim desejado.
 	 * 
