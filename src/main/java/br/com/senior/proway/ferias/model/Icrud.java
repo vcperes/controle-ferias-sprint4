@@ -8,10 +8,10 @@ public interface Icrud<T> {
 	
 	public T get(int id);
 	
-	public void create(T objeto);
+	public boolean create(T objeto);
 	
-	public void update(int id, T objeto);
+	public boolean update(int id, T objeto);
 	
-	public void delete(int id);
+	public boolean delete(int id);
 	
 }

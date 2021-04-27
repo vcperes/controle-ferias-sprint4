@@ -54,5 +54,4 @@ public class Ferias implements IFerias {
 	
 	public TiposFerias getTipo() {return this.tipoFerias;}
 	public void setTipo(TiposFerias tipo) {	this.tipoFerias = tipo; }
-
 }
