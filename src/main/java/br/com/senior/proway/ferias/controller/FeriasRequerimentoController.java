@@ -96,13 +96,12 @@ public class FeriasRequerimentoController {
 	 */
 	public boolean validacaoPrazoSolicitacaoDeFerias(LocalDate dataInicio, FeriasRequerimento feriasRequerimento) {
 		int intervalo = retornarIntervaloEmDiasEntreAsDatas(feriasRequerimento.getDataSolicitacao(), dataInicio);
-		//System.out.println(intervalo);
 		if (intervalo >= FeriasRequerimento.PRAZO_MINIMO_SOLICITACAO_FERIAS) {
 			return true;
 		} else {
+			feriasRequerimento.setEstadoRequisicao(EstadosRequisicao.INVALIDO);
 			return false;
 		}
 	}
-	
 	
 }

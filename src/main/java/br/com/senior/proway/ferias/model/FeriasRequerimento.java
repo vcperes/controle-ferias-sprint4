@@ -17,20 +17,20 @@ import br.com.senior.proway.ferias.model.enums.EstadosRequisicao;
  *         EM_ANALISE, APROVADO, REPROVADO.
  */
 public class FeriasRequerimento {
-	private String identificadorUsuario; // FK Foreign Key do usu�rio
+	private String identificadorUsuario;
 
-	private Ferias feriasRequisitada; // Inst�ncia de F�rias
-	private EstadosRequisicao estadoRequisicao; // ENUM
+	private Ferias feriasRequisitada;
+	private EstadosRequisicao estadoRequisicao;
 	private LocalDate dataSolicitacao;
 	public static short PRAZO_MINIMO_SOLICITACAO_FERIAS = 10;
 
-	public FeriasRequerimento(String identificadorUsuario, Ferias feriasRequisitada) {
+	public FeriasRequerimento( String identificadorUsuario, Ferias feriasRequisitada, EstadosRequisicao estadoRequisicao,LocalDate dataSolicitacao) {
 		this.identificadorUsuario = identificadorUsuario;
 		this.feriasRequisitada = feriasRequisitada;
-		this.estadoRequisicao = EstadosRequisicao.EM_ANALISE;
-		this.dataSolicitacao = LocalDate.now(); // data de cria��o da solicita��o
+		this.estadoRequisicao = estadoRequisicao;
+		this.dataSolicitacao = dataSolicitacao;
 	}
-
+	
 	public String getIdentificadorUsuario() {
 		return identificadorUsuario;
 	}

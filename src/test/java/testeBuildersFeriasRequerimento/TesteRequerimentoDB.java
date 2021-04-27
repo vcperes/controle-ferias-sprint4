@@ -21,7 +21,7 @@ import br.com.senior.proway.ferias.model.FeriasDirector;
 import br.com.senior.proway.ferias.model.FeriasRequerimento;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class TesteDb {
+public class TesteRequerimentoDB {
 	DataBase dbSingle = DataBase.getInstance();
 
 	@Test
@@ -38,10 +38,10 @@ public class TesteDb {
 		RequerimentoDirector directorRequerimento = new RequerimentoDirector();
 
 		RequerimentoBuilder builderRequerimento = new RequerimentoBuilder();
-		directorRequerimento.constructRequerimento(builderRequerimento, ferias, "Roberto");
+		directorRequerimento.createRequerimento(builderRequerimento, ferias, "Roberto");
 		
 
-		FeriasRequerimento feriasRequerimento = builderRequerimento.getResult();
+		FeriasRequerimento feriasRequerimento = builderRequerimento.build();
 
 		RequerimentoFeriasDAO DAOFerias = new RequerimentoFeriasDAO();
 		
@@ -68,10 +68,10 @@ public class TesteDb {
 		
 		RequerimentoDirector directorRequerimento = new RequerimentoDirector();
 		RequerimentoBuilder builderRequerimento = new RequerimentoBuilder();
-		directorRequerimento.constructRequerimento(builderRequerimento, ferias, "Joana");
+		directorRequerimento.createRequerimento(builderRequerimento, ferias, "Joana");
 		
 		
-		FeriasRequerimento feriasRequerimento = builderRequerimento.getResult();
+		FeriasRequerimento feriasRequerimento = builderRequerimento.build();
 		RequerimentoFeriasDAO DAOFerias = new RequerimentoFeriasDAO();
 		DAOFerias.create(feriasRequerimento);
 		
@@ -99,10 +99,10 @@ public class TesteDb {
 
 		RequerimentoDirector directorRequerimento = new RequerimentoDirector();
 		RequerimentoBuilder builderRequerimento = new RequerimentoBuilder();
-		directorRequerimento.constructRequerimento(builderRequerimento, ferias, "Godofredo");
+		directorRequerimento.createRequerimento(builderRequerimento, ferias, "Godofredo");
 		
 
-		FeriasRequerimento feriasRequerimento = builderRequerimento.getResult();
+		FeriasRequerimento feriasRequerimento = builderRequerimento.build();
 		RequerimentoFeriasDAO DAOFerias = new RequerimentoFeriasDAO();
 		DAOFerias.create(feriasRequerimento);
 		
@@ -110,10 +110,10 @@ public class TesteDb {
 		
 		RequerimentoDirector directorRequerimento2 = new RequerimentoDirector();
 		RequerimentoBuilder builderRequerimento2 = new RequerimentoBuilder();
-		directorRequerimento2.constructRequerimento(builderRequerimento2, ferias, "Tiburcio");
+		directorRequerimento2.createRequerimento(builderRequerimento2, ferias, "Tiburcio");
 		
 
-		FeriasRequerimento feriasRequerimento2 = builderRequerimento2.getResult();
+		FeriasRequerimento feriasRequerimento2 = builderRequerimento2.build();
 		RequerimentoFeriasDAO DAOFerias2 = new RequerimentoFeriasDAO();
 		DAOFerias2.create(feriasRequerimento2);
 				
@@ -142,10 +142,10 @@ public class TesteDb {
 
 		RequerimentoDirector directorRequerimento = new RequerimentoDirector();
 		RequerimentoBuilder builderRequerimento = new RequerimentoBuilder();
-		directorRequerimento.constructRequerimento(builderRequerimento, ferias, "Thiago");
+		directorRequerimento.createRequerimento(builderRequerimento, ferias, "Thiago");
 		
 
-		FeriasRequerimento feriasRequerimento = builderRequerimento.getResult();
+		FeriasRequerimento feriasRequerimento = builderRequerimento.build();
 		RequerimentoFeriasDAO DAOFerias = new RequerimentoFeriasDAO();
 		
 		boolean resultado = DAOFerias.update(3, feriasRequerimento);
@@ -181,10 +181,10 @@ public class TesteDb {
 		RequerimentoDirector directorRequerimento = new RequerimentoDirector();
 
 		RequerimentoBuilder builderRequerimento = new RequerimentoBuilder();
-		directorRequerimento.constructRequerimento(builderRequerimento, ferias, "Roberto");
+		directorRequerimento.createRequerimento(builderRequerimento, ferias, "Roberto");
 		
 
-		FeriasRequerimento feriasRequerimento = builderRequerimento.getResult();
+		FeriasRequerimento feriasRequerimento = builderRequerimento.build();
 
 		RequerimentoFeriasDAO DAOFerias = new RequerimentoFeriasDAO();
 		
