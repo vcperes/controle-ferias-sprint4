@@ -9,7 +9,7 @@ import java.time.temporal.ChronoUnit;
 
 import org.junit.Test;
 
-import br.com.senior.proway.ferias.model.BetterFerias;
+import br.com.senior.proway.ferias.model.Ferias;
 import br.com.senior.proway.ferias.model.Ferias;
 import br.com.senior.proway.ferias.model.FeriasBuilder;
 import br.com.senior.proway.ferias.model.FeriasDirector;
@@ -29,7 +29,7 @@ public class TesteFerias {
 		FeriasBuilder Bob = new FeriasBuilder();
 		feriasDirector.createFeriasTotal(Bob, LocalDate.now(), LocalDate.of(2021, 4, 28));
 		
-		BetterFerias ferias = Bob.build();
+		Ferias ferias = Bob.build();
 		assertEquals(ferias.tipoFerias, TiposFerias.TOTAL);
 		assertTrue(ferias.diasVendidos == 0);
 	}

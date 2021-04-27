@@ -2,7 +2,7 @@ package br.com.senior.proway.ferias.controller;
 
 import java.time.LocalDate;
 
-import br.com.senior.proway.ferias.model.BetterFerias;
+import br.com.senior.proway.ferias.model.Ferias;
 import br.com.senior.proway.ferias.model.FeriasBuilder;
 import br.com.senior.proway.ferias.model.FeriasDirector;
 
@@ -16,6 +16,6 @@ public class Main {
 		feriasDirector.createFeriasTotal(fBuilder, LocalDate.now(), LocalDate.of(2021, 4, 28));
 		
 		// trabalhador comeca
-		BetterFerias ft = fBuilder.build();
+		Ferias ft = fBuilder.build();
 	}
 }

@@ -14,9 +14,9 @@ public class FeriasBuilder implements IFeriasBuilder {
 	private short diasVendidos;
 	private TiposFerias tipoFerias;
 
-	public BetterFerias build() {
+	public Ferias build() {
 		this.checarValidade(); // pode ou nao mudar o tipo ferias
-		return new BetterFerias(
+		return new Ferias(
 				this.dataInicio,
 				this.dataFim,
 				this.diasTotaisRequisitados, // passar para metodo?
