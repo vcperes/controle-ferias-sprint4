@@ -11,12 +11,14 @@ public class FeriasBuilder implements IFeriasBuilder {
 	protected final short CREDITOS_MINIMOS_FERIAS_FRACIONADAS = 14;
 	protected final short DIAS_MAXIMOS_A_VENDER = 32;
 	
+	private int id;
 	private String identificadorUsuario; 
 	private LocalDate dataInicio;
 	private LocalDate dataFim;
 	private short diasTotaisRequisitados;
 	private short diasVendidos;
 	private TiposFerias tipoFerias;
+	
 
 	public Ferias build(short creditos) {
 		this.checarValidade(this, creditos);
@@ -30,6 +32,9 @@ public class FeriasBuilder implements IFeriasBuilder {
 	}
 	
 	//Getters & Setters
+	public void setId(int id) { this.id = id; }
+	public int getId() { return this.id; }
+	
 	public String getIdentificadorUsuario() { return this.identificadorUsuario; }
 	public void setIdentificadorUsuario(String valor) { this.identificadorUsuario = valor; }
 	
@@ -79,9 +84,6 @@ public class FeriasBuilder implements IFeriasBuilder {
 				}
 			} 
 		}
-		
-		
-			
 		// Checagens falharam, retorna falso e invalida as f�rias;
 		ferias.setTipo(TiposFerias.INVALIDA);
 		return false;	 
@@ -138,18 +140,6 @@ public class FeriasBuilder implements IFeriasBuilder {
 				return (diasAVender > DIAS_MAXIMOS_A_VENDER) 
 					? DIAS_MAXIMOS_A_VENDER : diasAVender;
 		}
-		return 0;
-	}
-
-	
-	// fix this
-	public void setId(int id) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public int getId() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 

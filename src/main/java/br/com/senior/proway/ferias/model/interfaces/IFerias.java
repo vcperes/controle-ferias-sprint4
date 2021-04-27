@@ -4,7 +4,10 @@ import java.time.LocalDate;
 
 import br.com.senior.proway.ferias.model.enums.TiposFerias;
 
-public interface IFerias extends IIdentificadorIdDAO {
+public interface IFerias {
+	public void setId(int id);
+	public int getId();
+	
 	void setIdentificadorUsuario(String valor);
 	String getIdentificadorUsuario();
 	

@@ -3,11 +3,8 @@ package br.com.senior.proway.ferias.model.DAO;
 import java.util.ArrayList;
 
 import br.com.senior.proway.ferias.database.DataBase;
-import br.com.senior.proway.ferias.model.Ferias;
 import br.com.senior.proway.ferias.model.enums.TiposFerias;
 import br.com.senior.proway.ferias.model.interfaces.IFerias;
-import br.com.senior.proway.ferias.model.interfaces.IFeriasBuilder;
-import br.com.senior.proway.ferias.model.interfaces.IIdentificadorIdDAO;
 
 public class FeriasDAO implements Icrud<IFerias>, IConsultaDeFeriasPorTipoDAO, IConsultaPorColaboradorDAO {
 

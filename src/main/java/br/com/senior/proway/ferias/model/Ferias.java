@@ -4,7 +4,6 @@ import java.time.LocalDate;
 
 import br.com.senior.proway.ferias.model.enums.TiposFerias;
 import br.com.senior.proway.ferias.model.interfaces.IFerias;
-import br.com.senior.proway.ferias.model.interfaces.IIdentificadorIdDAO;
 
 /**
  * Classe que representa a estrutura de dados de uma "unidade" de F�rias.
@@ -15,7 +14,8 @@ import br.com.senior.proway.ferias.model.interfaces.IIdentificadorIdDAO;
  * @author Sprint2
  *
  */
-public class Ferias implements IFerias, IIdentificadorIdDAO {
+public class Ferias implements IFerias {
+	private int id;
 	private String identificadorUsuario; 
 	// FK Foreign Key do usuário - Setar no requerimento
 	
@@ -24,7 +24,7 @@ public class Ferias implements IFerias, IIdentificadorIdDAO {
 	private short diasTotaisRequisitados;
 	private short diasVendidos;
 	private TiposFerias tipoFerias;
-	private int id;
+	
 
 	public Ferias(LocalDate dataInicio,
 						LocalDate dataFim,
@@ -39,13 +39,8 @@ public class Ferias implements IFerias, IIdentificadorIdDAO {
 		this.tipoFerias = tipo;
 	}
 	
-	public void setId(int id) {
-		this.id = id;		
-	}
-
-	public int getId() {
-		return this.id;
-	}
+	public void setId(int id) { this.id = id; }
+	public int getId() { return this.id; }
 	
 	public String getIdentificadorUsuario() { return this.identificadorUsuario; }
 	public void setIdentificadorUsuario(String valor) { this.identificadorUsuario = valor; }

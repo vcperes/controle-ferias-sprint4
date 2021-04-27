@@ -1,8 +1,6 @@
 package br.com.senior.proway.ferias.model;
 
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
-
 import br.com.senior.proway.ferias.model.enums.EstadosRequisicao;
 
 /**
