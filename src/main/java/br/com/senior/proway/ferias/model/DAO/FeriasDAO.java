@@ -46,7 +46,9 @@ public class FeriasDAO implements Icrud<IFerias>, IConsultaDeFeriasPorTipoDAO, I
 	public boolean create(IFerias objeto) { // Aqui o create na realidade � cadastrar.
 		DataBase.getInstance().getFerias().add(objeto);
 		return true;
-
+		//precisa implementar metodo que insere o id nesse objeto quando ele eh 
+		//criado/cadastrado no banco de dados, pois quando criamos um objeto, apenas 
+		//informamos o idUsuario
 	}
 
 	/**
