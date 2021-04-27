@@ -120,6 +120,15 @@ public class SaldoFerias
 		return lista.size();
 	}
 
+	// ISaldoFeriasValidacoes
+	
+	public boolean checarSaldoPositivo() {
+		return this.diasDisponiveisDeFerias > 0 ? true : false;
+	}
+	
+	
+	// Coisas que vao pra outro lugar
+	
 	// Interface ISaldoFeriasCalculos
 	
 	public LocalDate calcularProximasFerias() {
@@ -147,14 +156,6 @@ public class SaldoFerias
 		return creditos;
 	}
 
-	// ISaldoFeriasValidacoes
-	
-	public boolean checarSaldoPositivo() {
-		return this.diasDisponiveisDeFerias > 0 ? true : false;
-	}
-	
-	
-	
 	// ISaldoFeriasDAO
 	public ArrayList<FeriasRequerimento> receberRequerimentosEmEstado(EstadosRequisicao tipoDesejado){
 		ArrayList<FeriasRequerimento> pendentes = new ArrayList<FeriasRequerimento>();
