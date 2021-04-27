@@ -4,8 +4,13 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 //crtl+shift+O = AutoImport
 
+import br.com.senior.proway.ferias.controller.interfaces.ISaldoFeriasCalculos;
+import br.com.senior.proway.ferias.controller.interfaces.ISaldoFeriasValidacoes;
 import br.com.senior.proway.ferias.model.enums.EstadosRequisicao;
 import br.com.senior.proway.ferias.model.enums.TiposFerias;
+import br.com.senior.proway.ferias.model.interfaces.IHistoricoFerias;
+import br.com.senior.proway.ferias.model.interfaces.IHistoricoRequerimentos;
+import br.com.senior.proway.ferias.model.interfaces.ISaldoFerias;
 
 
 /**
@@ -20,103 +25,66 @@ import br.com.senior.proway.ferias.model.enums.TiposFerias;
  * @author SENIOR
  *
  */
-public class SaldoFerias {
-	//SCREAMING_SNAKE_CASE
+public class SaldoFerias 
+	implements  ISaldoFerias,
+				IHistoricoFerias, 
+				IHistoricoRequerimentos,
+				ISaldoFeriasCalculos,
+				ISaldoFeriasValidacoes
+	{
 	protected final short INTERVALO_ENTRE_FERIAS_EM_ANOS = 1;
 	protected final short DIAS_DISPONIVEIS_PARA_FERIAS = 30;
 
-	// Intervalos na posi��o [0] a [1] da array, inclusivos;
 	protected final short INTERVALO_FALTAS_1 = 6;
 	protected final short INTERVALO_FALTAS_2 = 15;
 	protected final short INTERVALO_FALTAS_3 = 24;
-	protected final short INTERVALO_FALTAS_4 = 33; // at� infinitos
+	protected final short INTERVALO_FALTAS_4 = 33;
 
-	
 	protected final short CREDITOS_FALTAS_1 = 24;
 	protected final short CREDITOS_FALTAS_2 = 18;
 	protected final short CREDITOS_FALTAS_3 = 12;
 	protected final short CREDITOS_FALTAS_4 = 0;
-
+	
 	private String identificadorUsuario; // FK Foreign Key do usu�rio - Decidir quais classes tem
 	
 	private LocalDate proximasFerias;
-	private int diasDisponiveisDeFerias; // Vai ser preenchido na data "proximasFerias"
+	private short diasDisponiveisDeFerias; // Vai ser preenchido na data "proximasFerias"
 	private ArrayList<Ferias> historicoFerias;
 	private ArrayList<FeriasRequerimento> historicoRequerimentos;
-	// Adicionar metodos para adicionar e remover itens nas ArrayLists (getters e setters)
 
-
-
-	// public SaldoFerias(String id) {  // <------ futuro uso do construtor
-	public SaldoFerias()
+	public SaldoFerias(
+			String identificadorUsuario,
+			LocalDate proximasFerias,
+			short diasDisponiveisDeFerias,
+			ArrayList<Ferias> historicoFerias,
+			ArrayList<FeriasRequerimento> historicoRequerimentos
+			)
 	{	
-		//identificadorUsuario = id; // FK Foreign Key do usu�rio
-		
-		proximasFerias = calcularProximasFerias();
-		diasDisponiveisDeFerias = 0;
-		historicoFerias = new ArrayList<Ferias>();
-		historicoRequerimentos = new ArrayList<FeriasRequerimento>();
-	}
-
-	
-
-	public String getIdentificadorUsuario() {
-		return identificadorUsuario;
-	}
-
-
-
-	public void setIdentificadorUsuario(String identificadorUsuario) {
 		this.identificadorUsuario = identificadorUsuario;
-	}
-
-
-
-	public LocalDate getProximasFerias() {
-		return proximasFerias;
-	}
-
-
-
-	public void setProximasFerias(LocalDate proximasFerias) {
 		this.proximasFerias = proximasFerias;
-	}
-
-
-
-	public int getDiasDisponiveisDeFerias() {
-		return diasDisponiveisDeFerias;
-	}
-
-
-
-	public void setDiasDisponiveisDeFerias(int diasDisponiveisDeFerias) {
 		this.diasDisponiveisDeFerias = diasDisponiveisDeFerias;
+		this.historicoFerias = historicoFerias;
+		this.historicoRequerimentos = historicoRequerimentos;
 	}
 
+	public String getIdentificadorUsuario() { return identificadorUsuario; }
+	public void setIdentificadorUsuario(String identificadorUsuario) { this.identificadorUsuario = identificadorUsuario;	}
 
+	public LocalDate getProximasFerias() {return proximasFerias;}
+	public void setProximasFerias(LocalDate proximasFerias) { this.proximasFerias = proximasFerias; }
 
-	public ArrayList<Ferias> getHistoricoFerias() {
-		return historicoFerias;
-	}
+	public short getDiasDisponiveisDeFerias() { return diasDisponiveisDeFerias; }
+	public void setDiasDisponiveisDeFerias(short diasDisponiveisDeFerias) {this.diasDisponiveisDeFerias = diasDisponiveisDeFerias;}
 
-	public ArrayList<FeriasRequerimento>getHistoricoRequimentos() {
-		return historicoRequerimentos;
-	}
+	public ArrayList<Ferias> getHistoricoFerias() {	return historicoFerias; }
+	public ArrayList<FeriasRequerimento>getHistoricoRequerimentos() {	return historicoRequerimentos; }
 	
-	// Nao devemos substituir a lista, ela j� esta instanciada no construtor.
-
-	//public void setHistoricoFerias(ArrayList<Ferias> historicoFerias) {
-	//	this.historicoFerias = historicoFerias;
-	//}
-
-	//public void setHistoricoRequimentos(
-	//		ArrayList<FeriasRequerimento> historicoRequimentos) {
-	//	this.historicoRequimentos = historicoRequimentos;
-	//}
-
+	/* 
+	 * Nao devemos substituir a lista, ela ja esta instanciada no construtor.
+	*	Logo, não vamos fazer SET para as ArrayLists
+	*/
+	
 	// Metodos para modificar as ArrayLists
-
 	public void adicionarHistoricoFerias(Ferias ferias) {
 		this.historicoFerias.add(ferias);
 	}
@@ -131,16 +99,8 @@ public class SaldoFerias {
 		this.historicoRequerimentos.remove(req);
 	}
 
-
-	/*
-	 * Funcão responsável por definir a data em que os dias disponíveis para férias
-	 * são creditados para os funcionários Quando a estrutura é iniciada, é
-	 * utilizada a informação de admissão do funcionário para calcular o dia em que
-	 * o mesmo recebe suas primeiras férias Para as próximas férias, é utilizada a
-	 * data do ultimo crédito de dias mais 365 anos;
-	 * 
-	 * @return Data dos próximos dias de férias disponíveis
-	 */
+	// Interface ISaldoFeriasCalculos
+	
 	public LocalDate calcularProximasFerias() {
 		if (this.getProximasFerias() == null) {
 			// puxar do sistema de cadastro de funcionarios
@@ -152,60 +112,49 @@ public class SaldoFerias {
 	}
 
 	
-	/*
-	 * Função responsável por creditar os dias disponíveis para férias. Essa função
-	 * é chamada na data definida pela variável "proximasFerias"
-	 * 
-	 */
-	
-	public short creditarDiasDeFerias() {
+	public short creditarDiasDeFerias(short faltas) {
 		short creditos = DIAS_DISPONIVEIS_PARA_FERIAS;
-		short faltas = receberFaltasDoControleDePontos();
 
-		if (faltas >= INTERVALO_FALTAS_1)
+		if (faltas >= INTERVALO_FALTAS_1 && faltas < INTERVALO_FALTAS_2)
 			creditos = CREDITOS_FALTAS_1;
-		else if (faltas >= INTERVALO_FALTAS_2 )
+		else if (faltas >= INTERVALO_FALTAS_2 && faltas < INTERVALO_FALTAS_3 )
 			creditos = CREDITOS_FALTAS_2;
-		else if (faltas >= INTERVALO_FALTAS_3 )
+		else if (faltas >= INTERVALO_FALTAS_3 && faltas < INTERVALO_FALTAS_4 )
 			creditos = CREDITOS_FALTAS_3;
 		else if (faltas >= INTERVALO_FALTAS_4)
 			creditos = CREDITOS_FALTAS_4;
 		return creditos;
 	}
 
-	public short receberFaltasDoControleDePontos() {
-		return 10;
-	} // vem de outra equipe - Controle de Pontos
-
-
-	/**
-	 * Verifica se possui saldo positivo.
-	 * 
-	 * Consulta o valor de Saldo de Ferias e verifica se ele � positivo.
-	 * 
-	 * @param saldoFerias, da estrutura de dados.
-	 * @return
-	 */
-	public static boolean verificarSePossuiSaldoDeFerias(int saldoFerias) {
-		boolean podeTirarFerias = saldoFerias > 0 ? true : false;
-
-		return podeTirarFerias;
+	// ISaldoFeriasValidacoes
+	
+	public boolean checarSaldoPositivo() {
+		return this.diasDisponiveisDeFerias > 0 ? true : false;
 	}
 	
-	/**
-	 * Pegar lista de chamados do tipoDesejado
-	 * 
-	 * tipoDesjado tem como opções os termos do enum EstadosRequisicao
-	 * 
-	 * Retorna uma lista de FeriasRequerimento contendo os requerimentos que possuem status desejado.
-	 * 
-	 * @param listarequerimentos
-	 * @return
-	 */
+	public int verificaQuantiaRequerimentos() {
+		return getHistoricoRequerimentos().size();
+	}
+	
+	public int verificaQuantiaRequerimentosDeTipo(EstadosRequisicao tipoDesejado) {
+		ArrayList<FeriasRequerimento> lista = receberRequerimentosEmEstado(tipoDesejado);
+		return lista.size();
+	}
+	
+	public int verificaQuantiaFeriasDeTipoNoHistorico(TiposFerias tipoDesejado) {
+		ArrayList<Ferias> lista = receberFeriasEmEstado(tipoDesejado);
+		return lista.size();
+	}
+	
+	public int verificaQuantidadeHistoricoFerias() {
+		return getHistoricoFerias().size();
+	}
+	
+	// ISaldoFeriasDAO
 	public ArrayList<FeriasRequerimento> receberRequerimentosEmEstado(EstadosRequisicao tipoDesejado){
 		ArrayList<FeriasRequerimento> pendentes = new ArrayList<FeriasRequerimento>();
 		
-		for(FeriasRequerimento reqFerias : getHistoricoRequimentos()) {
+		for(FeriasRequerimento reqFerias : getHistoricoRequerimentos()) {
 			if (reqFerias.getEstadoRequisicao() == tipoDesejado) {
 				pendentes.add(reqFerias);
 			}
@@ -213,39 +162,6 @@ public class SaldoFerias {
 		return pendentes;
 	}
 	
-	/**
-	 * Verificar se existem chamados do tipoDesejado.
-	 * 
-	 *
-	 * @return quantidade de requerimentos do tipoDesejado
-	 */
-	public int verificaQuantiaRequerimentosDeTipo(EstadosRequisicao tipoDesejado) {
-		ArrayList<FeriasRequerimento> lista = new ArrayList<FeriasRequerimento>();
-		lista = receberRequerimentosEmEstado(tipoDesejado);
-		return lista.size();
-	}
-	
-	/**
-	 * Verificar se existem requerimentos.
-	 * 
-	 *
-	 * @return quantidade de requerimentos do tipoDesejado
-	 */
-	public int verificaQuantiaRequerimentos() {
-		return getHistoricoRequimentos().size();
-	}
-	
-	
-	/**
-	 * Pegar lista de ferias do tipoDesejado
-	 * 
-	 * tipoDesjado tem como op��es os termos do enum TiposFerias
-	 * 
-	 * Retorna uma lista de Ferias contendo os chamados que possuem status desejado.
-	 * 
-	 * @param listaChamados
-	 * @return
-	 */
 	public ArrayList<Ferias> receberFeriasEmEstado(TiposFerias tipoDesejado){
 		ArrayList<Ferias> lista = new ArrayList<Ferias>();
 		
@@ -256,29 +172,4 @@ public class SaldoFerias {
 		}
 		return lista;
 	}
-	
-	/**
-	 * Verificar se existem ferias do tipoDesejado.
-	 * 
-	 *
-	 * @return quantidade de ferias do tipoDesejado
-	 */
-	public int verificaQuantiaFeriasDeTipoNoHistorico(TiposFerias tipoDesejado) {
-		ArrayList<Ferias> lista = new ArrayList<Ferias>();
-		lista = receberFeriasEmEstado(tipoDesejado);
-		return lista.size();
-	}
-	
-	/**
-	 * Verificar se existem requerimentos.
-	 * 
-	 *
-	 * @return quantidade de requerimentos do tipoDesejado
-	 */
-	public int verificaQuantidadeHistoricoFerias() {
-		return getHistoricoFerias().size();
-	}
-	
-	
-	
 }

@@ -17,9 +17,7 @@ import br.com.senior.proway.ferias.model.FeriasVendida;
 import br.com.senior.proway.ferias.model.enums.TiposFerias;
 
 public class TesteFerias {
-	
 
-// Generalizar para a fun��o receber faltasDoControleDePonto
 	@Test
 	public void feriasTotal() {
 		short creditos = 30;
@@ -40,8 +38,7 @@ public class TesteFerias {
 		short creditos = 30;
 		LocalDate data1 = LocalDate.of(2021, 4, 15);
 		LocalDate data2 = LocalDate.of(2021, 5, 5); // 20 dias de ferias
-		// lembrando que CREDITOS_MINIMOS_FERIAS_FRACIONADAS = 15;
-		// Sobram menos do que 15 creditos, logo a ferias � parcial e os dias restantes ser�o vendidos;
+		// lembrando que CREDITOS_MINIMOS_FERIAS_FRACIONADAS = 15; <- creditos que restariam
 		
 		FeriasDirector feriasDirector = new FeriasDirector();
 		FeriasBuilder Bob = new FeriasBuilder();
@@ -57,7 +54,7 @@ public class TesteFerias {
 		short creditos = 30;
 		LocalDate data1 = LocalDate.of(2021, 4, 16);
 		LocalDate data2 = LocalDate.of(2021, 5, 1); //15 dias 
-		// lembrando que CREDITOS_MINIMOS_FERIAS_FRACIONADAS = 15; <- creditos que restariam
+		// lembrando que CREDITOS_MINIMOS_FERIAS_FRACIONADAS = 15; 
 		
 		FeriasDirector feriasDirector = new FeriasDirector();
 		FeriasBuilder Bob = new FeriasBuilder();
