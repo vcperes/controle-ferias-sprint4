@@ -82,11 +82,6 @@ public class SaldoFerias
 		this.historicoFerias.remove(ferias);
 	}
 	
-	public int verificaQuantiaFeriasDeTipoNoHistorico(TiposFerias tipoDesejado) {
-		ArrayList<Ferias> lista = receberFeriasEmEstado(tipoDesejado);
-		return lista.size();
-	}
-	
 	public int verificaQuantidadeHistoricoFerias() {
 		return getHistoricoFerias().size();
 	}
@@ -102,43 +97,10 @@ public class SaldoFerias
 	public int verificaQuantiaRequerimentos() {
 		return getHistoricoRequerimentos().size();
 	}
-	
-	public int verificaQuantiaRequerimentosDeTipo(EstadosRequisicao tipoDesejado) {
-		ArrayList<FeriasRequerimento> lista = receberRequerimentosEmEstado(tipoDesejado);
-		return lista.size();
-	}
 
 	// ISaldoFeriasValidacoes
-	
 	public boolean checarSaldoPositivo() {
 		return this.diasDisponiveisDeFerias > 0 ? true : false;
 	}
 	
-	
-	// Coisas que vao pra outro lugar
-	
-
-
-	// ISaldoFeriasDAO
-	public ArrayList<FeriasRequerimento> receberRequerimentosEmEstado(EstadosRequisicao tipoDesejado){
-		ArrayList<FeriasRequerimento> pendentes = new ArrayList<FeriasRequerimento>();
-		
-		for(FeriasRequerimento reqFerias : getHistoricoRequerimentos()) {
-			if (reqFerias.getEstadoRequisicao() == tipoDesejado) {
-				pendentes.add(reqFerias);
-			}
-		}
-		return pendentes;
-	}
-	
-	public ArrayList<Ferias> receberFeriasEmEstado(TiposFerias tipoDesejado){
-		ArrayList<Ferias> lista = new ArrayList<Ferias>();
-		
-		for(Ferias ferias : getHistoricoFerias()) {
-			if (ferias.getTipo() == tipoDesejado) {
-				lista.add(ferias);
-			}
-		}
-		return lista;
-	}
 }

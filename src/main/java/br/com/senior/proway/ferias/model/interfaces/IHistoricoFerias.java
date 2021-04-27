@@ -8,13 +8,7 @@ public interface IHistoricoFerias {
 	public void adicionarHistoricoFerias(Ferias ferias);
 	public void removerHistoricoFerias(Ferias ferias);
 	
-	/**
-	 * Verificar se existem ferias do tipoDesejado.
-	 * 
-	 *
-	 * @return quantidade de ferias do tipoDesejado
-	 */
-	public int verificaQuantiaFeriasDeTipoNoHistorico(TiposFerias tipoDesejado);
+	
 	
 	/**
 	 * Verificar se existem requerimentos.

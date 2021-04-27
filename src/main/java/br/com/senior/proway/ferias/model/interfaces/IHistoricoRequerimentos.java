@@ -16,12 +16,4 @@ public interface IHistoricoRequerimentos {
 	 */
 	public int verificaQuantiaRequerimentos();
 	
-	/**
-	 * Verificar se existem chamados do tipoDesejado.
-	 * 
-	 *
-	 * @return quantidade de requerimentos do tipoDesejado
-	 */
-	public int verificaQuantiaRequerimentosDeTipo(EstadosRequisicao tipoDesejado);
-	
 }

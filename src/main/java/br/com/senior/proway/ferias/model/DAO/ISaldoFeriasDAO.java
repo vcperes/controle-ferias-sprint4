@@ -6,6 +6,7 @@ import br.com.senior.proway.ferias.model.Ferias;
 import br.com.senior.proway.ferias.model.FeriasRequerimento;
 import br.com.senior.proway.ferias.model.enums.EstadosRequisicao;
 import br.com.senior.proway.ferias.model.enums.TiposFerias;
+import br.com.senior.proway.ferias.model.interfaces.ISaldoFerias;
 
 public interface ISaldoFeriasDAO {
 
@@ -19,7 +20,15 @@ public interface ISaldoFeriasDAO {
 	 * @param listarequerimentos
 	 * @return
 	 */
-	public ArrayList<FeriasRequerimento> receberRequerimentosEmEstado(EstadosRequisicao tipoDesejado);
+	public ArrayList<FeriasRequerimento> receberRequerimentosEmEstado(EstadosRequisicao tipoDesejado, ISaldoFerias saldo);
+	
+	/**
+	 * Verificar se existem chamados do tipoDesejado.
+	 * 
+	 *
+	 * @return quantidade de requerimentos do tipoDesejado
+	 */
+	public int verificaQuantiaRequerimentosDeTipo(EstadosRequisicao tipoDesejado, ISaldoFerias saldo);
 	
 	/**
 	 * Pegar lista de ferias do tipoDesejado
@@ -31,5 +40,13 @@ public interface ISaldoFeriasDAO {
 	 * @param listaChamados
 	 * @return
 	 */
-	public ArrayList<Ferias> receberFeriasEmEstado(TiposFerias tipoDesejado);
+	public ArrayList<Ferias> receberFeriasEmEstado(TiposFerias tipoDesejado , ISaldoFerias saldo);
+	
+	/**
+	 * Verificar se existem ferias do tipoDesejado.
+	 * 
+	 *
+	 * @return quantidade de ferias do tipoDesejado
+	 */
+	public int verificaQuantiaFeriasDeTipoNoHistorico(TiposFerias tipoDesejado, ISaldoFerias saldo);
 }
