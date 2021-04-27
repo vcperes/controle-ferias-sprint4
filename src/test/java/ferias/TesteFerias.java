@@ -22,76 +22,114 @@ public class TesteFerias {
 // Generalizar para a fun��o receber faltasDoControleDePonto
 	@Test
 	public void feriasTotal() {
+		short creditos = 30;
 		LocalDate data1 = LocalDate.of(2021, 4, 15);
 		LocalDate data2 = LocalDate.of(2021, 5, 15); // 30 dias
 		
 		FeriasDirector feriasDirector = new FeriasDirector();
 		FeriasBuilder Bob = new FeriasBuilder();
-		feriasDirector.createFeriasTotal(Bob, LocalDate.now(), LocalDate.of(2021, 4, 28));
+		feriasDirector.createFeriasTotal(Bob, data1, data2);
+		Ferias ferias = Bob.build(creditos);
 		
-		Ferias ferias = Bob.build();
-		assertEquals(ferias.tipoFerias, TiposFerias.TOTAL);
-		assertTrue(ferias.diasVendidos == 0);
+		assertEquals(ferias.getTipo(), TiposFerias.TOTAL);
+		assertTrue(ferias.getDiasVendidos() == 0);
 	}
 	
 	@Test
 	public void feriasParcial() {
+		short creditos = 30;
 		LocalDate data1 = LocalDate.of(2021, 4, 15);
-		LocalDate data2 = LocalDate.of(2021, 5, 5); // 20 dias
+		LocalDate data2 = LocalDate.of(2021, 5, 5); // 20 dias de ferias
 		// lembrando que CREDITOS_MINIMOS_FERIAS_FRACIONADAS = 15;
 		// Sobram menos do que 15 creditos, logo a ferias � parcial e os dias restantes ser�o vendidos;
 		
-		Ferias ferias = new Ferias(data1, data2, 30);
-		assertTrue(ferias.checarValidade());
+		FeriasDirector feriasDirector = new FeriasDirector();
+		FeriasBuilder Bob = new FeriasBuilder();
+		feriasDirector.createFeriasParcial(Bob, data1, data2, creditos);
+		Ferias ferias = Bob.build(creditos);
+		
 		assertEquals(TiposFerias.PARCIAL, ferias.getTipo());
 		assertTrue(ferias.getDiasVendidos() > 0);
 	}
 	
 	@Test
 	public void feriasFracionada() {
+		short creditos = 30;
 		LocalDate data1 = LocalDate.of(2021, 4, 16);
 		LocalDate data2 = LocalDate.of(2021, 5, 1); //15 dias 
 		// lembrando que CREDITOS_MINIMOS_FERIAS_FRACIONADAS = 15; <- creditos que restariam
 		
-		Ferias ferias = new Ferias(data1, data2, 30);
-		assertTrue(ferias.checarValidade());
+		FeriasDirector feriasDirector = new FeriasDirector();
+		FeriasBuilder Bob = new FeriasBuilder();
+		feriasDirector.createFeriasFracionada(Bob, data1, data2);
+		Ferias ferias = Bob.build(creditos);
+
 		assertTrue(ferias.getDiasVendidos() == 0);
 		assertEquals(TiposFerias.FRACIONADA, ferias.getTipo());
 	}
 	
 	@Test
 	public void feriasVendida() {
-		FeriasVendida ferias = new FeriasVendida(30); // 30 creditos para vender
-		assertTrue(ferias.checarValidade());
-		assertTrue(ferias.getDiasVendidos() == 30);
+		short creditos = 30;
+		FeriasDirector feriasDirector = new FeriasDirector();
+		FeriasBuilder Bob = new FeriasBuilder();
+		feriasDirector.createFeriasVendida(Bob, creditos);
+		Ferias ferias = Bob.build(creditos);
+		
+		assertTrue(ferias.getDiasVendidos() == creditos);
+		assertEquals(TiposFerias.VENDIDA, ferias.getTipo());
+	}
+	
+	@Test
+	public void feriasVendidaEspecifica() {
+		short creditos = 30;
+		short queroVender = 25;
+		FeriasDirector feriasDirector = new FeriasDirector();
+		FeriasBuilder Bob = new FeriasBuilder();
+		feriasDirector.createFeriasVendidaEspecifica(Bob, queroVender);
+		Ferias ferias = Bob.build(creditos);
+		
+		assertTrue(ferias.getDiasVendidos() == queroVender);
 		assertEquals(TiposFerias.VENDIDA, ferias.getTipo());
 	}
 	
 	@Test
 	public void feriasVendidaAcimaDoLimite() {
-		FeriasVendida ferias = new FeriasVendida(40); // 40 creditos para vender
-		assertTrue(ferias.checarValidade());
-		assertTrue(ferias.getDiasVendidos() == ferias.DIAS_MAXIMOS_A_VENDER);
+		short creditos = 45;
+		FeriasDirector feriasDirector = new FeriasDirector();
+		FeriasBuilder Bob = new FeriasBuilder();
+		feriasDirector.createFeriasVendida(Bob, creditos);
+		Ferias ferias = Bob.build(creditos);
+
+		assertTrue(ferias.getDiasVendidos() < creditos);
 		assertEquals(TiposFerias.VENDIDA, ferias.getTipo());
 	}
 	
 	@Test
 	public void feriasInvalida_DataInicioPosteriorADataFim() {
+		short creditos = 30;
 		LocalDate data1 = LocalDate.of(2021, 6, 15);
 		LocalDate data2 = LocalDate.of(2021, 5, 15);
 		
-		Ferias ferias = new Ferias(data1, data2, 30);
-		assertFalse(ferias.checarValidade());
+		FeriasDirector feriasDirector = new FeriasDirector();
+		FeriasBuilder Bob = new FeriasBuilder();
+		feriasDirector.createFeriasTotal(Bob, data1, data2);
+		Ferias ferias = Bob.build(creditos);
+		
 		assertEquals(TiposFerias.INVALIDA, ferias.getTipo());
 	}
 	
 	@Test
 	public void feriasInvalida_SemCreditosSuficientes() {
+		short creditos = 30;
 		LocalDate data1 = LocalDate.of(2021, 4, 15);
 		LocalDate data2 = LocalDate.of(2021, 12, 15);
 		
-		Ferias ferias = new Ferias(data1, data2, 15);
-		assertFalse(ferias.checarValidade());
+		FeriasDirector feriasDirector = new FeriasDirector();
+		FeriasBuilder Bob = new FeriasBuilder();
+		feriasDirector.createFeriasFracionada(Bob, data1, data2);
+		Ferias ferias = Bob.build(creditos);
+		
 		assertEquals(TiposFerias.INVALIDA, ferias.getTipo());
 	}
 }

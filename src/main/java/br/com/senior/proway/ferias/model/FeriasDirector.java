@@ -66,18 +66,20 @@ public class FeriasDirector {
 		);
 		builder.setDiasVendidos(builder.calcularDiasVendidos(builder, diasEmCredito));
 	}
+
+// Na Ferias Parcial não é útil especificarmos os dias a vender, pois eles sao definidos pelo restante de creditos do saldo.
 	
-	public void createFeriasParcialEspecifica(
-			IFeriasBuilder builder, LocalDate dataInicio, LocalDate dataFim, short diasAVender
-	) {
-		builder.setDataInicio(dataInicio);
-		builder.setDataFim(dataFim);
-		builder.setTipo(TiposFerias.PARCIAL);
-		builder.setDiasTotaisRequisitados(
-				builder.calcularPeriodoFerias(builder.getDataInicio(), builder.getDataFim())
-		);
-		builder.setDiasVendidos(diasAVender);
-	}
+//	public void createFeriasParcialEspecifica(
+//			IFeriasBuilder builder, LocalDate dataInicio, LocalDate dataFim, short diasAVender
+//	) {
+//		builder.setDataInicio(dataInicio);
+//		builder.setDataFim(dataFim);
+//		builder.setTipo(TiposFerias.PARCIAL);
+//		builder.setDiasTotaisRequisitados(
+//				builder.calcularPeriodoFerias(builder.getDataInicio(), builder.getDataFim())
+//		);
+//		builder.setDiasVendidos(diasAVender);
+//	}
 	
 	
 

@@ -9,6 +9,7 @@ import br.com.senior.proway.ferias.model.interfaces.IFeriasBuilder;
 
 public class FeriasBuilder implements IFeriasBuilder {
 	protected final short CREDITOS_MINIMOS_FERIAS_FRACIONADAS = 14;
+	protected final short DIAS_MAXIMOS_A_VENDER = 32;
 	
 	private String identificadorUsuario; 
 	private LocalDate dataInicio;
@@ -17,8 +18,8 @@ public class FeriasBuilder implements IFeriasBuilder {
 	private short diasVendidos;
 	private TiposFerias tipoFerias;
 
-	public Ferias build() {
-		this.checarValidade(this); // pode ou nao mudar o tipo ferias
+	public Ferias build(short creditos) {
+		this.checarValidade(this, creditos);
 		return new Ferias(
 				this.dataInicio,
 				this.dataFim,
@@ -50,7 +51,13 @@ public class FeriasBuilder implements IFeriasBuilder {
 	
 	// Interface IFeriasValidacoes
 	
-	public boolean checarValidade(IFerias ferias) {
+	public boolean checarValidade(IFerias ferias, short creditos) {
+		// Checagem de creditos
+		if(ferias.getDiasTotaisRequisitados() + ferias.getDiasVendidos() > creditos) {
+			ferias.setTipo(TiposFerias.INVALIDA);
+			return false;
+		}
+		
 		// Checagem especifica para ferias Vendida
 		if(ferias.getTipo() == TiposFerias.VENDIDA)
 		{
@@ -72,8 +79,11 @@ public class FeriasBuilder implements IFeriasBuilder {
 				}
 			} 
 		}
+		
+		
+			
 		// Checagens falharam, retorna falso e invalida as f�rias;
-		setTipo(TiposFerias.INVALIDA);
+		ferias.setTipo(TiposFerias.INVALIDA);
 		return false;	 
 	 }
 	
@@ -115,7 +125,6 @@ public class FeriasBuilder implements IFeriasBuilder {
 			return (short) dataInicioFerias.until(dataFimFerias, ChronoUnit.DAYS);
 		}
 		else {
-			setTipo(TiposFerias.INVALIDA);
 			return 0;
 		}
 	}
@@ -124,10 +133,12 @@ public class FeriasBuilder implements IFeriasBuilder {
 		if ( ferias.getTipo() == TiposFerias.PARCIAL 
 				|| ferias.getTipo() == TiposFerias.VENDIDA) 
 		{
-			return (short) (diasDisponiveisParaFerias - ferias.getDiasTotaisRequisitados());
-		} else {
-			return 0;
+			short diasAVender = (short) (diasDisponiveisParaFerias - ferias.getDiasTotaisRequisitados());
+			if (diasAVender > 0) 
+				return (diasAVender > DIAS_MAXIMOS_A_VENDER) 
+					? DIAS_MAXIMOS_A_VENDER : diasAVender;
 		}
+		return 0;
 	}
 	
 	

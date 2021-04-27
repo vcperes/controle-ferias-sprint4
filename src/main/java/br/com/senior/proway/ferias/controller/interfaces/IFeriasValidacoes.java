@@ -16,7 +16,7 @@ public interface IFeriasValidacoes {
 	 * 
 	 * @return true/false
 	 */
-	public boolean checarValidade(IFerias ferias);
+	public boolean checarValidade(IFerias ferias, short creditos);
 
 	/**
 	 * Classifica o tipo de f�rias com base nos dias de f�rias dispon�veis ao
