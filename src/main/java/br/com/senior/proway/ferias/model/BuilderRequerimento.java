@@ -4,12 +4,7 @@ public class BuilderRequerimento implements Builder {
 
 	private String identificadorUsuario;
 	private Ferias feriasRequisitadas;
-	
-	public BuilderRequerimento(Ferias ferias, String identificadorUsuario) {
-		this.setFeriasRequisitadas(ferias);
-		this.setIdentificadorUsuario(identificadorUsuario);
-	}
-	
+		
 	public void setIdentificadorUsuario(String identificadorUsuario) {
 		this.identificadorUsuario = identificadorUsuario;		
 	}

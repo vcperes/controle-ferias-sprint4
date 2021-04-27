@@ -34,4 +34,8 @@ public class Ferias {
 		this.diasVendidos = diasVendidos;
 		this.tipoFerias = tipo;
 	}
+	
+	public void setIdenficadores(String valor) {
+		this.identificadorUsuario = valor;
+	}
 }
