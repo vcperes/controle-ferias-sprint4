@@ -2,6 +2,8 @@ package br.com.senior.proway.ferias.controller.interfaces;
 
 import java.time.LocalDate;
 
+import br.com.senior.proway.ferias.model.interfaces.ISaldoFerias;
+
 public interface ISaldoFeriasCalculos {
 	/*
 	 * Funcão responsável por definir a data em que os dias disponíveis para férias
@@ -12,12 +14,16 @@ public interface ISaldoFeriasCalculos {
 	 * 
 	 * @return Data dos próximos dias de férias disponíveis
 	 */
-	public LocalDate calcularProximasFerias();
+	public LocalDate calcularProximasFerias(ISaldoFerias saldo);
+	
+	public void atualizarProximasFerias(ISaldoFerias saldo);
 
 	/*
-	 * Função responsável por creditar os dias disponíveis para férias. Essa função
-	 * é chamada na data definida pela variável "proximasFerias"
+	 * Função responsável calcular os creditos de dias disponíveis para férias. Essa função
+	 * é chamada na data definida pela variável "proximasFerias" e recebe a quantidade de faltas do funcionario
 	 * 
 	 */
-	public short creditarDiasDeFerias(short faltas);
+	public short calcularDiasDeFerias(short faltas);
+	
+	public void atualizarDiasDeFerias(ISaldoFerias saldo, short faltas);
 }

@@ -16,7 +16,7 @@ public class SaldoFeriasBuilder implements ISaldoBuilder {
 	public SaldoFerias build() {
 		return new SaldoFerias(
 			this.identificadorUsuario,
-			this.proximasFerias,// = this.calcularProximasFerias();
+			this.proximasFerias,// Valor ja calculado para +1 ano apos contratacao
 			this.diasDisponiveisDeFerias,
 			this.historicoFerias,
 			this.historicoRequerimentos

@@ -29,21 +29,9 @@ public class SaldoFerias
 	implements  ISaldoFerias,
 				IHistoricoFerias, 
 				IHistoricoRequerimentos,
-				ISaldoFeriasCalculos,
 				ISaldoFeriasValidacoes
 	{
-	protected final short INTERVALO_ENTRE_FERIAS_EM_ANOS = 1;
-	protected final short DIAS_DISPONIVEIS_PARA_FERIAS = 30;
-
-	protected final short INTERVALO_FALTAS_1 = 6;
-	protected final short INTERVALO_FALTAS_2 = 15;
-	protected final short INTERVALO_FALTAS_3 = 24;
-	protected final short INTERVALO_FALTAS_4 = 33;
-
-	protected final short CREDITOS_FALTAS_1 = 24;
-	protected final short CREDITOS_FALTAS_2 = 18;
-	protected final short CREDITOS_FALTAS_3 = 12;
-	protected final short CREDITOS_FALTAS_4 = 0;
+	
 	
 	private String identificadorUsuario; // FK Foreign Key do usu�rio - Decidir quais classes tem
 	
@@ -129,32 +117,7 @@ public class SaldoFerias
 	
 	// Coisas que vao pra outro lugar
 	
-	// Interface ISaldoFeriasCalculos
-	
-	public LocalDate calcularProximasFerias() {
-		if (this.getProximasFerias() == null) {
-			// puxar do sistema de cadastro de funcionarios
-			LocalDate admissao = LocalDate.now();
-			return (admissao.plusYears(INTERVALO_ENTRE_FERIAS_EM_ANOS));
-		} else {
-			return (this.getProximasFerias().plusYears(INTERVALO_ENTRE_FERIAS_EM_ANOS));
-		}
-	}
 
-	
-	public short creditarDiasDeFerias(short faltas) {
-		short creditos = DIAS_DISPONIVEIS_PARA_FERIAS;
-
-		if (faltas >= INTERVALO_FALTAS_1 && faltas < INTERVALO_FALTAS_2)
-			creditos = CREDITOS_FALTAS_1;
-		else if (faltas >= INTERVALO_FALTAS_2 && faltas < INTERVALO_FALTAS_3 )
-			creditos = CREDITOS_FALTAS_2;
-		else if (faltas >= INTERVALO_FALTAS_3 && faltas < INTERVALO_FALTAS_4 )
-			creditos = CREDITOS_FALTAS_3;
-		else if (faltas >= INTERVALO_FALTAS_4)
-			creditos = CREDITOS_FALTAS_4;
-		return creditos;
-	}
 
 	// ISaldoFeriasDAO
 	public ArrayList<FeriasRequerimento> receberRequerimentosEmEstado(EstadosRequisicao tipoDesejado){
