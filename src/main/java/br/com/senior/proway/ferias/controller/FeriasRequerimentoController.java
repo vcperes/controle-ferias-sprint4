@@ -1,8 +1,13 @@
-package br.com.senior.proway.ferias.model;
+package br.com.senior.proway.ferias.controller;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+
+import br.com.senior.proway.ferias.model.DataBaseSingle;
+import br.com.senior.proway.ferias.model.EstadosRequisicao;
+import br.com.senior.proway.ferias.model.FeriasRequerimento;
+import br.com.senior.proway.ferias.model.FeriasRequerimentoDAO;
 
 public class FeriasRequerimentoController {
 
@@ -23,14 +28,26 @@ public class FeriasRequerimentoController {
 		feriasRequerimentoDAO.create(requerimento);
 	}
 	
-	public void update(short id, FeriasRequerimento feriasRequerimento) {
+	public void updateRequerimentoPorId(short id, FeriasRequerimento feriasRequerimento) {
 		FeriasRequerimentoDAO feriasRequerimentoDAO = new FeriasRequerimentoDAO();
 		feriasRequerimentoDAO.update(id, feriasRequerimento);
 	}
 	
-	public void delete(short id) {
+	public void deleteRequerimentoPorId(short id) {
 		FeriasRequerimentoDAO feriasRequerimentoDAO = new FeriasRequerimentoDAO();
 		feriasRequerimentoDAO.delete(id);
+	}
+	
+	public ArrayList<FeriasRequerimento> getAllRequerimentosPorId(short idUsuario) {
+		DataBaseSingle dbSingle = DataBaseSingle.getInstance("historico");
+		FeriasRequerimentoDAO feriasRequerimentoDAO = new FeriasRequerimentoDAO();
+		ArrayList<FeriasRequerimento> requerimentoUsuarios = feriasRequerimentoDAO.getAll();
+		for (int i = 0; i < dbSingle.historico.size(); i++) {
+			if(dbSingle.historico.get(i).getIdentificadorUsuario().equals(idUsuario)) {
+				requerimentoUsuarios.add(dbSingle.historico.get(i));
+			}
+		}
+		return requerimentoUsuarios;
 	}
 	
 	/*

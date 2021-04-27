@@ -20,7 +20,7 @@ public class FeriasRequerimento {
 	private Ferias feriasRequisitada; // Inst�ncia de F�rias
 	private EstadosRequisicao estadoRequisicao; // ENUM
 	private LocalDate dataSolicitacao;
-	static short PRAZO_MINIMO_SOLICITACAO_FERIAS = 10;
+	public static short PRAZO_MINIMO_SOLICITACAO_FERIAS = 10;
 
 	public FeriasRequerimento(String identificadorUsuario, Ferias feriasRequisitada) {
 		this.identificadorUsuario = identificadorUsuario;
