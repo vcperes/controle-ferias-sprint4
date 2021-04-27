@@ -13,7 +13,7 @@ public class SaldoFeriasBuilder implements ISaldoBuilder {
 	private ArrayList<Ferias> historicoFerias;
 	private ArrayList<FeriasRequerimento> historicoRequerimentos;
 	
-	public SaldoFerias build(String identificadorFuncionario) {
+	public SaldoFerias build() {
 		return new SaldoFerias(
 			this.identificadorUsuario,
 			this.proximasFerias,// = this.calcularProximasFerias();
