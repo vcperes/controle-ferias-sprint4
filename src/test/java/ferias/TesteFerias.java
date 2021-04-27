@@ -3,17 +3,12 @@ package ferias;
 import static org.junit.Assert.*;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
 
 import org.junit.Test;
 
 import br.com.senior.proway.ferias.model.Ferias;
-import br.com.senior.proway.ferias.model.Ferias;
 import br.com.senior.proway.ferias.model.FeriasBuilder;
 import br.com.senior.proway.ferias.model.FeriasDirector;
-import br.com.senior.proway.ferias.model.FeriasVendida;
 import br.com.senior.proway.ferias.model.enums.TiposFerias;
 
 public class TesteFerias {

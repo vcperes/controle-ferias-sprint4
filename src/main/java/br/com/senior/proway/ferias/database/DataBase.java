@@ -10,12 +10,13 @@ public final class DataBase {
 	private static DataBase instance;
 	public ArrayList<IFerias> ferias;
 	public ArrayList<SaldoFerias> saldoDeFerias;
-	public ArrayList<FeriasRequerimento> saldoDeRequerimento;
+	public ArrayList<FeriasRequerimento> requerimentos;
+	public ArrayList<FeriasRequerimento> historico;
 
 	public DataBase() {
 		ferias = new ArrayList<IFerias>();
 		saldoDeFerias = new ArrayList<SaldoFerias>();
-		saldoDeRequerimento = new ArrayList<FeriasRequerimento>();
+		requerimentos = new ArrayList<FeriasRequerimento>();
 	}
 
 	public static DataBase getInstance() {
@@ -33,8 +34,8 @@ public final class DataBase {
 		return saldoDeFerias;
 	}
 
-	public ArrayList<FeriasRequerimento> getSaldoDeRequerimento() {
-		return saldoDeRequerimento;
+	public ArrayList<FeriasRequerimento> getRequerimento() {
+		return requerimentos;
 	}
 
 }

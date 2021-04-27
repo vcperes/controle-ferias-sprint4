@@ -4,43 +4,43 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 
-import br.com.senior.proway.ferias.model.DataBaseSingle;
-import br.com.senior.proway.ferias.model.EstadosRequisicao;
+import br.com.senior.proway.ferias.database.DataBase;
 import br.com.senior.proway.ferias.model.FeriasRequerimento;
-import br.com.senior.proway.ferias.model.FeriasRequerimentoDAO;
+import br.com.senior.proway.ferias.model.DAO.RequerimentoFeriasDAO;
+import br.com.senior.proway.ferias.model.enums.EstadosRequisicao;
 
 public class FeriasRequerimentoController {
 
 	public ArrayList<FeriasRequerimento> getAllRequerimentos(){
-		FeriasRequerimentoDAO feriasRequerimentoDAO = new FeriasRequerimentoDAO();
+		RequerimentoFeriasDAO feriasRequerimentoDAO = new RequerimentoFeriasDAO();
 		ArrayList<FeriasRequerimento> feriasRequerimento = feriasRequerimentoDAO.getAll();
 		return feriasRequerimento;
 	}
 	
 	public FeriasRequerimento getRequerimentoPorId(short id) {
-		FeriasRequerimentoDAO feriasRequerimentoDAO = new FeriasRequerimentoDAO();
+		RequerimentoFeriasDAO feriasRequerimentoDAO = new RequerimentoFeriasDAO();
 		FeriasRequerimento  feriasRequerimento = feriasRequerimentoDAO.get(id);
 		return feriasRequerimento;
 	}	
 	
 	public void createRequerimento(FeriasRequerimento requerimento) {
-		FeriasRequerimentoDAO feriasRequerimentoDAO = new FeriasRequerimentoDAO();
+		RequerimentoFeriasDAO feriasRequerimentoDAO = new RequerimentoFeriasDAO();
 		feriasRequerimentoDAO.create(requerimento);
 	}
 	
 	public void updateRequerimentoPorId(short id, FeriasRequerimento feriasRequerimento) {
-		FeriasRequerimentoDAO feriasRequerimentoDAO = new FeriasRequerimentoDAO();
+		RequerimentoFeriasDAO feriasRequerimentoDAO = new RequerimentoFeriasDAO();
 		feriasRequerimentoDAO.update(id, feriasRequerimento);
 	}
 	
 	public void deleteRequerimentoPorId(short id) {
-		FeriasRequerimentoDAO feriasRequerimentoDAO = new FeriasRequerimentoDAO();
+		RequerimentoFeriasDAO feriasRequerimentoDAO = new RequerimentoFeriasDAO();
 		feriasRequerimentoDAO.delete(id);
 	}
 	
 	public ArrayList<FeriasRequerimento> getAllRequerimentosPorId(short idUsuario) {
-		DataBaseSingle dbSingle = DataBaseSingle.getInstance("historico");
-		FeriasRequerimentoDAO feriasRequerimentoDAO = new FeriasRequerimentoDAO();
+		DataBase dbSingle = DataBase.getInstance();
+		RequerimentoFeriasDAO feriasRequerimentoDAO = new RequerimentoFeriasDAO();
 		ArrayList<FeriasRequerimento> requerimentoUsuarios = feriasRequerimentoDAO.getAll();
 		for (int i = 0; i < dbSingle.historico.size(); i++) {
 			if(dbSingle.historico.get(i).getIdentificadorUsuario().equals(idUsuario)) {

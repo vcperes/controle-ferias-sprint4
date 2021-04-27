@@ -1,11 +1,13 @@
-package br.com.senior.proway.ferias.model;
+package br.com.senior.proway.ferias.model.DAO;
 
 import java.util.ArrayList;
 
 import br.com.senior.proway.ferias.database.DataBase;
-import br.com.senior.proway.ferias.model.interfaces.IConsultaDeFeriasPorTipoDAO;
-import br.com.senior.proway.ferias.model.interfaces.IConsultaPorColaboradorDAO;
+import br.com.senior.proway.ferias.model.Ferias;
+import br.com.senior.proway.ferias.model.enums.TiposFerias;
 import br.com.senior.proway.ferias.model.interfaces.IFerias;
+import br.com.senior.proway.ferias.model.interfaces.IFeriasBuilder;
+import br.com.senior.proway.ferias.model.interfaces.IIdentificadorIdDAO;
 
 public class FeriasDAO implements Icrud<IFerias>, IConsultaDeFeriasPorTipoDAO, IConsultaPorColaboradorDAO {
 
@@ -39,53 +41,55 @@ public class FeriasDAO implements Icrud<IFerias>, IConsultaDeFeriasPorTipoDAO, I
 	/**
 	 * Metodo que cadastra um objeto do tipo IFerias na lista database/DataBase/ferias.
 	 * 
-	 * @return 
+	 * @return boolean Retorna se o mÃ©todo foi executado com sucesso.
 	 */
-		
-	public void create(IFerias objeto) { // Aqui o create na realidade é cadastrar.
-		DataBase.getInstance().getFerias().add(objeto.build());
-		// Aguardando push dos colegas
+	public boolean create(IFerias objeto) { // Aqui o create na realidade ï¿½ cadastrar.
+		DataBase.getInstance().getFerias().add(objeto);
+		return true;
 
 	}
 
 	/**
-	 * Atualiza um objeto do tipo IFerias através do id.
-	 * Busca dentro da lista ferias, um objeto do tipo IFerias através de um Id. Localizando faz a subscrição.
+	 * Atualiza um objeto do tipo IFerias atravï¿½s do id.
+	 * Busca dentro da lista ferias, um objeto do tipo IFerias atravï¿½s de um Id. Localizando faz a subscriï¿½ï¿½o.
 	 * 
-	 * @return 
+	 * @return boolean Retorna se o mÃ©todo foi executado com sucesso.
 	 */
-		
-	public void update(int id, IFerias novaFerias) {
+	public boolean update(int id, IFerias novaFerias) {
+		boolean sucesso = false;
 		ArrayList<IFerias> todasAsFerias = DataBase.getInstance().getFerias();
 		for (IFerias umaFerias : todasAsFerias) {
 			if (umaFerias.getId() == id) {
 				umaFerias = novaFerias;
+				sucesso = true;
+				break;
 			}
 		}
-		// return boolean
+		return sucesso;
 
 	}
 
 	/**
-	 * Deleta objeto do tipo IFerias através do id.
-	 * Busca dentro da lista ferias, um objeto do tipo IFerias através de um Id. Localizando faz a remoção.
+	 * Deleta objeto do tipo IFerias atravï¿½s do id.
+	 * Busca dentro da lista ferias, um objeto do tipo IFerias atravï¿½s de um Id. Localizando faz a remoï¿½ï¿½o.
 	 * 
-	 * @return 
+	 * @return boolean Retorna se o mÃ©todo foi executado com sucesso.
 	 */
-	
-	public void delete(int id) {
+	public boolean delete(int id) {
+		boolean sucesso = false;
 		ArrayList<IFerias> todasAsFerias = DataBase.getInstance().getFerias();
 		for (IFerias ferias : todasAsFerias) {
 			if (ferias.getId() == id) {
 				todasAsFerias.remove(ferias);
+				sucesso = true;
+				break;
 			}
-			break;
 		}
-		// return
+		return sucesso;
 	}
 
 	/***
-	 * Retorna uma lista de Férias Totais. Retorna uma lista com objetos do tipo
+	 * Retorna uma lista de Fï¿½rias Totais. Retorna uma lista com objetos do tipo
 	 * IFerias onde o TipoDeFerias eh igual a TOTAL.
 	 * 
 	 * @return ArrayList<IFerias> Lista de objetos do tipo IFerias.

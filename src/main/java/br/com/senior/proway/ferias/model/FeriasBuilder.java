@@ -140,11 +140,17 @@ public class FeriasBuilder implements IFeriasBuilder {
 		}
 		return 0;
 	}
-	
-	
 
 	
+	// fix this
+	public void setId(int id) {
+		// TODO Auto-generated method stub
+		
+	}
 
+	public int getId() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 
-
-}
+	}

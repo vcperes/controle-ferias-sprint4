@@ -1,16 +1,19 @@
-package br.com.senior.proway.ferias.model;
+package br.com.senior.proway.ferias.model.DAO;
 
 import java.util.ArrayList;
 
-public class FeriasRequerimentoDAO implements Icrud<FeriasRequerimento>{
+import br.com.senior.proway.ferias.database.DataBase;
+import br.com.senior.proway.ferias.model.FeriasRequerimento;
+
+public class RequerimentoFeriasDAO implements Icrud<FeriasRequerimento>{
 
 	public ArrayList<FeriasRequerimento> getAll() {
-		DataBaseSingle dbSingle = DataBaseSingle.getInstance("historico");
+		DataBase dbSingle = DataBase.getInstance();
 		return dbSingle.historico;
 	}
 
 	public FeriasRequerimento get(int id) {
-		DataBaseSingle dbSingle = DataBaseSingle.getInstance("historico");
+		DataBase dbSingle = DataBase.getInstance();
 		
 		if(id < dbSingle.historico.size() && id >= 0) {
 			return dbSingle.historico.get(id);	
@@ -19,7 +22,7 @@ public class FeriasRequerimentoDAO implements Icrud<FeriasRequerimento>{
 	}
 
 	public boolean create(FeriasRequerimento objeto) {
-		DataBaseSingle dbSingle = DataBaseSingle.getInstance("historico");
+		DataBase dbSingle = DataBase.getInstance();
 		
 		for(int i = 0; i < dbSingle.historico.size(); i++) {
 			if(dbSingle.historico.get(i).getIdentificadorUsuario() == objeto.getIdentificadorUsuario()) {
@@ -31,7 +34,7 @@ public class FeriasRequerimentoDAO implements Icrud<FeriasRequerimento>{
 	}
 
 	public boolean update(int id, FeriasRequerimento objeto) {
-		DataBaseSingle dbSingle = DataBaseSingle.getInstance("historico");
+		DataBase dbSingle = DataBase.getInstance();
 		
 		if(id < dbSingle.historico.size() && id >= 0) {
 			dbSingle.historico.set(id, objeto);
@@ -41,7 +44,7 @@ public class FeriasRequerimentoDAO implements Icrud<FeriasRequerimento>{
 	}
 
 	public boolean delete(int id) {		
-		DataBaseSingle dbSingle = DataBaseSingle.getInstance("historico");
+		DataBase dbSingle = DataBase.getInstance();
 		
 		if(id < dbSingle.historico.size() && id >= 0) {
 			dbSingle.historico.remove(id);	

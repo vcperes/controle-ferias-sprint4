@@ -1,6 +1,8 @@
 package br.com.senior.proway.ferias.model;
 
-public class BuilderRequerimento implements Builder {
+import br.com.senior.proway.ferias.model.interfaces.IRequerimentoFeriasBuilder;
+
+public class RequerimentoBuilder implements IRequerimentoFeriasBuilder {
 
 	private String identificadorUsuario;
 	private Ferias feriasRequisitadas;
@@ -16,4 +18,6 @@ public class BuilderRequerimento implements Builder {
 	public FeriasRequerimento getResult() {
 		return new FeriasRequerimento(this.identificadorUsuario, this.feriasRequisitadas);
 	}
+
+
 }
