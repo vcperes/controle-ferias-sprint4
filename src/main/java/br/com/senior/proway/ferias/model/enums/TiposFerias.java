@@ -1,4 +1,4 @@
-package br.com.senior.proway.ferias.model;
+package br.com.senior.proway.ferias.model.enums;
 
 public enum TiposFerias {
 	INVALIDA, // Erro

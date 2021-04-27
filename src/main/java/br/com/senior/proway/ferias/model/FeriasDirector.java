@@ -2,6 +2,7 @@ package br.com.senior.proway.ferias.model;
 
 import java.time.LocalDate;
 
+import br.com.senior.proway.ferias.model.enums.TiposFerias;
 import br.com.senior.proway.ferias.model.interfaces.IFeriasBuilder;
 
 public class FeriasDirector {

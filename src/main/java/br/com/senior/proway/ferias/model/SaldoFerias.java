@@ -4,6 +4,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 //crtl+shift+O = AutoImport
 
+import br.com.senior.proway.ferias.model.enums.EstadosRequisicao;
+import br.com.senior.proway.ferias.model.enums.TiposFerias;
+
 
 /**
  * A classe que representa o saldo e historico de ferias.

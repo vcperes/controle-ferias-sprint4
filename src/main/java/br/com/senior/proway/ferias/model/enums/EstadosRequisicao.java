@@ -1,4 +1,4 @@
-package br.com.senior.proway.ferias.model;
+package br.com.senior.proway.ferias.model.enums;
 /**
  * 
  * @author Jonata e Leonardo Pereira

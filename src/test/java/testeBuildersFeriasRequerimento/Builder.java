@@ -10,7 +10,7 @@ import br.com.senior.proway.ferias.model.BuilderRequerimento;
 import br.com.senior.proway.ferias.model.FeriasBuilder;
 import br.com.senior.proway.ferias.model.FeriasDirector;
 import br.com.senior.proway.ferias.model.FeriasRequerimento;
-import br.com.senior.proway.ferias.model.TiposFerias;
+import br.com.senior.proway.ferias.model.enums.TiposFerias;
 import br.com.senior.proway.ferias.model.DirectorRequerimento;
 
 

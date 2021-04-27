@@ -2,7 +2,7 @@ package br.com.senior.proway.ferias.model.interfaces;
 
 import java.time.LocalDate;
 
-import br.com.senior.proway.ferias.model.TiposFerias;
+import br.com.senior.proway.ferias.model.enums.TiposFerias;
 
 public interface IFerias {
 	void setIdentificadorUsuario(String valor);
