@@ -5,6 +5,10 @@ import java.time.LocalDate;
 import br.com.senior.proway.ferias.model.TiposFerias;
 
 public interface IFerias {
+	
+	void setId(int id);
+	int getId();
+		
 	void setIdentificadorUsuario(String valor);
 
 	String getIdentificadorUsuario();

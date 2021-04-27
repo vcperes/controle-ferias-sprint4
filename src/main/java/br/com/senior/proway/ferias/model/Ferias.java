@@ -12,6 +12,7 @@ import java.time.LocalDate;
  *
  */
 public class Ferias {
+	private int id;
 	private String identificadorUsuario; 
 	// FK Foreign Key do usu�rio - Decidir quais classes tem
 	// setar depois

@@ -19,9 +19,21 @@ public class FeriasDAO implements Icrud<IFerias>, IConsultaDeFeriasPorTipoDAO, I
 		return ferias;
 	}
 
+	/**
+	 * Metodo que busca uma ferias especifica em uma lista, atraves do id.
+	 * 
+	 * @return IFerias - Um objeto do tipo IFerias.
+	 */
+	
 	public IFerias get(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		IFerias ferias = null;
+		ArrayList<IFerias> todasAsFerias = DataBase.getInstance().getFerias();
+		for(IFerias umaFerias : todasAsFerias) {
+			if(umaFerias.getId() == id) {
+				ferias = umaFerias;
+			}
+		}
+		return ferias;
 	}
 
 	public void create(IFerias objeto) {
