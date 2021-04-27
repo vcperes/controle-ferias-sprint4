@@ -15,12 +15,11 @@ import br.com.senior.proway.ferias.model.interfaces.IFerias;
  */
 public class Ferias implements IFerias {
 	private String identificadorUsuario; 
-	// FK Foreign Key do usu�rio - Decidir quais classes tem
-	// setar depois
+	// FK Foreign Key do usuário - Setar no requerimento
 	
 	private LocalDate dataInicio;
 	private LocalDate dataFim;
-	private short diasTotaisRequisitados; // passar para private/protected
+	private short diasTotaisRequisitados;
 	private short diasVendidos;
 	private TiposFerias tipoFerias;
 
@@ -37,20 +36,22 @@ public class Ferias implements IFerias {
 		this.tipoFerias = tipo;
 	}
 	
-	public void setIdentificadorUsuario(String valor) { this.identificadorUsuario = valor; }
-	public void setDataInicio(LocalDate data) {	this.dataInicio = data;	}
-	public void setDataFim(LocalDate data) { this.dataFim = data; }
-	public void setDiasTotaisRequisitados (short valor) {this.diasTotaisRequisitados = valor;}
-	public void setDiasVendidos(short valor) { this.diasVendidos = valor;}
-	public void setTipo(TiposFerias tipo) { this.tipoFerias = tipo; }
-	
-	// Getters
 	public String getIdentificadorUsuario() { return this.identificadorUsuario; }
-	public LocalDate getDataInicio() { return this.dataInicio; }
-	public LocalDate getDataFim() { return this.dataFim; }
+	public void setIdentificadorUsuario(String valor) { this.identificadorUsuario = valor; }
+	
+	public LocalDate getDataInicio() {return this.dataInicio;}
+	public void setDataInicio(LocalDate data) { this.dataInicio = data; }
+	
+	public LocalDate getDataFim() {return this.dataFim;}
+	public void setDataFim(LocalDate data) { this.dataFim = data; }
+	
 	public short getDiasTotaisRequisitados() {return this.diasTotaisRequisitados;}
-	public short getDiasVendidos() { return this.diasVendidos; }
-	public TiposFerias getTipo() { return this.tipoFerias; }
-
+	public void setDiasTotaisRequisitados(short valor) { this.diasTotaisRequisitados = valor; }
+	
+	public short getDiasVendidos() {return this.diasVendidos;}
+	public void setDiasVendidos(short valor) { this.diasVendidos = valor; }
+	
+	public TiposFerias getTipo() {return this.tipoFerias;}
+	public void setTipo(TiposFerias tipo) {	this.tipoFerias = tipo; }
 
 }

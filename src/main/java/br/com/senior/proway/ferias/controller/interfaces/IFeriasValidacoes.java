@@ -1,5 +1,7 @@
 package br.com.senior.proway.ferias.controller.interfaces;
 
+import java.time.LocalDate;
+
 import br.com.senior.proway.ferias.model.Ferias;
 import br.com.senior.proway.ferias.model.TiposFerias;
 import br.com.senior.proway.ferias.model.interfaces.IFerias;
@@ -14,7 +16,7 @@ public interface IFeriasValidacoes {
 	 * 
 	 * @return true/false
 	 */
-	public boolean checarValidade(Ferias ferias);
+	public boolean checarValidade(IFerias ferias);
 
 	/**
 	 * Classifica o tipo de f�rias com base nos dias de f�rias dispon�veis ao
@@ -25,7 +27,13 @@ public interface IFeriasValidacoes {
 	 * @param saldoDiasFerias - vem da classe SaldoFerias
 	 * @return TiposFerias classifica��o
 	 */
-	public TiposFerias classificarFerias(Ferias ferias , short saldoDiasFerias);
+	public TiposFerias classificarFerias(IFerias ferias , short saldoDiasFerias);
 	
-	
+	/** Verifica se a data de inicio de f�rias vem antes da data de fim desejado.
+	 * 
+	 * @param dataInicio
+	 * @param dataFim
+	 * @return periodo valido/invalido
+	 */
+	public boolean periodoFeriasValido(LocalDate dataInicio, LocalDate dataFim);
 }

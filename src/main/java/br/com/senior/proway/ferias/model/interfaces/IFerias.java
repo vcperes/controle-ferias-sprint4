@@ -20,5 +20,6 @@ public interface IFerias {
 	public void setDiasVendidos(short valor);
 	public short getDiasVendidos();
 	
+	TiposFerias getTipo();
 	void setTipo(TiposFerias total);
 }

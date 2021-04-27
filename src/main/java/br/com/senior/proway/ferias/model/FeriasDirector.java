@@ -12,7 +12,9 @@ public class FeriasDirector {
 		builder.setDataInicio(dataInicio);
 		builder.setDataFim(dataFim);
 		builder.setTipo(TiposFerias.TOTAL);
-		builder.setDiasTotaisRequisitados(); //Deve ser chamado depois de setar datas
+		builder.setDiasTotaisRequisitados(
+				builder.calcularPeriodoFerias(builder.getDataInicio(), builder.getDataFim())
+		);
 		builder.setDiasVendidos((short) 0);
 	}
 	
@@ -22,27 +24,57 @@ public class FeriasDirector {
 		builder.setDataInicio(dataInicio);
 		builder.setDataFim(dataFim);
 		builder.setTipo(TiposFerias.FRACIONADA);
-		builder.setDiasTotaisRequisitados();
+		builder.setDiasTotaisRequisitados(
+				builder.calcularPeriodoFerias(builder.getDataInicio(), builder.getDataFim())
+		);
 		builder.setDiasVendidos((short) 0);
 	}
 	
 	public void createFeriasVendida(
+			IFeriasBuilder builder, short diasEmCredito
+	) {
+		builder.setDataInicio(null);
+		builder.setDataFim(null);
+		builder.setTipo(TiposFerias.VENDIDA);
+		builder.setDiasTotaisRequisitados(
+				builder.calcularPeriodoFerias(builder.getDataInicio(), builder.getDataFim())
+		);
+		builder.setDiasVendidos(builder.calcularDiasVendidos(builder, diasEmCredito));
+	}
+	
+	public void createFeriasVendidaEspecifica(
 			IFeriasBuilder builder, short diasAVender
 	) {
 		builder.setDataInicio(null);
 		builder.setDataFim(null);
 		builder.setTipo(TiposFerias.VENDIDA);
-		builder.setDiasTotaisRequisitados();
+		builder.setDiasTotaisRequisitados(
+				builder.calcularPeriodoFerias(builder.getDataInicio(), builder.getDataFim())
+		);
 		builder.setDiasVendidos(diasAVender);
 	}
 	
 	public void createFeriasParcial(
+			IFeriasBuilder builder, LocalDate dataInicio, LocalDate dataFim, short diasEmCredito
+	) {
+		builder.setDataInicio(dataInicio);
+		builder.setDataFim(dataFim);
+		builder.setTipo(TiposFerias.PARCIAL);
+		builder.setDiasTotaisRequisitados(
+				builder.calcularPeriodoFerias(builder.getDataInicio(), builder.getDataFim())
+		);
+		builder.setDiasVendidos(builder.calcularDiasVendidos(builder, diasEmCredito));
+	}
+	
+	public void createFeriasParcialEspecifica(
 			IFeriasBuilder builder, LocalDate dataInicio, LocalDate dataFim, short diasAVender
 	) {
 		builder.setDataInicio(dataInicio);
 		builder.setDataFim(dataFim);
 		builder.setTipo(TiposFerias.PARCIAL);
-		builder.setDiasTotaisRequisitados();
+		builder.setDiasTotaisRequisitados(
+				builder.calcularPeriodoFerias(builder.getDataInicio(), builder.getDataFim())
+		);
 		builder.setDiasVendidos(diasAVender);
 	}
 	
