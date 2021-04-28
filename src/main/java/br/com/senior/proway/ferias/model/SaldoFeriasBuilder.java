@@ -5,6 +5,8 @@ import java.util.ArrayList;
 
 import br.com.senior.proway.ferias.model.interfaces.ISaldoBuilder;
 
+/** Instancia um objeto de SaldoFerias de acordo com os valores passados pelo SaldoFeriasDirector
+ */
 public class SaldoFeriasBuilder implements ISaldoBuilder {
 	
 	private String identificadorUsuario; 
@@ -13,6 +15,8 @@ public class SaldoFeriasBuilder implements ISaldoBuilder {
 	private ArrayList<Ferias> historicoFerias;
 	private ArrayList<FeriasRequerimento> historicoRequerimentos;
 	
+	/** Instancia e retorna um objeto de SaldoFerias
+	 */
 	public SaldoFerias build() {
 		return new SaldoFerias(
 			this.identificadorUsuario,

@@ -20,7 +20,7 @@ public class FeriasBuilder implements IFeriasBuilder {
 	private short diasVendidos;
 	private TiposFerias tipoFerias;
 	
-	/** Instancia e retorna um objeto de Ferias
+	/** Instancia e retorna um objeto de Ferias após realizar uma checagem nos valores recebidos pelo FeriasDirector
 	 * @param creditos Saldo disponivel de creditos para ferias
 	 */
 	public Ferias build(short creditos) {
