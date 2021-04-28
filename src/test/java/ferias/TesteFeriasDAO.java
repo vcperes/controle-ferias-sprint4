@@ -1,4 +1,5 @@
-package br.com.senior.proway.ferias.model.DAO;
+package ferias;
+
 
 import static org.junit.Assert.*;
 
@@ -12,10 +13,11 @@ import br.com.senior.proway.ferias.database.DataBase;
 import br.com.senior.proway.ferias.model.Ferias;
 import br.com.senior.proway.ferias.model.FeriasBuilder;
 import br.com.senior.proway.ferias.model.FeriasDirector;
+import br.com.senior.proway.ferias.model.DAO.FeriasDAO;
 import br.com.senior.proway.ferias.model.enums.TiposFerias;
 import br.com.senior.proway.ferias.model.interfaces.IFerias;
 
-public class FeriasDAOTest {
+public class TesteFeriasDAO {
 
 	FeriasDAO feriasDAO = new FeriasDAO();
 	ArrayList<Ferias> ferias = new ArrayList<Ferias>();
@@ -79,7 +81,7 @@ public class FeriasDAOTest {
 //	public void testGet() {
 //		fail("Not yet implemented");
 //	}
-// falta implementar método para inserir id no objeto no momento na criação
+// falta implementar mï¿½todo para inserir id no objeto no momento na criaï¿½ï¿½o
 	
 	@Test
 	public void testCreate() {
@@ -190,7 +192,7 @@ public class FeriasDAOTest {
 //	public void testDelete() {
 // 		this.popularListaDeFerias();
 // 		ArrayList<IFerias> ferias = DataBase.getInstance().ferias;
-// falta implementar método para inserir id no objeto no momento na criação
+// falta implementar mï¿½todo para inserir id no objeto no momento na criaï¿½ï¿½o
 //	}
 
 	@Test

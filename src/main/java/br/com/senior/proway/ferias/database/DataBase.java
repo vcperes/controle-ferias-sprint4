@@ -2,7 +2,7 @@ package br.com.senior.proway.ferias.database;
 
 import java.util.ArrayList;
 
-import br.com.senior.proway.ferias.model.FeriasRequerimento;
+import br.com.senior.proway.ferias.model.RequerimentoFerias;
 import br.com.senior.proway.ferias.model.SaldoFerias;
 import br.com.senior.proway.ferias.model.interfaces.IFerias;
 
@@ -10,13 +10,13 @@ public final class DataBase {
 	private static DataBase instance;
 	public ArrayList<IFerias> ferias;
 	public ArrayList<SaldoFerias> saldoDeFerias;
-	public ArrayList<FeriasRequerimento> requerimentos;
-	public ArrayList<FeriasRequerimento> historico;
+	public ArrayList<RequerimentoFerias> requerimentos;
+	public ArrayList<RequerimentoFerias> historico;
 
 	public DataBase() {
 		ferias = new ArrayList<IFerias>();
 		saldoDeFerias = new ArrayList<SaldoFerias>();
-		requerimentos = new ArrayList<FeriasRequerimento>();
+		requerimentos = new ArrayList<RequerimentoFerias>();
 	}
 
 	public static DataBase getInstance() {
@@ -34,7 +34,7 @@ public final class DataBase {
 		return saldoDeFerias;
 	}
 
-	public ArrayList<FeriasRequerimento> getRequerimento() {
+	public ArrayList<RequerimentoFerias> getRequerimento() {
 		return requerimentos;
 	}
 	

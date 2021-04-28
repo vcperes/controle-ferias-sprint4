@@ -4,17 +4,17 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 import br.com.senior.proway.ferias.database.DataBase;
-import br.com.senior.proway.ferias.model.FeriasRequerimento;
-import br.com.senior.proway.ferias.model.enums.EstadosRequisicao;
+import br.com.senior.proway.ferias.model.RequerimentoFerias;
+import br.com.senior.proway.ferias.model.enums.EstadosRequerimentos;
 
-public class RequerimentoFeriasDAO implements Icrud<FeriasRequerimento>{
+public class RequerimentoFeriasDAO implements Icrud<RequerimentoFerias>{
 
-	public ArrayList<FeriasRequerimento> getAll() {
+	public ArrayList<RequerimentoFerias> getAll() {
 		DataBase dbSingle = DataBase.getInstance();
 		return dbSingle.requerimentos;
 	}
 
-	public FeriasRequerimento get(int id) {
+	public RequerimentoFerias get(int id) {
 		DataBase dbSingle = DataBase.getInstance();
 		
 		if(id < dbSingle.requerimentos.size() && id >= 0) {
@@ -23,10 +23,10 @@ public class RequerimentoFeriasDAO implements Icrud<FeriasRequerimento>{
 		return null;
 	}
 
-	public boolean create(FeriasRequerimento objeto) {
+	public boolean create(RequerimentoFerias objeto) {
 		DataBase dbSingle = DataBase.getInstance();
 		
-		for (FeriasRequerimento feriasReq : dbSingle.requerimentos) {
+		for (RequerimentoFerias feriasReq : dbSingle.requerimentos) {
 			if(feriasReq.getIdentificadorUsuario() == objeto.getIdentificadorUsuario()) {
 				return false;
 			}
@@ -35,7 +35,7 @@ public class RequerimentoFeriasDAO implements Icrud<FeriasRequerimento>{
 		return true;
 	}
 
-	public boolean update(int id, FeriasRequerimento objeto) {
+	public boolean update(int id, RequerimentoFerias objeto) {
 		DataBase dbSingle = DataBase.getInstance();
 		
 		if(id < dbSingle.requerimentos.size() && id >= 0) {
@@ -55,11 +55,11 @@ public class RequerimentoFeriasDAO implements Icrud<FeriasRequerimento>{
 		return false;
 	}
 	
-	public ArrayList<FeriasRequerimento> getRequerimentoPorEstado(EstadosRequisicao estado) {
+	public ArrayList<RequerimentoFerias> getRequerimentoPorEstado(EstadosRequerimentos estado) {
 		DataBase dbSingle = DataBase.getInstance();
-		ArrayList<FeriasRequerimento> listaDeRequerimentosEstado = new ArrayList<FeriasRequerimento>();
+		ArrayList<RequerimentoFerias> listaDeRequerimentosEstado = new ArrayList<RequerimentoFerias>();
 		
-		for (FeriasRequerimento feriasRequerimento : dbSingle.requerimentos) {
+		for (RequerimentoFerias feriasRequerimento : dbSingle.requerimentos) {
 			if(feriasRequerimento.getEstadoRequisicao() == estado) {
 				listaDeRequerimentosEstado.add(feriasRequerimento);
 			}
@@ -67,11 +67,11 @@ public class RequerimentoFeriasDAO implements Icrud<FeriasRequerimento>{
 		return listaDeRequerimentosEstado;
 	}
 
-	public ArrayList<FeriasRequerimento> getRequerimentoPorData(LocalDate dataParaPesquisa) {
+	public ArrayList<RequerimentoFerias> getRequerimentoPorData(LocalDate dataParaPesquisa) {
 		DataBase dbSingle = DataBase.getInstance();
-		ArrayList<FeriasRequerimento> listaDeRequerimentosData = new ArrayList<FeriasRequerimento>();
+		ArrayList<RequerimentoFerias> listaDeRequerimentosData = new ArrayList<RequerimentoFerias>();
 		
-		for (FeriasRequerimento feriasRequerimento : dbSingle.requerimentos) {
+		for (RequerimentoFerias feriasRequerimento : dbSingle.requerimentos) {
 			if(feriasRequerimento.getDataSolicitacao().equals(dataParaPesquisa)) {
 				listaDeRequerimentosData.add(feriasRequerimento);
 			}

@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 import br.com.senior.proway.ferias.controller.interfaces.ISaldoFeriasCalculos;
 import br.com.senior.proway.ferias.controller.interfaces.ISaldoFeriasValidacoes;
-import br.com.senior.proway.ferias.model.enums.EstadosRequisicao;
+import br.com.senior.proway.ferias.model.enums.EstadosRequerimentos;
 import br.com.senior.proway.ferias.model.enums.TiposFerias;
 import br.com.senior.proway.ferias.model.interfaces.IHistoricoFerias;
 import br.com.senior.proway.ferias.model.interfaces.IHistoricoRequerimentos;
@@ -38,14 +38,14 @@ public class SaldoFerias
 	private LocalDate proximasFerias;
 	private short diasDisponiveisDeFerias; // Vai ser preenchido na data "proximasFerias"
 	private ArrayList<Ferias> historicoFerias;
-	private ArrayList<FeriasRequerimento> historicoRequerimentos;
+	private ArrayList<RequerimentoFerias> historicoRequerimentos;
 
 	public SaldoFerias(
 			String identificadorUsuario,
 			LocalDate proximasFerias,
 			short diasDisponiveisDeFerias,
 			ArrayList<Ferias> historicoFerias,
-			ArrayList<FeriasRequerimento> historicoRequerimentos
+			ArrayList<RequerimentoFerias> historicoRequerimentos
 			)
 	{	
 		this.identificadorUsuario = identificadorUsuario;
@@ -65,7 +65,7 @@ public class SaldoFerias
 	public void setDiasDisponiveisDeFerias(short diasDisponiveisDeFerias) {this.diasDisponiveisDeFerias = diasDisponiveisDeFerias;}
 
 	public ArrayList<Ferias> getHistoricoFerias() {	return historicoFerias; }
-	public ArrayList<FeriasRequerimento>getHistoricoRequerimentos() {	return historicoRequerimentos; }
+	public ArrayList<RequerimentoFerias>getHistoricoRequerimentos() {	return historicoRequerimentos; }
 	
 	/* 
 	 * Nao devemos substituir a lista, ela ja esta instanciada no construtor.
@@ -87,10 +87,10 @@ public class SaldoFerias
 	}
 	
 	// HistoricoRequerimentos
-	public void adicionarHistoricoRequerimentos(FeriasRequerimento req) {
+	public void adicionarHistoricoRequerimentos(RequerimentoFerias req) {
 		this.historicoRequerimentos.add(req);
 	}
-	public void removerHistoricoRequerimentos(FeriasRequerimento req) {
+	public void removerHistoricoRequerimentos(RequerimentoFerias req) {
 		this.historicoRequerimentos.remove(req);
 	}
 	

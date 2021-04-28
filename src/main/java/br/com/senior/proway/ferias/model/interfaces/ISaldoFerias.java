@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 import br.com.senior.proway.ferias.model.Ferias;
-import br.com.senior.proway.ferias.model.FeriasRequerimento;
+import br.com.senior.proway.ferias.model.RequerimentoFerias;
 
 public interface ISaldoFerias{
 
@@ -18,6 +18,6 @@ public interface ISaldoFerias{
 	public void setDiasDisponiveisDeFerias(short diasDisponiveisDeFerias);
 	
 	public ArrayList<Ferias> getHistoricoFerias();
-	public ArrayList<FeriasRequerimento>getHistoricoRequerimentos();
+	public ArrayList<RequerimentoFerias>getHistoricoRequerimentos();
 	
 }

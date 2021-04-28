@@ -2,7 +2,7 @@ package br.com.senior.proway.ferias.model;
 
 import java.time.LocalDate;
 
-import br.com.senior.proway.ferias.model.enums.EstadosRequisicao;
+import br.com.senior.proway.ferias.model.enums.EstadosRequerimentos;
 import br.com.senior.proway.ferias.model.interfaces.IRequerimentoFeriasBuilder;
 
 public class RequerimentoDirector {
@@ -18,7 +18,7 @@ public class RequerimentoDirector {
 		ferias.setIdentificadorUsuario(identificadorUsuario);
 		builder.setFeriasRequisitadas(ferias);
 		builder.setIdentificadorUsuario(identificadorUsuario);
-		builder.setEstadoRequisicao (EstadosRequisicao.EM_ANALISE);
+		builder.setEstadoRequisicao (EstadosRequerimentos.EM_ANALISE);
 		builder.setDataSolicitacao (LocalDate.now());
 	}
 }

@@ -5,9 +5,9 @@ import java.util.ArrayList;
 
 import br.com.senior.proway.ferias.controller.interfaces.ISaldoFeriasCalculos;
 import br.com.senior.proway.ferias.model.Ferias;
-import br.com.senior.proway.ferias.model.FeriasRequerimento;
+import br.com.senior.proway.ferias.model.RequerimentoFerias;
 import br.com.senior.proway.ferias.model.DAO.ISaldoFeriasDAO;
-import br.com.senior.proway.ferias.model.enums.EstadosRequisicao;
+import br.com.senior.proway.ferias.model.enums.EstadosRequerimentos;
 import br.com.senior.proway.ferias.model.enums.TiposFerias;
 import br.com.senior.proway.ferias.model.interfaces.ISaldoFerias;
 
@@ -67,15 +67,15 @@ public class SaldoFeriasController implements ISaldoFeriasCalculos {
 		return lista.size();
 	}
 		
-	public int verificaQuantiaRequerimentosDeTipo(EstadosRequisicao tipoDesejado, ISaldoFerias saldo) {
-		ArrayList<FeriasRequerimento> lista = receberRequerimentosEmEstado(tipoDesejado, saldo);
+	public int verificaQuantiaRequerimentosDeTipo(EstadosRequerimentos tipoDesejado, ISaldoFerias saldo) {
+		ArrayList<RequerimentoFerias> lista = receberRequerimentosEmEstado(tipoDesejado, saldo);
 		return lista.size();
 	}
 	
-	public ArrayList<FeriasRequerimento> receberRequerimentosEmEstado(EstadosRequisicao tipoDesejado, ISaldoFerias saldo){
-		ArrayList<FeriasRequerimento> pendentes = new ArrayList<FeriasRequerimento>();
+	public ArrayList<RequerimentoFerias> receberRequerimentosEmEstado(EstadosRequerimentos tipoDesejado, ISaldoFerias saldo){
+		ArrayList<RequerimentoFerias> pendentes = new ArrayList<RequerimentoFerias>();
 		
-		for(FeriasRequerimento reqFerias : saldo.getHistoricoRequerimentos()) {
+		for(RequerimentoFerias reqFerias : saldo.getHistoricoRequerimentos()) {
 			if (reqFerias.getEstadoRequisicao() == tipoDesejado) {
 				pendentes.add(reqFerias);
 			}

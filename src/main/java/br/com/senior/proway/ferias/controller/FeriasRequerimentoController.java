@@ -5,9 +5,9 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 
 import br.com.senior.proway.ferias.database.DataBase;
-import br.com.senior.proway.ferias.model.FeriasRequerimento;
+import br.com.senior.proway.ferias.model.RequerimentoFerias;
 import br.com.senior.proway.ferias.model.DAO.RequerimentoFeriasDAO;
-import br.com.senior.proway.ferias.model.enums.EstadosRequisicao;
+import br.com.senior.proway.ferias.model.enums.EstadosRequerimentos;
 
 public class FeriasRequerimentoController {
 	
@@ -19,9 +19,9 @@ public class FeriasRequerimentoController {
 	 * 
 	 * @return ArrayList<FeriasRequerimento>
 	 */
-	public ArrayList<FeriasRequerimento> getAllRequerimentos(){
+	public ArrayList<RequerimentoFerias> getAllRequerimentos(){
 		RequerimentoFeriasDAO feriasRequerimentoDAO = new RequerimentoFeriasDAO();
-		ArrayList<FeriasRequerimento> feriasRequerimento = feriasRequerimentoDAO.getAll();
+		ArrayList<RequerimentoFerias> feriasRequerimento = feriasRequerimentoDAO.getAll();
 		return feriasRequerimento;
 	}
 	
@@ -35,9 +35,9 @@ public class FeriasRequerimentoController {
 	 * @param short id
 	 * @return FeriasRequerimento
 	 */
-	public FeriasRequerimento getRequerimentoPorId(short id) {
+	public RequerimentoFerias getRequerimentoPorId(short id) {
 		RequerimentoFeriasDAO feriasRequerimentoDAO = new RequerimentoFeriasDAO();
-		FeriasRequerimento  feriasRequerimento = feriasRequerimentoDAO.get(id);
+		RequerimentoFerias  feriasRequerimento = feriasRequerimentoDAO.get(id);
 		return feriasRequerimento;
 	}	
 	
@@ -45,11 +45,11 @@ public class FeriasRequerimentoController {
 	 * Create.
 	 * 
 	 * Controlller faz contato com o FeriasRequerimentoDAO, recebe como parametro um objeto
-	 * do tipo FeriasRequerimento, insere o mesmo em nossa Persistencia através do DAO.
+	 * do tipo FeriasRequerimento, insere o mesmo em nossa Persistencia atravï¿½s do DAO.
 	 * 
-	 * @param FeriasRequerimento requerimento
+	 * @param RequerimentoFerias requerimento
 	 */
-	public void createRequerimento(FeriasRequerimento requerimento) {
+	public void createRequerimento(RequerimentoFerias requerimento) {
 		RequerimentoFeriasDAO feriasRequerimentoDAO = new RequerimentoFeriasDAO();
 		feriasRequerimentoDAO.create(requerimento);
 	}
@@ -64,7 +64,7 @@ public class FeriasRequerimentoController {
 	 * @param id (short)
 	 * @param feriasRequerimento (FeriasRequerimento)
 	 */
-	public void updateRequerimentoPorId(short id, FeriasRequerimento feriasRequerimento) {
+	public void updateRequerimentoPorId(short id, RequerimentoFerias feriasRequerimento) {
 		RequerimentoFeriasDAO feriasRequerimentoDAO = new RequerimentoFeriasDAO();
 		feriasRequerimentoDAO.update(id, feriasRequerimento);
 	}
@@ -91,10 +91,10 @@ public class FeriasRequerimentoController {
 	 * @param idUsuario (short)
 	 * @return ArrayList<FeriasRequerimento>
 	 */
-	public ArrayList<FeriasRequerimento> getAllRequerimentosPorIdUsuario(short idUsuario) {
+	public ArrayList<RequerimentoFerias> getAllRequerimentosPorIdUsuario(short idUsuario) {
 		DataBase dbSingle = DataBase.getInstance();
 		RequerimentoFeriasDAO feriasRequerimentoDAO = new RequerimentoFeriasDAO();
-		ArrayList<FeriasRequerimento> requerimentoUsuarios = feriasRequerimentoDAO.getAll();
+		ArrayList<RequerimentoFerias> requerimentoUsuarios = feriasRequerimentoDAO.getAll();
 		for (int i = 0; i < dbSingle.historico.size(); i++) {
 			if(dbSingle.historico.get(i).getIdentificadorUsuario().equals(idUsuario)) {
 				requerimentoUsuarios.add(dbSingle.historico.get(i));
@@ -111,7 +111,7 @@ public class FeriasRequerimentoController {
 	 * 
 	 * @return true/false sucesso da operacao.
 	 */
-	public void atualizarEstadoRequisicao(EstadosRequisicao novoEstado, FeriasRequerimento feriasRequerimento) {
+	public void atualizarEstadoRequisicao(EstadosRequerimentos novoEstado, RequerimentoFerias feriasRequerimento) {
 		// Verificar os estados dentro do ENUM);
 		// Futuramente fazer outras validacoes necessarias aqui. Por enquanto o mmetodo esta redundante com o setEstadoRequisicao;
 		feriasRequerimento.setEstadoRequisicao(novoEstado);
@@ -151,12 +151,12 @@ public class FeriasRequerimentoController {
 	 * @return True/False sucesso da validacao.
 	 * 
 	 */
-	public boolean validacaoPrazoSolicitacaoDeFerias(LocalDate dataInicio, FeriasRequerimento feriasRequerimento) {
+	public boolean validacaoPrazoSolicitacaoDeFerias(LocalDate dataInicio, RequerimentoFerias feriasRequerimento) {
 		int intervalo = retornarIntervaloEmDiasEntreAsDatas(feriasRequerimento.getDataSolicitacao(), dataInicio);
-		if (intervalo >= FeriasRequerimento.PRAZO_MINIMO_SOLICITACAO_FERIAS) {
+		if (intervalo >= RequerimentoFerias.PRAZO_MINIMO_SOLICITACAO_FERIAS) {
 			return true;
 		} else {
-			feriasRequerimento.setEstadoRequisicao(EstadosRequisicao.INVALIDO);
+			feriasRequerimento.setEstadoRequisicao(EstadosRequerimentos.INVALIDO);
 			return false;
 		}
 	}

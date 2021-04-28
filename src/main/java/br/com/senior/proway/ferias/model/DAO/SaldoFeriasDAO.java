@@ -4,9 +4,9 @@ import java.util.ArrayList;
 
 import br.com.senior.proway.ferias.database.DataBase;
 import br.com.senior.proway.ferias.model.Ferias;
-import br.com.senior.proway.ferias.model.FeriasRequerimento;
+import br.com.senior.proway.ferias.model.RequerimentoFerias;
 import br.com.senior.proway.ferias.model.SaldoFerias;
-import br.com.senior.proway.ferias.model.enums.EstadosRequisicao;
+import br.com.senior.proway.ferias.model.enums.EstadosRequerimentos;
 import br.com.senior.proway.ferias.model.enums.TiposFerias;
 import br.com.senior.proway.ferias.model.interfaces.IFerias;
 
@@ -58,12 +58,12 @@ public class SaldoFeriasDAO implements ISaldoFeriasDAO, Icrud<SaldoFerias>{
 		return false;
 	}
 
-	public ArrayList<FeriasRequerimento> receberRequerimentosEmEstado(EstadosRequisicao tipoDesejado) {
+	public ArrayList<RequerimentoFerias> receberRequerimentosEmEstado(EstadosRequerimentos tipoDesejado) {
 		DataBase dbSingle = DataBase.getInstance();
 		
-		ArrayList<FeriasRequerimento> requerimentosPorEstado = new ArrayList<FeriasRequerimento>();		
+		ArrayList<RequerimentoFerias> requerimentosPorEstado = new ArrayList<RequerimentoFerias>();		
 		
-		for(FeriasRequerimento requerimento : dbSingle.requerimentos) {
+		for(RequerimentoFerias requerimento : dbSingle.requerimentos) {
 			if(requerimento.getEstadoRequisicao() == tipoDesejado) {
 				requerimentosPorEstado.add(requerimento);
 			}
@@ -84,8 +84,8 @@ public class SaldoFeriasDAO implements ISaldoFeriasDAO, Icrud<SaldoFerias>{
 		return feriasPorTipoDesejado;
 	}
 
-	public int verificaQuantiaRequerimentosDeTipo(EstadosRequisicao tipoDesejado) {
-		ArrayList<FeriasRequerimento> reqPorTipoDesejado = receberRequerimentosEmEstado(tipoDesejado);
+	public int verificaQuantiaRequerimentosDeTipo(EstadosRequerimentos tipoDesejado) {
+		ArrayList<RequerimentoFerias> reqPorTipoDesejado = receberRequerimentosEmEstado(tipoDesejado);
 		return reqPorTipoDesejado.size();
 	}
 

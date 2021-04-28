@@ -1,4 +1,4 @@
-package testeBuildersFeriasRequerimento;
+package ferias;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -11,10 +11,10 @@ import br.com.senior.proway.ferias.controller.FeriasRequerimentoController;
 import br.com.senior.proway.ferias.model.Ferias;
 import br.com.senior.proway.ferias.model.FeriasBuilder;
 import br.com.senior.proway.ferias.model.FeriasDirector;
-import br.com.senior.proway.ferias.model.FeriasRequerimento;
+import br.com.senior.proway.ferias.model.RequerimentoFerias;
 import br.com.senior.proway.ferias.model.RequerimentoBuilder;
 import br.com.senior.proway.ferias.model.RequerimentoDirector;
-import br.com.senior.proway.ferias.model.enums.EstadosRequisicao;
+import br.com.senior.proway.ferias.model.enums.EstadosRequerimentos;
 
 public class TesteRequerimento {
 
@@ -32,14 +32,14 @@ public class TesteRequerimento {
 		RequerimentoDirector requerimentoDirector = new RequerimentoDirector();
 		RequerimentoBuilder requerimentoBuilder = new RequerimentoBuilder();
 		requerimentoDirector.createRequerimento(requerimentoBuilder, ferias, "IdentificardorUsuario123");
-		FeriasRequerimento feriasRequerimento = requerimentoBuilder.build();
+		RequerimentoFerias feriasRequerimento = requerimentoBuilder.build();
 		
-		assertTrue(feriasRequerimento.getEstadoRequisicao() == EstadosRequisicao.EM_ANALISE);
+		assertTrue(feriasRequerimento.getEstadoRequisicao() == EstadosRequerimentos.EM_ANALISE);
 		
 		FeriasRequerimentoController controllerReq = new FeriasRequerimentoController();
-		controllerReq.atualizarEstadoRequisicao(EstadosRequisicao.APROVADO, feriasRequerimento);
+		controllerReq.atualizarEstadoRequisicao(EstadosRequerimentos.APROVADO, feriasRequerimento);
 		
-		assertTrue(feriasRequerimento.getEstadoRequisicao() == EstadosRequisicao.APROVADO);
+		assertTrue(feriasRequerimento.getEstadoRequisicao() == EstadosRequerimentos.APROVADO);
 	}
 	
 	@Test
@@ -59,7 +59,7 @@ public class TesteRequerimento {
 		RequerimentoBuilder requerimentoBuilder = new RequerimentoBuilder();
 		
 		requerimentoDirector.createRequerimento(requerimentoBuilder, ferias, "IdentificardorUsuario123");
-		FeriasRequerimento feriasRequerimento = requerimentoBuilder.build();
+		RequerimentoFerias feriasRequerimento = requerimentoBuilder.build();
 		
 		FeriasRequerimentoController controllerReq = new FeriasRequerimentoController();
 		

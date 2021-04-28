@@ -2,8 +2,9 @@ package br.com.senior.proway.ferias.model;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import br.com.senior.proway.ferias.controller.interfaces.IFeriasRequerimento;
-import br.com.senior.proway.ferias.model.enums.EstadosRequisicao;
+
+import br.com.senior.proway.ferias.model.enums.EstadosRequerimentos;
+import br.com.senior.proway.ferias.model.interfaces.IFeriasRequerimento;
 
 /**
  * 
@@ -16,15 +17,15 @@ import br.com.senior.proway.ferias.model.enums.EstadosRequisicao;
  *         metodo de trazer o estado da requisicao que podera ser
  *         EM_ANALISE, APROVADO, REPROVADO.
  */
-public class FeriasRequerimento implements IFeriasRequerimento{
+public class RequerimentoFerias implements IFeriasRequerimento{
 	private String identificadorUsuario;
 
 	private Ferias feriasRequisitada;
-	private EstadosRequisicao estadoRequisicao;
+	private EstadosRequerimentos estadoRequisicao;
 	private LocalDate dataSolicitacao;
 	public static short PRAZO_MINIMO_SOLICITACAO_FERIAS = 10;
 
-	public FeriasRequerimento( String identificadorUsuario, Ferias feriasRequisitada, EstadosRequisicao estadoRequisicao,LocalDate dataSolicitacao) {
+	public RequerimentoFerias( String identificadorUsuario, Ferias feriasRequisitada, EstadosRequerimentos estadoRequisicao,LocalDate dataSolicitacao) {
 		this.identificadorUsuario = identificadorUsuario;
 		this.feriasRequisitada = feriasRequisitada;
 		this.estadoRequisicao = estadoRequisicao;
@@ -47,11 +48,11 @@ public class FeriasRequerimento implements IFeriasRequerimento{
 		this.feriasRequisitada = feriasRequisitada;
 	}
 
-	public EstadosRequisicao getEstadoRequisicao() {
+	public EstadosRequerimentos getEstadoRequisicao() {
 		return estadoRequisicao;
 	}
 
-	public void setEstadoRequisicao(EstadosRequisicao estadoRequisicao) {
+	public void setEstadoRequisicao(EstadosRequerimentos estadoRequisicao) {
 		this.estadoRequisicao = estadoRequisicao;
 	}
 

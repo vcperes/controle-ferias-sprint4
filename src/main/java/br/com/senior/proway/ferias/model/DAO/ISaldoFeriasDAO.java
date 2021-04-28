@@ -3,8 +3,8 @@ package br.com.senior.proway.ferias.model.DAO;
 import java.util.ArrayList;
 
 import br.com.senior.proway.ferias.model.Ferias;
-import br.com.senior.proway.ferias.model.FeriasRequerimento;
-import br.com.senior.proway.ferias.model.enums.EstadosRequisicao;
+import br.com.senior.proway.ferias.model.RequerimentoFerias;
+import br.com.senior.proway.ferias.model.enums.EstadosRequerimentos;
 import br.com.senior.proway.ferias.model.enums.TiposFerias;
 import br.com.senior.proway.ferias.model.interfaces.ISaldoFerias;
 
@@ -20,7 +20,7 @@ public interface ISaldoFeriasDAO {
 	 * @param listarequerimentos
 	 * @return
 	 */
-	public ArrayList<FeriasRequerimento> receberRequerimentosEmEstado(EstadosRequisicao tipoDesejado);
+	public ArrayList<RequerimentoFerias> receberRequerimentosEmEstado(EstadosRequerimentos tipoDesejado);
 	
 	/**
 	 * Verificar se existem chamados do tipoDesejado.
@@ -28,7 +28,7 @@ public interface ISaldoFeriasDAO {
 	 *
 	 * @return quantidade de requerimentos do tipoDesejado
 	 */
-	public int verificaQuantiaRequerimentosDeTipo(EstadosRequisicao tipoDesejado);
+	public int verificaQuantiaRequerimentosDeTipo(EstadosRequerimentos tipoDesejado);
 	
 	/**
 	 * Pegar lista de ferias do tipoDesejado
