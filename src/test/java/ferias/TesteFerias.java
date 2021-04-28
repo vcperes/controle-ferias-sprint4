@@ -25,7 +25,7 @@ public class TesteFerias {
 		Ferias ferias = Bob.build(creditos);
 		
 		assertEquals(ferias.getTipo(), TiposFerias.TOTAL);
-		assertTrue(ferias.getDiasVendidos() == 0);
+		assertEquals(0, ferias.getDiasVendidos());
 	}
 	
 	@Test
@@ -41,7 +41,7 @@ public class TesteFerias {
 		Ferias ferias = Bob.build(creditos);
 		
 		assertEquals(TiposFerias.PARCIAL, ferias.getTipo());
-		assertTrue(ferias.getDiasVendidos() > 0);
+		assertEquals(10, ferias.getDiasVendidos());
 	}
 	
 	@Test
@@ -56,7 +56,7 @@ public class TesteFerias {
 		feriasDirector.createFeriasFracionada(Bob, data1, data2);
 		Ferias ferias = Bob.build(creditos);
 
-		assertTrue(ferias.getDiasVendidos() == 0);
+		assertEquals(0, ferias.getDiasVendidos());
 		assertEquals(TiposFerias.FRACIONADA, ferias.getTipo());
 	}
 	
@@ -68,7 +68,7 @@ public class TesteFerias {
 		feriasDirector.createFeriasVendida(Bob, creditos);
 		Ferias ferias = Bob.build(creditos);
 		
-		assertTrue(ferias.getDiasVendidos() == creditos);
+		assertEquals(creditos, ferias.getDiasVendidos());
 		assertEquals(TiposFerias.VENDIDA, ferias.getTipo());
 	}
 	
@@ -81,7 +81,7 @@ public class TesteFerias {
 		feriasDirector.createFeriasVendidaEspecifica(Bob, queroVender);
 		Ferias ferias = Bob.build(creditos);
 		
-		assertTrue(ferias.getDiasVendidos() == queroVender);
+		assertEquals(queroVender, ferias.getDiasVendidos());
 		assertEquals(TiposFerias.VENDIDA, ferias.getTipo());
 	}
 	
@@ -93,7 +93,7 @@ public class TesteFerias {
 		feriasDirector.createFeriasVendida(Bob, creditos);
 		Ferias ferias = Bob.build(creditos);
 
-		assertTrue(ferias.getDiasVendidos() < creditos);
+		assertNotEquals(creditos, ferias.getDiasVendidos());
 		assertEquals(TiposFerias.VENDIDA, ferias.getTipo());
 	}
 	
