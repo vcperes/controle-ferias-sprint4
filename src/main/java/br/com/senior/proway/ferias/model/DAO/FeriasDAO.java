@@ -38,17 +38,19 @@ public class FeriasDAO implements Icrud<IFerias>, IConsultaDeFeriasPorTipoDAO, I
 	/**
 	 * Metodo que cadastra um objeto do tipo IFerias na lista database/DataBase/ferias.
 	 * 
-	 * @return boolean Retorna se o método foi executado com sucesso.
+	 * @return boolean Retorna se o metodo foi executado com sucesso.
 	 */
-	public boolean create(IFerias objeto) { // Aqui o create na realidade � cadastrar.
+	public boolean create(IFerias objeto) { // Aqui o create na realidade eh cadastrar.
 		DataBase.getInstance().getFerias().add(objeto);
 		return true;
-
+		//precisa implementar metodo que insere o id nesse objeto quando ele eh 
+		//criado/cadastrado no banco de dados, pois quando criamos um objeto, apenas 
+		//informamos o idUsuario
 	}
 
 	/**
-	 * Atualiza um objeto do tipo IFerias atrav�s do id.
-	 * Busca dentro da lista ferias, um objeto do tipo IFerias atrav�s de um Id. Localizando faz a subscri��o.
+	 * Atualiza um objeto do tipo IFerias atraves do id.
+	 * Busca dentro da lista ferias, um objeto do tipo IFerias atraves de um Id. Localizando faz a subscri��o.
 	 * 
 	 * @return boolean Retorna se o método foi executado com sucesso.
 	 */
@@ -67,10 +69,11 @@ public class FeriasDAO implements Icrud<IFerias>, IConsultaDeFeriasPorTipoDAO, I
 	}
 
 	/**
-	 * Deleta objeto do tipo IFerias atrav�s do id.
-	 * Busca dentro da lista ferias, um objeto do tipo IFerias atrav�s de um Id. Localizando faz a remo��o.
+	 * Deleta objeto do tipo IFerias atraves do id.
+	 * Busca dentro da lista ferias, um objeto do tipo IFerias atraves de um Id. Localizando 
+	 * faz a remocao.
 	 * 
-	 * @return boolean Retorna se o método foi executado com sucesso.
+	 * @return boolean Retorna se o metodo foi executado com sucesso.
 	 */
 	public boolean delete(int id) {
 		boolean sucesso = false;
@@ -86,7 +89,7 @@ public class FeriasDAO implements Icrud<IFerias>, IConsultaDeFeriasPorTipoDAO, I
 	}
 
 	/***
-	 * Retorna uma lista de F�rias Totais. Retorna uma lista com objetos do tipo
+	 * Retorna uma lista de Ferias Totais. Retorna uma lista com objetos do tipo
 	 * IFerias onde o TipoDeFerias eh igual a TOTAL.
 	 * 
 	 * @return ArrayList<IFerias> Lista de objetos do tipo IFerias.

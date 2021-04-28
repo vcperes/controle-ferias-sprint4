@@ -37,5 +37,11 @@ public final class DataBase {
 	public ArrayList<FeriasRequerimento> getRequerimento() {
 		return requerimentos;
 	}
+	
+	public void limparListaDeFerias() {
+		for (int i = 0; i < DataBase.getInstance().getFerias().size(); i++) {
+			DataBase.getInstance().ferias.remove(i);
+		}
+	}	
 
 }
