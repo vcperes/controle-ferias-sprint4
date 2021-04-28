@@ -11,7 +11,7 @@ public interface IFeriasCalculos {
 	 *
 	 * Deve ser chamado depois de setar datas.
 	 */
-	short calcularPeriodoFerias(LocalDate dataInicioFerias, LocalDate dataFimFerias);
+	public short calcularPeriodoFerias(LocalDate dataInicioFerias, LocalDate dataFimFerias);
 	
 	/**
 	 * Calcula os dias a serem vendidos com base nos dias de f�rias dispon�veis ao funcion�rio e no

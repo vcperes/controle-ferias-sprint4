@@ -8,14 +8,14 @@ public interface IFerias {
 	public void setId(int id);
 	public int getId();
 	
-	void setIdentificadorUsuario(String valor);
-	String getIdentificadorUsuario();
+	public void setIdentificadorUsuario(String valor);
+	public String getIdentificadorUsuario();
 	
-	void setDataInicio(LocalDate dataInicio);
-	LocalDate getDataInicio();
+	public void setDataInicio(LocalDate dataInicio);
+	public LocalDate getDataInicio();
 	
-	void setDataFim(LocalDate dataFim);
-	LocalDate getDataFim();
+	public void setDataFim(LocalDate dataFim);
+	public LocalDate getDataFim();
 	
 	public void setDiasTotaisRequisitados(short valor);
 	public short getDiasTotaisRequisitados();
@@ -23,6 +23,6 @@ public interface IFerias {
 	public void setDiasVendidos(short valor);
 	public short getDiasVendidos();
 	
-	TiposFerias getTipo();
-	void setTipo(TiposFerias total);
+	public TiposFerias getTipo();
+	public void setTipo(TiposFerias total);
 }

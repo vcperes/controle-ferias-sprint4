@@ -7,6 +7,11 @@ import br.com.senior.proway.ferias.model.interfaces.IFeriasBuilder;
 
 public class FeriasDirector {
 	
+	/** Instancia um objeto de Ferias classificado como Ferias TOTAL
+	 * @param builder Objeto Builder responsavel por instanciar Ferias
+	 * @param dataInicio LocalDate que representa a data de inicio das ferias
+	 * @param dataFim LocalDate que representa a data de fim das ferias
+	 */
 	public void createFeriasTotal(
 			IFeriasBuilder builder, LocalDate dataInicio, LocalDate dataFim
 	) {
@@ -19,6 +24,11 @@ public class FeriasDirector {
 		builder.setDiasVendidos((short) 0);
 	}
 	
+	/** Instancia um objeto de Ferias classificado como Ferias FRACIONADA
+	 * @param builder Objeto Builder responsavel por instanciar Ferias
+	 * @param dataInicio LocalDate que representa a data de inicio das ferias
+	 * @param dataFim LocalDate que representa a data de fim das ferias
+	 */
 	public void createFeriasFracionada(
 			IFeriasBuilder builder, LocalDate dataInicio, LocalDate dataFim
 	) {
@@ -31,6 +41,10 @@ public class FeriasDirector {
 		builder.setDiasVendidos((short) 0);
 	}
 	
+	/** Instancia um objeto de Ferias classificado como Ferias VENDIDA
+	 * @param builder Objeto Builder responsavel por instanciar Ferias
+	 * @param diasEmCredito Saldo disponivel de creditos para ferias
+	 */
 	public void createFeriasVendida(
 			IFeriasBuilder builder, short diasEmCredito
 	) {
@@ -43,6 +57,10 @@ public class FeriasDirector {
 		builder.setDiasVendidos(builder.calcularDiasVendidos(builder, diasEmCredito));
 	}
 	
+	/** Variante que Instancia um objeto de Ferias classificado como Ferias VENDIDA
+	 * @param builder Objeto Builder responsavel por instanciar Ferias
+	 * @param diasAVender Quantos creditos devem ser vendidos
+	 */
 	public void createFeriasVendidaEspecifica(
 			IFeriasBuilder builder, short diasAVender
 	) {
@@ -55,6 +73,12 @@ public class FeriasDirector {
 		builder.setDiasVendidos(diasAVender);
 	}
 	
+	/** Instancia um objeto de Ferias classificado como Ferias FRACIONADA
+	 * @param builder Objeto Builder responsavel por instanciar Ferias
+	 * @param dataInicio LocalDate que representa a data de inicio das ferias
+	 * @param dataFim LocalDate que representa a data de fim das ferias
+	 * @param diasEmCredito Saldo disponivel de creditos para ferias
+	 */
 	public void createFeriasParcial(
 			IFeriasBuilder builder, LocalDate dataInicio, LocalDate dataFim, short diasEmCredito
 	) {
