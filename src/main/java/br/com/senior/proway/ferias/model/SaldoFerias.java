@@ -33,7 +33,7 @@ public class SaldoFerias
 	{
 	
 	
-	private String identificadorUsuario; // FK Foreign Key do usu�rio - Decidir quais classes tem
+	private String identificadorUsuario; // FK Foreign Key do usuario - Decidir quais classes tem
 	
 	private LocalDate proximasFerias;
 	private short diasDisponiveisDeFerias; // Vai ser preenchido na data "proximasFerias"
