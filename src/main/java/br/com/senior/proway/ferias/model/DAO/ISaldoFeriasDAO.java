@@ -20,7 +20,7 @@ public interface ISaldoFeriasDAO {
 	 * @param listarequerimentos
 	 * @return
 	 */
-	public ArrayList<FeriasRequerimento> receberRequerimentosEmEstado(EstadosRequisicao tipoDesejado, ISaldoFerias saldo);
+	public ArrayList<FeriasRequerimento> receberRequerimentosEmEstado(EstadosRequisicao tipoDesejado);
 	
 	/**
 	 * Verificar se existem chamados do tipoDesejado.
@@ -28,7 +28,7 @@ public interface ISaldoFeriasDAO {
 	 *
 	 * @return quantidade de requerimentos do tipoDesejado
 	 */
-	public int verificaQuantiaRequerimentosDeTipo(EstadosRequisicao tipoDesejado, ISaldoFerias saldo);
+	public int verificaQuantiaRequerimentosDeTipo(EstadosRequisicao tipoDesejado);
 	
 	/**
 	 * Pegar lista de ferias do tipoDesejado
@@ -40,7 +40,7 @@ public interface ISaldoFeriasDAO {
 	 * @param listaChamados
 	 * @return
 	 */
-	public ArrayList<Ferias> receberFeriasEmEstado(TiposFerias tipoDesejado , ISaldoFerias saldo);
+	public ArrayList<Ferias> receberFeriasEmEstado(TiposFerias tipoDesejado);
 	
 	/**
 	 * Verificar se existem ferias do tipoDesejado.
@@ -48,5 +48,5 @@ public interface ISaldoFeriasDAO {
 	 *
 	 * @return quantidade de ferias do tipoDesejado
 	 */
-	public int verificaQuantiaFeriasDeTipoNoHistorico(TiposFerias tipoDesejado, ISaldoFerias saldo);
+	public int verificaQuantiaFeriasDeTipoNoHistorico(TiposFerias tipoDesejado);
 }

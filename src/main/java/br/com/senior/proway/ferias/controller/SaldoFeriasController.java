@@ -11,7 +11,7 @@ import br.com.senior.proway.ferias.model.enums.EstadosRequisicao;
 import br.com.senior.proway.ferias.model.enums.TiposFerias;
 import br.com.senior.proway.ferias.model.interfaces.ISaldoFerias;
 
-public class SaldoFeriasController implements ISaldoFeriasCalculos, ISaldoFeriasDAO {
+public class SaldoFeriasController implements ISaldoFeriasCalculos {
 	
 	public final short INTERVALO_ENTRE_FERIAS_EM_ANOS = 1;
 	public final short DIAS_DISPONIVEIS_PARA_FERIAS = 30;

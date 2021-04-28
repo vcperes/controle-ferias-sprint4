@@ -200,7 +200,7 @@ public class TesteRequerimentoDB {
 	}
 	
 	@Test
-	public void testeIRemovendoIdNãoExistente() {	
+	public void testeIRemovendoIdNaoExistente() {	
 		RequerimentoFeriasDAO DAOFerias = new RequerimentoFeriasDAO();
 
 		assertFalse(DAOFerias.delete(1));

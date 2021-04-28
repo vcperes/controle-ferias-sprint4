@@ -83,4 +83,14 @@ public class SaldoFeriasDAO implements ISaldoFeriasDAO, Icrud<SaldoFerias>{
 		}
 		return feriasPorTipoDesejado;
 	}
+
+	public int verificaQuantiaRequerimentosDeTipo(EstadosRequisicao tipoDesejado) {
+		ArrayList<FeriasRequerimento> reqPorTipoDesejado = receberRequerimentosEmEstado(tipoDesejado);
+		return reqPorTipoDesejado.size();
+	}
+
+	public int verificaQuantiaFeriasDeTipoNoHistorico(TiposFerias tipoDesejado) {
+		ArrayList<Ferias> feriasPorTipoDesejado = receberFeriasEmEstado(tipoDesejado);
+		return feriasPorTipoDesejado.size();
+	}
 }
