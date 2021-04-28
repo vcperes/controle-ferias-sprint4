@@ -1,6 +1,5 @@
 package testeBuildersFeriasRequerimento;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -46,23 +45,25 @@ public class TesteRequerimento {
 	@Test
 	public void testValidarDataSolicitacaoComDataInicioFerias() {
 		short creditos = 30;
-		LocalDate data1 = LocalDate.of(2021, 5, 06);
+		
+		LocalDate data1 = LocalDate.of(2021, 5, 07);
 		LocalDate data2 = LocalDate.of(2021, 5, 16);
 		
 		FeriasDirector feriasDirector = new FeriasDirector();
 		FeriasBuilder Bob = new FeriasBuilder();
+		
 		feriasDirector.createFeriasTotal(Bob, data1, data2);
 		Ferias ferias = Bob.build(creditos);
 		
 		RequerimentoDirector requerimentoDirector = new RequerimentoDirector();
 		RequerimentoBuilder requerimentoBuilder = new RequerimentoBuilder();
+		
 		requerimentoDirector.createRequerimento(requerimentoBuilder, ferias, "IdentificardorUsuario123");
 		FeriasRequerimento feriasRequerimento = requerimentoBuilder.build();
 		
 		FeriasRequerimentoController controllerReq = new FeriasRequerimentoController();
-		boolean validacao = controllerReq.validacaoPrazoSolicitacaoDeFerias(data1, feriasRequerimento);
 		
-		assertEquals(EstadosRequisicao.INVALIDO, feriasRequerimento.getEstadoRequisicao());
-		assertFalse(validacao);
+		assertFalse(controllerReq.validacaoPrazoSolicitacaoDeFerias(data1, feriasRequerimento));
+		
 	}
 }

@@ -3,20 +3,21 @@ package br.com.senior.proway.ferias.model;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
+import br.com.senior.proway.ferias.controller.interfaces.IFeriasRequerimento;
 import br.com.senior.proway.ferias.model.enums.EstadosRequisicao;
 
 /**
  * 
- * @author Jonata e Leonardo Pereira A classe FeriasRequerimento � responsavel
- *         por verificar quantos dias o funcionario solicitou suas f�rias
- *         antes da data pretendida (n�o menor de 10 dias). Esta
- *         verifica��o � feita pelo metodo
- *         validacaoPrazoSolicitacaoDeFerias e o calculo � feito pelo metodo
- *         retornarIntervaloEmDiasEntreAsDatas. A classe tamb�m possui o
- *         metodo de trazer o estado da requisi��o que podera ser
+ * @author Jonata e Leonardo Pereira A classe FeriasRequerimento e responsavel
+ *         por verificar quantos dias o funcionario solicitou suas ferias
+ *         antes da data pretendida (nao menor que 10 dias). Esta
+ *         verificacao e feita pelo metodo
+ *         validacaoPrazoSolicitacaoDeFerias e o calculo e feito pelo metodo
+ *         retornarIntervaloEmDiasEntreAsDatas. A classe tambem possui o
+ *         metodo de trazer o estado da requisicao que podera ser
  *         EM_ANALISE, APROVADO, REPROVADO.
  */
-public class FeriasRequerimento {
+public class FeriasRequerimento implements IFeriasRequerimento{
 	private String identificadorUsuario;
 
 	private Ferias feriasRequisitada;
