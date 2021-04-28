@@ -6,7 +6,8 @@ import java.time.temporal.ChronoUnit;
 import br.com.senior.proway.ferias.model.enums.TiposFerias;
 import br.com.senior.proway.ferias.model.interfaces.IFerias;
 import br.com.senior.proway.ferias.model.interfaces.IFeriasBuilder;
-
+/** Instancia um objeto de Ferias de acordo com os valores passados pelo FeriasDirector
+ */
 public class FeriasBuilder implements IFeriasBuilder {
 	protected final short CREDITOS_MINIMOS_FERIAS_FRACIONADAS = 14;
 	protected final short DIAS_MAXIMOS_A_VENDER = 32;
@@ -19,7 +20,9 @@ public class FeriasBuilder implements IFeriasBuilder {
 	private short diasVendidos;
 	private TiposFerias tipoFerias;
 	
-
+	/** Instancia e retorna um objeto de Ferias
+	 * @param creditos Saldo disponivel de creditos para ferias
+	 */
 	public Ferias build(short creditos) {
 		this.checarValidade(this, creditos);
 		return new Ferias(

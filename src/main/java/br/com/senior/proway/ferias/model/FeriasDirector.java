@@ -5,6 +5,8 @@ import java.time.LocalDate;
 import br.com.senior.proway.ferias.model.enums.TiposFerias;
 import br.com.senior.proway.ferias.model.interfaces.IFeriasBuilder;
 
+/** Responsavel por definir os valores que o Builder carrega para cada caso de instanciamento de Ferias.
+ */
 public class FeriasDirector {
 	
 	/** Instancia um objeto de Ferias classificado como Ferias TOTAL

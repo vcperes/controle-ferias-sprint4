@@ -14,8 +14,8 @@ public interface IFeriasCalculos {
 	public short calcularPeriodoFerias(LocalDate dataInicioFerias, LocalDate dataFimFerias);
 	
 	/**
-	 * Calcula os dias a serem vendidos com base nos dias de f�rias dispon�veis ao funcion�rio e no
-	 * tipo de f�rias; Apenas os tipos PARCIAL e VENDIDA v�o ter dias a serem vendidos.
+	 * Calcula os dias a serem vendidos com base nos dias de f�rias disponiveis ao funcionario e no
+	 * tipo de ferias; Apenas os tipos PARCIAL e VENDIDA vao ter dias a serem vendidos.
 	 * 
 	 * @param diasDisponiveisParaFerias - vem da classe SaldoFerias
 	 * @return short dias a serem vendidos
