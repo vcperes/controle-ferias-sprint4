@@ -4,14 +4,14 @@ import java.util.ArrayList;
 
 public interface Icrud<T> {
 
-	public ArrayList<T> getAll();
+	public ArrayList<T> pegarTodos();
 	
-	public T get(int id);
+	public T pegarPorID(int id);
 	
-	public boolean create(T objeto);
+	public boolean cadastrar(T objeto);
 	
-	public boolean update(int id, T objeto);
+	public boolean alterar(int id, T objeto);
 	
-	public boolean delete(int id);
+	public boolean deletar(int id);
 	
 }

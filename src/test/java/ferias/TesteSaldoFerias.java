@@ -19,10 +19,10 @@ public class TesteSaldoFerias {
 		String userID = "SK8H8R";
 		
 		SaldoFeriasDirector SaldoDirector = new SaldoFeriasDirector();
-		SaldoFeriasBuilder Bob = new SaldoFeriasBuilder();
+		SaldoFeriasBuilder saldoFeriasBuilder = new SaldoFeriasBuilder();
 		
-		SaldoDirector.createSaldoFerias(Bob, userID, dataAdmissao);
-		SaldoFerias saldo = Bob.build();
+		SaldoDirector.createSaldoFerias(saldoFeriasBuilder, userID, dataAdmissao);
+		SaldoFerias saldo = saldoFeriasBuilder.build();
 	
 		assertEquals(dataAdmissao.plusYears(1), saldo.getProximasFerias());
 		assertEquals(userID, saldo.getIdentificadorUsuario());
@@ -34,11 +34,11 @@ public class TesteSaldoFerias {
 		String userID = "SK8H8R";
 		
 		SaldoFeriasDirector SaldoDirector = new SaldoFeriasDirector();
-		SaldoFeriasBuilder Bob = new SaldoFeriasBuilder();
+		SaldoFeriasBuilder saldoFeriasBuilder = new SaldoFeriasBuilder();
 		SaldoFeriasController GroundControl = new SaldoFeriasController();
 		
-		SaldoDirector.createSaldoFerias(Bob, userID, dataAdmissao);
-		SaldoFerias saldo = Bob.build();
+		SaldoDirector.createSaldoFerias(saldoFeriasBuilder, userID, dataAdmissao);
+		SaldoFerias saldo = saldoFeriasBuilder.build();
 		// Ao criarmos o objeto saldo, a ProximasFerias ja foi atualizada para dataAdmissao+1
 		
 		GroundControl.atualizarProximasFerias(saldo);
@@ -54,11 +54,11 @@ public class TesteSaldoFerias {
 		short faltas = 0;
 		
 		SaldoFeriasDirector SaldoDirector = new SaldoFeriasDirector();
-		SaldoFeriasBuilder Bob = new SaldoFeriasBuilder();
+		SaldoFeriasBuilder saldoFeriasBuilder = new SaldoFeriasBuilder();
 		SaldoFeriasController GroundControl = new SaldoFeriasController();
 		
-		SaldoDirector.createSaldoFerias(Bob, userID, dataAdmissao);
-		SaldoFerias saldo = Bob.build();
+		SaldoDirector.createSaldoFerias(saldoFeriasBuilder, userID, dataAdmissao);
+		SaldoFerias saldo = saldoFeriasBuilder.build();
 		
 		GroundControl.atualizarDiasDeFerias(saldo, faltas);
 		assertEquals(GroundControl.DIAS_DISPONIVEIS_PARA_FERIAS, saldo.getDiasDisponiveisDeFerias());	
@@ -71,11 +71,11 @@ public class TesteSaldoFerias {
 		short faltas = 8;
 		
 		SaldoFeriasDirector SaldoDirector = new SaldoFeriasDirector();
-		SaldoFeriasBuilder Bob = new SaldoFeriasBuilder();
+		SaldoFeriasBuilder saldoFeriasBuilder = new SaldoFeriasBuilder();
 		SaldoFeriasController GroundControl = new SaldoFeriasController();
 		
-		SaldoDirector.createSaldoFerias(Bob, userID, dataAdmissao);
-		SaldoFerias saldo = Bob.build();
+		SaldoDirector.createSaldoFerias(saldoFeriasBuilder, userID, dataAdmissao);
+		SaldoFerias saldo = saldoFeriasBuilder.build();
 		
 		GroundControl.atualizarDiasDeFerias(saldo, faltas);
 		assertEquals(GroundControl.CREDITOS_FALTAS_1, saldo.getDiasDisponiveisDeFerias());	
@@ -88,11 +88,11 @@ public class TesteSaldoFerias {
 		short faltas = 18;
 		
 		SaldoFeriasDirector SaldoDirector = new SaldoFeriasDirector();
-		SaldoFeriasBuilder Bob = new SaldoFeriasBuilder();
+		SaldoFeriasBuilder saldoFeriasBuilder = new SaldoFeriasBuilder();
 		SaldoFeriasController GroundControl = new SaldoFeriasController();
 		
-		SaldoDirector.createSaldoFerias(Bob, userID, dataAdmissao);
-		SaldoFerias saldo = Bob.build();
+		SaldoDirector.createSaldoFerias(saldoFeriasBuilder, userID, dataAdmissao);
+		SaldoFerias saldo = saldoFeriasBuilder.build();
 		
 		GroundControl.atualizarDiasDeFerias(saldo, faltas);
 		assertEquals(GroundControl.CREDITOS_FALTAS_2, saldo.getDiasDisponiveisDeFerias());	
@@ -105,11 +105,11 @@ public class TesteSaldoFerias {
 		short faltas = 28;
 		
 		SaldoFeriasDirector SaldoDirector = new SaldoFeriasDirector();
-		SaldoFeriasBuilder Bob = new SaldoFeriasBuilder();
+		SaldoFeriasBuilder saldoFeriasBuilder = new SaldoFeriasBuilder();
 		SaldoFeriasController GroundControl = new SaldoFeriasController();
 		
-		SaldoDirector.createSaldoFerias(Bob, userID, dataAdmissao);
-		SaldoFerias saldo = Bob.build();
+		SaldoDirector.createSaldoFerias(saldoFeriasBuilder, userID, dataAdmissao);
+		SaldoFerias saldo = saldoFeriasBuilder.build();
 		
 		GroundControl.atualizarDiasDeFerias(saldo, faltas);
 		assertEquals(GroundControl.CREDITOS_FALTAS_3, saldo.getDiasDisponiveisDeFerias());	
@@ -122,11 +122,11 @@ public class TesteSaldoFerias {
 		short faltas = 38;
 		
 		SaldoFeriasDirector SaldoDirector = new SaldoFeriasDirector();
-		SaldoFeriasBuilder Bob = new SaldoFeriasBuilder();
+		SaldoFeriasBuilder saldoFeriasBuilder = new SaldoFeriasBuilder();
 		SaldoFeriasController GroundControl = new SaldoFeriasController();
 		
-		SaldoDirector.createSaldoFerias(Bob, userID, dataAdmissao);
-		SaldoFerias saldo = Bob.build();
+		SaldoDirector.createSaldoFerias(saldoFeriasBuilder, userID, dataAdmissao);
+		SaldoFerias saldo = saldoFeriasBuilder.build();
 		
 		GroundControl.atualizarDiasDeFerias(saldo, faltas);
 		assertEquals(GroundControl.CREDITOS_FALTAS_4, saldo.getDiasDisponiveisDeFerias());	

@@ -25,9 +25,9 @@ public class TesteRequerimento {
 		LocalDate data2 = LocalDate.of(2021, 4, 16);
 		
 		FeriasDirector feriasDirector = new FeriasDirector();
-		FeriasBuilder Bob = new FeriasBuilder();
-		feriasDirector.createFeriasTotal(Bob, data1, data2);
-		Ferias ferias = Bob.build(creditos);
+		FeriasBuilder feriasBuilder = new FeriasBuilder();
+		feriasDirector.createFeriasTotal(feriasBuilder, data1, data2);
+		Ferias ferias = feriasBuilder.build(creditos);
 		
 		RequerimentoDirector requerimentoDirector = new RequerimentoDirector();
 		RequerimentoBuilder requerimentoBuilder = new RequerimentoBuilder();
@@ -50,10 +50,10 @@ public class TesteRequerimento {
 		LocalDate data2 = LocalDate.of(2021, 5, 16);
 		
 		FeriasDirector feriasDirector = new FeriasDirector();
-		FeriasBuilder Bob = new FeriasBuilder();
+		FeriasBuilder feriasBuilder = new FeriasBuilder();
 		
-		feriasDirector.createFeriasTotal(Bob, data1, data2);
-		Ferias ferias = Bob.build(creditos);
+		feriasDirector.createFeriasTotal(feriasBuilder, data1, data2);
+		Ferias ferias = feriasBuilder.build(creditos);
 		
 		RequerimentoDirector requerimentoDirector = new RequerimentoDirector();
 		RequerimentoBuilder requerimentoBuilder = new RequerimentoBuilder();
