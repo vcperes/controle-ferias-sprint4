@@ -65,7 +65,7 @@ public class TesteFeriasDAO {
 		for (Ferias umaFerias : ferias) {
 			DataBase.getInstance().ferias.add(umaFerias);
 
-			ArrayList<IFerias> feriasRecebidas = feriasDAO.getAll();
+			ArrayList<IFerias> feriasRecebidas = feriasDAO.pegarTodos();
 			assertEquals(feriasRecebidas.size(), DataBase.getInstance().ferias.size());
 			DataBase.getInstance().limparListaDeFerias();
 		}
@@ -73,7 +73,7 @@ public class TesteFeriasDAO {
 
 	@Test
 	public void testGetAllVazio() {
-		ArrayList<IFerias> feriasRecebidas = feriasDAO.getAll();
+		ArrayList<IFerias> feriasRecebidas = feriasDAO.pegarTodos();
 		assertEquals(feriasRecebidas.size(), 0);
 	}
 
@@ -180,7 +180,7 @@ public class TesteFeriasDAO {
 		assertEquals(DataBase.getInstance().ferias.get(0).getTipo(), TiposFerias.PARCIAL);
 
 		IFerias novaFerias = DataBase.getInstance().ferias.get(1);
-		boolean sucesso = feriasDAO.update(0, novaFerias);
+		boolean sucesso = feriasDAO.alterar(0, novaFerias);
 
 		assertTrue(sucesso);
 		assertEquals(DataBase.getInstance().ferias.get(0).getTipo(), TiposFerias.TOTAL);

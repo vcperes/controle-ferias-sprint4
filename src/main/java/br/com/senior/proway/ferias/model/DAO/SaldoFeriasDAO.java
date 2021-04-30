@@ -12,12 +12,12 @@ import br.com.senior.proway.ferias.model.interfaces.IFerias;
 
 public class SaldoFeriasDAO implements ISaldoFeriasDAO, Icrud<SaldoFerias>{
 
-	public ArrayList<SaldoFerias> getAll() {
+	public ArrayList<SaldoFerias> pegarTodos() {
 		DataBase dbSingle = DataBase.getInstance();
 		return dbSingle.saldoDeFerias;
 	}
 
-	public SaldoFerias get(int id) {
+	public SaldoFerias pegarPorID(int id) {
 		DataBase dbSingle = DataBase.getInstance();
 		
 		if(id < dbSingle.saldoDeFerias.size() && id >= 0) {
@@ -26,7 +26,7 @@ public class SaldoFeriasDAO implements ISaldoFeriasDAO, Icrud<SaldoFerias>{
 		return null;
 	}
 
-	public boolean create(SaldoFerias objeto) {
+	public boolean cadastrar(SaldoFerias objeto) {
 		DataBase dbSingle = DataBase.getInstance();
 		
 		for (SaldoFerias saldoFerias : dbSingle.saldoDeFerias) {
@@ -38,7 +38,7 @@ public class SaldoFeriasDAO implements ISaldoFeriasDAO, Icrud<SaldoFerias>{
 		return true;
 	}
 
-	public boolean update(int id, SaldoFerias objeto) {
+	public boolean alterar(int id, SaldoFerias objeto) {
 		DataBase dbSingle = DataBase.getInstance();
 		
 		if(id < dbSingle.saldoDeFerias.size() && id >= 0) {
@@ -48,7 +48,7 @@ public class SaldoFeriasDAO implements ISaldoFeriasDAO, Icrud<SaldoFerias>{
 		return false;
 	}
 
-	public boolean delete(int id) {
+	public boolean deletar(int id) {
 		DataBase dbSingle = DataBase.getInstance();
 		
 		if(id < dbSingle.saldoDeFerias.size() && id >= 0) {

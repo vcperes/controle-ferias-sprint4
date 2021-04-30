@@ -48,7 +48,7 @@ public class TesteRequerimentoDAO {
 		RequerimentoFerias feriasRequerimento = builderRequerimento.build();
 
 		RequerimentoFeriasDAO DAOFerias = new RequerimentoFeriasDAO();
-		boolean resultado = DAOFerias.create(feriasRequerimento);
+		boolean resultado = DAOFerias.cadastrar(feriasRequerimento);
 		
 		assertTrue(resultado); 
 		assertEquals(dbSingle.requerimentos.size(), 1); 
@@ -75,9 +75,9 @@ public class TesteRequerimentoDAO {
 		RequerimentoFerias feriasRequerimento = builderRequerimento.build();
 		
 		RequerimentoFeriasDAO DAOFerias = new RequerimentoFeriasDAO();
-		DAOFerias.create(feriasRequerimento);
+		DAOFerias.cadastrar(feriasRequerimento);
 		
-		assertSame(dbSingle.requerimentos.get(0), DAOFerias.get(0));
+		assertSame(dbSingle.requerimentos.get(0), DAOFerias.pegarPorID(0));
 		
 		//assertEquals(dbSingle.requerimentos.get(0).getIdentificadorUsuario(), "Roberto");
 		//assertEquals(dbSingle.requerimentos.get(1).getIdentificadorUsuario(), "Joana");
@@ -103,7 +103,7 @@ public class TesteRequerimentoDAO {
 		RequerimentoFerias feriasRequerimento = builderRequerimento.build();
 		
 		RequerimentoFeriasDAO DAOFerias = new RequerimentoFeriasDAO();
-		DAOFerias.create(feriasRequerimento);
+		DAOFerias.cadastrar(feriasRequerimento);
 		
 		// -----------------
 		
@@ -117,7 +117,7 @@ public class TesteRequerimentoDAO {
 		
 		// ----------------- Criacao de Testes
 		
-		assertSame(dbSingle.requerimentos, DAOFerias2.getAll());
+		assertSame(dbSingle.requerimentos, DAOFerias2.pegarTodos());
 	}
 	
 	@Test
@@ -140,7 +140,7 @@ public class TesteRequerimentoDAO {
 		RequerimentoFerias feriasRequerimento = builderRequerimento.build();
 		
 		RequerimentoFeriasDAO DAOFerias = new RequerimentoFeriasDAO();
-		assertTrue(DAOFerias.update(2, feriasRequerimento)); 
+		assertTrue(DAOFerias.alterar(2, feriasRequerimento)); 
 	}
 	
 	@Test
@@ -163,7 +163,7 @@ public class TesteRequerimentoDAO {
 		RequerimentoFerias feriasRequerimento = builderRequerimento.build();
 
 		RequerimentoFeriasDAO DAOFerias = new RequerimentoFeriasDAO();
-		boolean teste = DAOFerias.create(feriasRequerimento);
+		boolean teste = DAOFerias.cadastrar(feriasRequerimento);
 		
 		assertFalse(teste);
 	}
@@ -193,17 +193,17 @@ public class TesteRequerimentoDAO {
 	@Test
 	public void testeHRemove() {	
 		RequerimentoFeriasDAO DAOFerias = new RequerimentoFeriasDAO();
-		DAOFerias.delete(3); 
-		DAOFerias.delete(2); 
+		DAOFerias.deletar(3); 
+		DAOFerias.deletar(2); 
 
-		assertTrue(DAOFerias.delete(1));
+		assertTrue(DAOFerias.deletar(1));
 	}
 	
 	@Test
 	public void testeIRemovendoIdNaoExistente() {	
 		RequerimentoFeriasDAO DAOFerias = new RequerimentoFeriasDAO();
 
-		assertFalse(DAOFerias.delete(1));
+		assertFalse(DAOFerias.deletar(1));
 	}	
 	
 	@Test
@@ -226,9 +226,9 @@ public class TesteRequerimentoDAO {
 		RequerimentoFerias feriasRequerimento = builderRequerimento.build();
 		
 		RequerimentoFeriasDAO DAOFerias = new RequerimentoFeriasDAO();
-		DAOFerias.create(feriasRequerimento);
+		DAOFerias.cadastrar(feriasRequerimento);
 		
-		assertNull(DAOFerias.get(2));
+		assertNull(DAOFerias.pegarPorID(2));
 	}
 	
 	@Test
@@ -251,9 +251,9 @@ public class TesteRequerimentoDAO {
 		RequerimentoFerias feriasRequerimento = builderRequerimento.build();
 		
 		RequerimentoFeriasDAO DAOFerias = new RequerimentoFeriasDAO();
-		DAOFerias.create(feriasRequerimento);
+		DAOFerias.cadastrar(feriasRequerimento);
 		
-		assertNull(DAOFerias.get(-1));
+		assertNull(DAOFerias.pegarPorID(-1));
 	}
 	
 	
@@ -277,6 +277,6 @@ public class TesteRequerimentoDAO {
 		RequerimentoFerias feriasRequerimento = builderRequerimento.build();
 		
 		RequerimentoFeriasDAO DAOFerias = new RequerimentoFeriasDAO();
-		assertFalse(DAOFerias.update(3, feriasRequerimento)); 
+		assertFalse(DAOFerias.alterar(3, feriasRequerimento)); 
 	}
 }

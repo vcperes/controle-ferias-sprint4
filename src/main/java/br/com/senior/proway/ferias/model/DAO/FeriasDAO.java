@@ -13,7 +13,7 @@ public class FeriasDAO implements Icrud<IFerias>, IConsultaDeFeriasPorTipoDAO, I
 	 * 
 	 * @return ArrayList<IFerias> Lista de objetos do tipo IFerias.
 	 */
-	public ArrayList<IFerias> getAll() {
+	public ArrayList<IFerias> pegarTodos() {
 		ArrayList<IFerias> ferias = DataBase.getInstance().getFerias();
 		return ferias;
 	}
@@ -24,7 +24,7 @@ public class FeriasDAO implements Icrud<IFerias>, IConsultaDeFeriasPorTipoDAO, I
 	 * @return IFerias - Um objeto do tipo IFerias.
 	 */
 
-	public IFerias get(int id) {
+	public IFerias pegarPorID(int id) {
 		IFerias ferias = null;
 		ArrayList<IFerias> todasAsFerias = DataBase.getInstance().getFerias();
 		for (IFerias umaFerias : todasAsFerias) {
@@ -40,7 +40,7 @@ public class FeriasDAO implements Icrud<IFerias>, IConsultaDeFeriasPorTipoDAO, I
 	 * 
 	 * @return boolean Retorna se o metodo foi executado com sucesso.
 	 */
-	public boolean create(IFerias objeto) { // Aqui o create na realidade eh cadastrar.
+	public boolean cadastrar(IFerias objeto) { // Aqui o create na realidade eh cadastrar.
 		DataBase.getInstance().getFerias().add(objeto);
 		return true;
 		//precisa implementar metodo que insere o id nesse objeto quando ele eh 
@@ -54,7 +54,7 @@ public class FeriasDAO implements Icrud<IFerias>, IConsultaDeFeriasPorTipoDAO, I
 	 * 
 	 * @return boolean Retorna se o método foi executado com sucesso.
 	 */
-	public boolean update(int id, IFerias novaFerias) {
+	public boolean alterar(int id, IFerias novaFerias) {
 		boolean sucesso = false;
 		ArrayList<IFerias> todasAsFerias = DataBase.getInstance().getFerias();
 		for (IFerias umaFerias : todasAsFerias) {
@@ -75,7 +75,7 @@ public class FeriasDAO implements Icrud<IFerias>, IConsultaDeFeriasPorTipoDAO, I
 	 * 
 	 * @return boolean Retorna se o metodo foi executado com sucesso.
 	 */
-	public boolean delete(int id) {
+	public boolean deletar(int id) {
 		boolean sucesso = false;
 		ArrayList<IFerias> todasAsFerias = DataBase.getInstance().getFerias();
 		for (IFerias ferias : todasAsFerias) {

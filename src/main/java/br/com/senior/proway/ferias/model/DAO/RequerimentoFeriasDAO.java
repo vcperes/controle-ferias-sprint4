@@ -9,12 +9,12 @@ import br.com.senior.proway.ferias.model.enums.EstadosRequerimentos;
 
 public class RequerimentoFeriasDAO implements Icrud<RequerimentoFerias>{
 
-	public ArrayList<RequerimentoFerias> getAll() {
+	public ArrayList<RequerimentoFerias> pegarTodos() {
 		DataBase dbSingle = DataBase.getInstance();
 		return dbSingle.requerimentos;
 	}
 
-	public RequerimentoFerias get(int id) {
+	public RequerimentoFerias pegarPorID(int id) {
 		DataBase dbSingle = DataBase.getInstance();
 		
 		if(id < dbSingle.requerimentos.size() && id >= 0) {
@@ -23,7 +23,7 @@ public class RequerimentoFeriasDAO implements Icrud<RequerimentoFerias>{
 		return null;
 	}
 
-	public boolean create(RequerimentoFerias objeto) {
+	public boolean cadastrar(RequerimentoFerias objeto) {
 		DataBase dbSingle = DataBase.getInstance();
 		
 		for (RequerimentoFerias feriasReq : dbSingle.requerimentos) {
@@ -35,7 +35,7 @@ public class RequerimentoFeriasDAO implements Icrud<RequerimentoFerias>{
 		return true;
 	}
 
-	public boolean update(int id, RequerimentoFerias objeto) {
+	public boolean alterar(int id, RequerimentoFerias objeto) {
 		DataBase dbSingle = DataBase.getInstance();
 		
 		if(id < dbSingle.requerimentos.size() && id >= 0) {
@@ -45,7 +45,7 @@ public class RequerimentoFeriasDAO implements Icrud<RequerimentoFerias>{
 		return false;
 	}
 
-	public boolean delete(int id) {		
+	public boolean deletar(int id) {		
 		DataBase dbSingle = DataBase.getInstance();
 		
 		if(id < dbSingle.requerimentos.size() && id >= 0) {

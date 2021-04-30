@@ -21,7 +21,7 @@ public class FeriasRequerimentoController {
 	 */
 	public ArrayList<RequerimentoFerias> getAllRequerimentos(){
 		RequerimentoFeriasDAO feriasRequerimentoDAO = new RequerimentoFeriasDAO();
-		ArrayList<RequerimentoFerias> feriasRequerimento = feriasRequerimentoDAO.getAll();
+		ArrayList<RequerimentoFerias> feriasRequerimento = feriasRequerimentoDAO.pegarTodos();
 		return feriasRequerimento;
 	}
 	
@@ -37,7 +37,7 @@ public class FeriasRequerimentoController {
 	 */
 	public RequerimentoFerias getRequerimentoPorId(short id) {
 		RequerimentoFeriasDAO feriasRequerimentoDAO = new RequerimentoFeriasDAO();
-		RequerimentoFerias  feriasRequerimento = feriasRequerimentoDAO.get(id);
+		RequerimentoFerias  feriasRequerimento = feriasRequerimentoDAO.pegarPorID(id);
 		return feriasRequerimento;
 	}	
 	
@@ -51,7 +51,7 @@ public class FeriasRequerimentoController {
 	 */
 	public void createRequerimento(RequerimentoFerias requerimento) {
 		RequerimentoFeriasDAO feriasRequerimentoDAO = new RequerimentoFeriasDAO();
-		feriasRequerimentoDAO.create(requerimento);
+		feriasRequerimentoDAO.cadastrar(requerimento);
 	}
 	
 	/**
@@ -66,7 +66,7 @@ public class FeriasRequerimentoController {
 	 */
 	public void updateRequerimentoPorId(short id, RequerimentoFerias feriasRequerimento) {
 		RequerimentoFeriasDAO feriasRequerimentoDAO = new RequerimentoFeriasDAO();
-		feriasRequerimentoDAO.update(id, feriasRequerimento);
+		feriasRequerimentoDAO.alterar(id, feriasRequerimento);
 	}
 	
 	/**
@@ -79,7 +79,7 @@ public class FeriasRequerimentoController {
 	 */
 	public void deleteRequerimentoPorId(short id) {
 		RequerimentoFeriasDAO feriasRequerimentoDAO = new RequerimentoFeriasDAO();
-		feriasRequerimentoDAO.delete(id);
+		feriasRequerimentoDAO.deletar(id);
 	}
 	
 	/**
@@ -94,7 +94,7 @@ public class FeriasRequerimentoController {
 	public ArrayList<RequerimentoFerias> getAllRequerimentosPorIdUsuario(short idUsuario) {
 		DataBase dbSingle = DataBase.getInstance();
 		RequerimentoFeriasDAO feriasRequerimentoDAO = new RequerimentoFeriasDAO();
-		ArrayList<RequerimentoFerias> requerimentoUsuarios = feriasRequerimentoDAO.getAll();
+		ArrayList<RequerimentoFerias> requerimentoUsuarios = feriasRequerimentoDAO.pegarTodos();
 		for (int i = 0; i < dbSingle.historico.size(); i++) {
 			if(dbSingle.historico.get(i).getIdentificadorUsuario().equals(idUsuario)) {
 				requerimentoUsuarios.add(dbSingle.historico.get(i));
