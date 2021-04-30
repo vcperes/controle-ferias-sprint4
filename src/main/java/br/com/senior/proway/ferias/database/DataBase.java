@@ -7,8 +7,7 @@ import br.com.senior.proway.ferias.model.SaldoFerias;
 import br.com.senior.proway.ferias.model.interfaces.IFerias;
 
 public final class DataBase {
-	private String nome = "praticandoGit";
-	private String nome1 = "praticandoGit2";
+	
 	private static DataBase instance;
 	public ArrayList<IFerias> ferias;
 	public ArrayList<SaldoFerias> saldoDeFerias;
