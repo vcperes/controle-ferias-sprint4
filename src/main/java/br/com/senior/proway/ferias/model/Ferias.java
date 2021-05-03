@@ -25,6 +25,9 @@ public class Ferias implements IFerias {
 	private short diasVendidos;
 	private TiposFerias tipoFerias;
 	
+	public Ferias() {
+		
+	}
 
 	public Ferias(LocalDate dataInicio,
 						LocalDate dataFim,

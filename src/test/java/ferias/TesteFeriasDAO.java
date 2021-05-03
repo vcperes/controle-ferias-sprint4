@@ -1,12 +1,10 @@
 package ferias;
 
-
 import static org.junit.Assert.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import br.com.senior.proway.ferias.database.DataBase;
@@ -77,12 +75,14 @@ public class TesteFeriasDAO {
 		assertEquals(feriasRecebidas.size(), 0);
 	}
 
-//	@Ignore
-//	public void testGet() {
-//		fail("Not yet implemented");
-//	}
-// falta implementar m�todo para inserir id no objeto no momento na cria��o
-	
+	@Test
+	public void testPegarPorID() {
+		int id = 1;
+		IFerias ferias = feriasDAO.pegarPorID(id);
+		assertEquals(1, ferias.getId());
+		assertEquals(3, ferias.getTipo());
+	}
+
 	@Test
 	public void testCreate() {
 
@@ -135,7 +135,7 @@ public class TesteFeriasDAO {
 
 	@Test
 	public void testUpdate() {
-		
+
 		FeriasDirector feriasDiretor = new FeriasDirector();
 		FeriasBuilder feriasBuilder = new FeriasBuilder();
 		// parcial
@@ -177,14 +177,14 @@ public class TesteFeriasDAO {
 		for (Ferias umaFerias : ferias) {
 			DataBase.getInstance().ferias.add(umaFerias);
 
-		assertEquals(DataBase.getInstance().ferias.get(0).getTipo(), TiposFerias.PARCIAL);
+			assertEquals(DataBase.getInstance().ferias.get(0).getTipo(), TiposFerias.PARCIAL);
 
-		IFerias novaFerias = DataBase.getInstance().ferias.get(1);
-		boolean sucesso = feriasDAO.alterar(0, novaFerias);
+			IFerias novaFerias = DataBase.getInstance().ferias.get(1);
+			boolean sucesso = feriasDAO.alterar(0, novaFerias);
 
-		assertTrue(sucesso);
-		assertEquals(DataBase.getInstance().ferias.get(0).getTipo(), TiposFerias.TOTAL);
-		DataBase.getInstance().limparListaDeFerias();
+			assertTrue(sucesso);
+			assertEquals(DataBase.getInstance().ferias.get(0).getTipo(), TiposFerias.TOTAL);
+			DataBase.getInstance().limparListaDeFerias();
 		}
 	}
 
