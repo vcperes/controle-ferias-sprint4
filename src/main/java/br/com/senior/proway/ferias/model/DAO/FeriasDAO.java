@@ -22,8 +22,37 @@ public class FeriasDAO implements Icrud<IFerias>, IConsultaDeFeriasPorTipoDAO, I
 	 * @return ArrayList<IFerias> Lista de objetos do tipo IFerias.
 	 */
 	public ArrayList<IFerias> pegarTodos() {
-		ArrayList<IFerias> ferias = DataBase.getInstance().getFerias();
-		return ferias;
+		ArrayList<IFerias> listaFerias = new ArrayList<IFerias>();
+		try {
+
+			PostgresConector.conectar();
+			String query = "SELECT *FROM ferias";
+			ResultSet resultSet = PostgresConector.executarQuery(query);
+
+			while (resultSet.next()) {
+				Ferias ferias = new Ferias();
+
+				ferias.setId(resultSet.getInt("id"));
+
+				ferias.setIdentificadorUsuario(resultSet.getString("id_colaborador"));
+
+				LocalDate localDateInicio = resultSet.getDate("dataInicio").toLocalDate();
+				ferias.setDataInicio(localDateInicio);
+
+				LocalDate localDateFim = resultSet.getDate("dataFim").toLocalDate();
+				ferias.setDataInicio(localDateFim);
+
+				int tipoFerias = resultSet.getInt("id_tipoferias");
+				ferias.setTipo(TiposFerias.pegarPorValor(tipoFerias));
+
+				listaFerias.add(ferias);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return listaFerias;
 	}
 
 	/**
@@ -47,10 +76,10 @@ public class FeriasDAO implements Icrud<IFerias>, IConsultaDeFeriasPorTipoDAO, I
 
 				LocalDate localDateInicio = resultSet.getDate("dataInicio").toLocalDate();
 				ferias.setDataInicio(localDateInicio);
-				
+
 				LocalDate localDateFim = resultSet.getDate("dataFim").toLocalDate();
 				ferias.setDataFim(localDateFim);
-				
+
 				ferias.setDiasVendidos(resultSet.getShort("diasVendidos"));
 
 				int tipoFerias = resultSet.getInt("id_tipoferias");
