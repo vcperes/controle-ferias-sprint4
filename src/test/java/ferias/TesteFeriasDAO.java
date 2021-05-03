@@ -2,6 +2,8 @@ package ferias;
 
 import static org.junit.Assert.*;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -14,6 +16,7 @@ import br.com.senior.proway.ferias.model.FeriasDirector;
 import br.com.senior.proway.ferias.model.DAO.FeriasDAO;
 import br.com.senior.proway.ferias.model.enums.TiposFerias;
 import br.com.senior.proway.ferias.model.interfaces.IFerias;
+import br.com.senior.proway.ferias.postgresql.PostgresConector;
 
 public class TesteFeriasDAO {
 
@@ -76,10 +79,20 @@ public class TesteFeriasDAO {
 	}
 
 	@Test
-	public void testPegarPorID() {
-		int id = 1;
+	public void testPegarPorID() throws SQLException {
+		PostgresConector.conectar();
+		String inserir = "INSERT INTO ferias (id_colaborador, datainicio, datafim, diasvendidos, id_tipoferias) VALUES(1, '03/05/2021', '13/05/2021', 0, 3)";
+		PostgresConector.executarUpdateQuery(inserir);
+		
+		String consultar = "SELECT * FROM ferias WHERE id_colaborador = 1 AND datafim = '13/05/2021'";
+		ResultSet resultSet = PostgresConector.executarQuery(consultar);
+		int id = 0;
+		if(resultSet.next()) {
+			id = resultSet.getInt("id");
+		}
+		
 		IFerias ferias = feriasDAO.pegarPorID(id);
-		assertEquals(1, ferias.getId());
+		assertEquals(id, ferias.getId());
 		assertEquals(3, ferias.getTipo().getValor());
 	}
 

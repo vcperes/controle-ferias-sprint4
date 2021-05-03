@@ -10,6 +10,7 @@ import java.util.Date;
 import br.com.senior.proway.ferias.database.DataBase;
 import br.com.senior.proway.ferias.model.Ferias;
 import br.com.senior.proway.ferias.model.FeriasBuilder;
+import br.com.senior.proway.ferias.model.FeriasDirector;
 import br.com.senior.proway.ferias.model.enums.TiposFerias;
 import br.com.senior.proway.ferias.model.interfaces.IFerias;
 import br.com.senior.proway.ferias.postgresql.PostgresConector;
@@ -69,12 +70,29 @@ public class FeriasDAO implements Icrud<IFerias>, IConsultaDeFeriasPorTipoDAO, I
 	 * 
 	 * @return boolean Retorna se o metodo foi executado com sucesso.
 	 */
-	public boolean cadastrar(IFerias objeto) { // Aqui o create na realidade eh cadastrar.
-		DataBase.getInstance().getFerias().add(objeto);
+	public boolean cadastrar(IFerias objeto) {
+		FeriasDirector feriasDiretor = new FeriasDirector();
+		FeriasBuilder feriasBuilder = new FeriasBuilder();
+		
+		short creditos = 29;
+		int id_colaborador = 1;
+		LocalDate dataInicio = LocalDate.of(2021, 04, 01);
+		LocalDate dataFim = LocalDate.of(2021, 04, 27);
+		feriasDiretor.createFeriasParcial(feriasBuilder, dataInicio, dataFim, creditos);
+		Ferias ferias = feriasBuilder.build(creditos);
+		
+		try {
+			String query = "INSERT INTO ferias (id_colaborador, datainicio, datafim, diasvendidos, id_tipoferias) VALUES(@id_colaborador, @datainicio, @dataFim, @ )";
+			PostgresConector.conectar();
+			PostgresConector.executarQuery(query);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		
 		return true;
-		// precisa implementar metodo que insere o id nesse objeto quando ele eh
-		// criado/cadastrado no banco de dados, pois quando criamos um objeto, apenas
-		// informamos o idUsuario
+		
 	}
 
 	/**
