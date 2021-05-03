@@ -1,10 +1,17 @@
 package br.com.senior.proway.ferias.model.DAO;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 
 import br.com.senior.proway.ferias.database.DataBase;
+import br.com.senior.proway.ferias.model.Ferias;
+import br.com.senior.proway.ferias.model.FeriasBuilder;
 import br.com.senior.proway.ferias.model.enums.TiposFerias;
 import br.com.senior.proway.ferias.model.interfaces.IFerias;
+import br.com.senior.proway.ferias.postgresql.PostgresConector;
 
 public class FeriasDAO implements Icrud<IFerias>, IConsultaDeFeriasPorTipoDAO, IConsultaPorColaboradorDAO {
 
@@ -25,32 +32,55 @@ public class FeriasDAO implements Icrud<IFerias>, IConsultaDeFeriasPorTipoDAO, I
 	 */
 
 	public IFerias pegarPorID(int id) {
-		IFerias ferias = null;
-		ArrayList<IFerias> todasAsFerias = DataBase.getInstance().getFerias();
-		for (IFerias umaFerias : todasAsFerias) {
-			if (umaFerias.getId() == id) {
-				ferias = umaFerias;
+		IFerias ferias = new Ferias();
+
+		try {
+			PostgresConector.conectar();
+			String query = "SELECT * FROM ferias WHERE id = " + id;
+			ResultSet resultSet = PostgresConector.executarQuery(query);
+
+			if (resultSet.next()) {
+				ferias.setId(resultSet.getInt("id"));
 			}
+			if (resultSet.next()) {
+				ferias.setIdentificadorUsuario(resultSet.getString("id_colaborador"));
+			}
+			
+				LocalDate localDateInicio = resultSet.getDate("dataInicio").toInstant().atZone(ZoneId.systemDefault())
+						.toLocalDate();
+				ferias.setDataInicio(localDateInicio);
+				LocalDate localDateFim = resultSet.getDate("dataFim").toInstant().atZone(ZoneId.systemDefault())
+						.toLocalDate();
+				ferias.setDataFim(localDateFim);
+				ferias.setDiasVendidos(resultSet.getShort("diasVendidos"));
+
+				int tipoFerias = resultSet.getInt("id_tipoferias");
+				ferias.setTipo(TiposFerias.pegarPorValor(tipoFerias));
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
 		return ferias;
 	}
 
 	/**
-	 * Metodo que cadastra um objeto do tipo IFerias na lista database/DataBase/ferias.
+	 * Metodo que cadastra um objeto do tipo IFerias na lista
+	 * database/DataBase/ferias.
 	 * 
 	 * @return boolean Retorna se o metodo foi executado com sucesso.
 	 */
 	public boolean cadastrar(IFerias objeto) { // Aqui o create na realidade eh cadastrar.
 		DataBase.getInstance().getFerias().add(objeto);
 		return true;
-		//precisa implementar metodo que insere o id nesse objeto quando ele eh 
-		//criado/cadastrado no banco de dados, pois quando criamos um objeto, apenas 
-		//informamos o idUsuario
+		// precisa implementar metodo que insere o id nesse objeto quando ele eh
+		// criado/cadastrado no banco de dados, pois quando criamos um objeto, apenas
+		// informamos o idUsuario
 	}
 
 	/**
-	 * Atualiza um objeto do tipo IFerias atraves do id.
-	 * Busca dentro da lista ferias, um objeto do tipo IFerias atraves de um Id. Localizando faz a subscri��o.
+	 * Atualiza um objeto do tipo IFerias atraves do id. Busca dentro da lista
+	 * ferias, um objeto do tipo IFerias atraves de um Id. Localizando faz a
+	 * subscri��o.
 	 * 
 	 * @return boolean Retorna se o método foi executado com sucesso.
 	 */
@@ -69,9 +99,8 @@ public class FeriasDAO implements Icrud<IFerias>, IConsultaDeFeriasPorTipoDAO, I
 	}
 
 	/**
-	 * Deleta objeto do tipo IFerias atraves do id.
-	 * Busca dentro da lista ferias, um objeto do tipo IFerias atraves de um Id. Localizando 
-	 * faz a remocao.
+	 * Deleta objeto do tipo IFerias atraves do id. Busca dentro da lista ferias, um
+	 * objeto do tipo IFerias atraves de um Id. Localizando faz a remocao.
 	 * 
 	 * @return boolean Retorna se o metodo foi executado com sucesso.
 	 */

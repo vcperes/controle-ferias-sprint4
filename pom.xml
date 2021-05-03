@@ -4,4 +4,17 @@
   <artifactId>ferias</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <name>Controle de Ferias</name>
+   <dependencies>
+	<dependency>
+	  <groupId>org.postgresql</groupId>
+	  <artifactId>postgresql</artifactId>
+	  <version>42.2.20</version>
+	</dependency>
+	<dependency>
+	   <groupId>junit</groupId>
+	   <artifactId>junit</artifactId>
+	   <version>4.13</version>
+	   <scope>test</scope>
+	 </dependency> 
+  </dependencies>
 </project>
