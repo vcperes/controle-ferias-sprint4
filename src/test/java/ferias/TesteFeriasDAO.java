@@ -80,7 +80,7 @@ public class TesteFeriasDAO {
 		int id = 1;
 		IFerias ferias = feriasDAO.pegarPorID(id);
 		assertEquals(1, ferias.getId());
-		assertEquals(3, ferias.getTipo());
+		assertEquals(3, ferias.getTipo().getValor());
 	}
 
 	@Test
