@@ -1,16 +1,12 @@
 package br.com.senior.proway.ferias.model.DAO;
 
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Date;
-
 import br.com.senior.proway.ferias.database.DataBase;
 import br.com.senior.proway.ferias.model.Ferias;
-import br.com.senior.proway.ferias.model.FeriasBuilder;
-import br.com.senior.proway.ferias.model.FeriasDirector;
 import br.com.senior.proway.ferias.model.enums.TiposFerias;
 import br.com.senior.proway.ferias.model.interfaces.IFerias;
 import br.com.senior.proway.ferias.postgresql.PostgresConector;
@@ -58,7 +54,9 @@ public class FeriasDAO implements Icrud<IFerias>, IConsultaDeFeriasPorTipoDAO, I
 	/**
 	 * Metodo que busca e retorna um objeto do tipo IFerias, atraves do id.
 	 * 
+	 * @param int id Id do objeto a ser consultado.
 	 * @return IFerias - Um objeto do tipo IFerias.
+	 * @author Janaina, Vitor, Bruna, Jonata, Daniella.
 	 */
 
 	public IFerias pegarPorID(int id) {
@@ -93,70 +91,70 @@ public class FeriasDAO implements Icrud<IFerias>, IConsultaDeFeriasPorTipoDAO, I
 	}
 
 	/**
-	 * Metodo que cadastra um objeto do tipo IFerias na lista
-	 * database/DataBase/ferias.
+	 * Metodo que cadastra um objeto do tipo IFerias.
 	 * 
+	 * @param IFerias ferias
 	 * @return boolean Retorna se o metodo foi executado com sucesso.
+	 * @author Janaina
 	 */
-	public boolean cadastrar(IFerias objeto) {
-		FeriasDirector feriasDiretor = new FeriasDirector();
-		FeriasBuilder feriasBuilder = new FeriasBuilder();
 
-		short creditos = 29;
-		int id_colaborador = 1;
-		LocalDate dataInicio = LocalDate.of(2021, 04, 01);
-		LocalDate dataFim = LocalDate.of(2021, 04, 27);
-		feriasDiretor.createFeriasParcial(feriasBuilder, dataInicio, dataFim, creditos);
-		Ferias ferias = feriasBuilder.build(creditos);
 
+	public boolean cadastrar(IFerias _ferias) {
+		IFerias ferias = _ferias;
+		boolean cadastrou = false;
 		try {
-			String query = "INSERT INTO ferias (id_colaborador, datainicio, datafim, diasvendidos, id_tipoferias) VALUES(@id_colaborador, @datainicio, @dataFim, @ )";
 			PostgresConector.conectar();
-			PostgresConector.executarQuery(query);
+
+			String query = "INSERT INTO ferias (id_colaborador, datainicio, datafim, diasvendidos, id_tipoferias) VALUES("
+					+ ferias.getIdentificadorUsuario() + ", '" + Date.valueOf(ferias.getDataInicio()) + "', '"
+					+ Date.valueOf(ferias.getDataFim()) + "', " + ferias.getDiasVendidos() + ", "
+					+ ferias.getTipo().getValor() + ")";
+			PostgresConector.executarUpdateQuery(query);
+			cadastrou = true;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
-		return true;
-
+		return cadastrou;
 	}
 
 	/**
 	 * Atualiza um objeto do tipo IFerias atraves do id. Busca dentro da lista
 	 * ferias, um objeto do tipo IFerias atraves de um Id. Localizando faz a
-	 * subscri��o.
+	 * subscricao.
 	 * 
 	 * @return boolean Retorna se o método foi executado com sucesso.
+	 * @author Janaina
 	 */
 	public boolean alterar(int id, IFerias novaFerias) {
 		boolean sucesso = false;
-		ArrayList<IFerias> todasAsFerias = DataBase.getInstance().getFerias();
-		for (IFerias umaFerias : todasAsFerias) {
-			if (umaFerias.getId() == id) {
-				umaFerias = novaFerias;
-				sucesso = true;
-				break;
-			}
+		try {
+		PostgresConector.conectar();
+		String query = "UPDATE ferias SET datainicio = '" + Date.valueOf(novaFerias.getDataInicio()) + "', datafim = '" + Date.valueOf(novaFerias.getDataFim()) + "', diasvendidos = " + novaFerias.getDiasVendidos() + ", id_tipoferias = " + novaFerias.getTipo().getValor() + " WHERE id = " + id;
+		PostgresConector.executarUpdateQuery(query);
+		sucesso = true;
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
 		}
 		return sucesso;
-
 	}
 
 	/**
-	 * Deleta objeto do tipo IFerias atraves do id. Busca dentro da lista ferias, um
-	 * objeto do tipo IFerias atraves de um Id. Localizando faz a remocao.
+	 * Deleta objeto do tipo IFerias atraves onde o id é igual ao id passado no parâmetro.
 	 * 
+	 * @param int Id Id do objeto a ser deletado.
 	 * @return boolean Retorna se o metodo foi executado com sucesso.
+	 * @author Janaina 
 	 */
 	public boolean deletar(int id) {
 		boolean sucesso = false;
-		ArrayList<IFerias> todasAsFerias = DataBase.getInstance().getFerias();
-		for (IFerias ferias : todasAsFerias) {
-			if (ferias.getId() == id) {
-				todasAsFerias.remove(ferias);
-				sucesso = true;
-				break;
-			}
+		try {
+			String query = "DELETE FROM ferias WHERE id = " + id;
+			PostgresConector.conectar();
+			PostgresConector.executarUpdateQuery(query);
+			sucesso = true;
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
 		return sucesso;
 	}
