@@ -38,10 +38,9 @@ public class FeriasDAO implements Icrud<IFerias>, IConsultaDeFeriasPorTipoDAO, I
 
 				LocalDate localDateFim = resultSet.getDate("dataFim").toLocalDate();
 				ferias.setDataInicio(localDateFim);
-
-				int tipoFerias = resultSet.getInt("id_tipoferias");
-				ferias.setTipo(TiposFerias.pegarPorValor(tipoFerias));
-
+		
+				ferias.setTipo(TiposFerias.pegarPorValor(resultSet.getInt("id_tipoferias")));
+				
 				listaFerias.add(ferias);
 			}
 
@@ -98,11 +97,14 @@ public class FeriasDAO implements Icrud<IFerias>, IConsultaDeFeriasPorTipoDAO, I
 	 * @return boolean Retorna se o metodo foi executado com sucesso.
 	 * @author Janaina
 	 */
+
+
 	public boolean cadastrar(IFerias _ferias) {
 		IFerias ferias = _ferias;
 		boolean cadastrou = false;
 		try {
 			PostgresConector.conectar();
+
 			String query = "INSERT INTO ferias (id_colaborador, datainicio, datafim, diasvendidos, id_tipoferias) VALUES("
 					+ ferias.getIdentificadorUsuario() + ", '" + Date.valueOf(ferias.getDataInicio()) + "', '"
 					+ Date.valueOf(ferias.getDataFim()) + "', " + ferias.getDiasVendidos() + ", "
@@ -113,7 +115,6 @@ public class FeriasDAO implements Icrud<IFerias>, IConsultaDeFeriasPorTipoDAO, I
 			e.printStackTrace();
 		}
 		return cadastrou;
-
 	}
 
 	/**
@@ -165,14 +166,35 @@ public class FeriasDAO implements Icrud<IFerias>, IConsultaDeFeriasPorTipoDAO, I
 	 * @return ArrayList<IFerias> Lista de objetos do tipo IFerias.
 	 */
 	public ArrayList<IFerias> pegarTodasAsFeriasTotais() {
-		ArrayList<IFerias> ferias = DataBase.getInstance().getFerias();
-		ArrayList<IFerias> feriasTotais = new ArrayList<IFerias>();
-		for (IFerias umaFerias : ferias) {
-			if (umaFerias.getTipo().equals(TiposFerias.TOTAL)) {
-				feriasTotais.add(umaFerias);
+		ArrayList<IFerias> listaTodasAsFeriasTotais = new ArrayList<IFerias>();
+
+		try {
+			PostgresConector.conectar();
+			String query = "SELECT * FROM ferias WHERE id_tipoferias = 2";
+			ResultSet resultSet = PostgresConector.executarQuery(query);
+
+			while (resultSet.next()) {
+				Ferias ferias = new Ferias();
+
+				ferias.setId(resultSet.getInt("id"));
+				ferias.setIdentificadorUsuario(resultSet.getString("id_colaborador"));
+
+				LocalDate localDataInicio = resultSet.getDate("DataInicio").toLocalDate();
+				ferias.setDataInicio(localDataInicio);
+
+				LocalDate localDataFim = resultSet.getDate("DataFim").toLocalDate();
+				ferias.setDataFim(localDataFim);
+
+				ferias.setDiasVendidos((short) resultSet.getInt("diasvendidos"));
+
+				ferias.setTipo(TiposFerias.pegarPorValor(resultSet.getInt("id_tipoferias")));
+
+				listaTodasAsFeriasTotais.add(ferias);
 			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		return feriasTotais;
+		return listaTodasAsFeriasTotais;
 	}
 
 	/***
