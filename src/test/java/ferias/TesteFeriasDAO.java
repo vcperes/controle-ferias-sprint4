@@ -196,8 +196,6 @@ public class TesteFeriasDAO {
 		PostgresConector.executarUpdateQuery(deletarId2);
 	}
 
-}
-
 
 	@Test
 	public void testPegarTodasAsFeriasFracionadas() throws SQLException {
