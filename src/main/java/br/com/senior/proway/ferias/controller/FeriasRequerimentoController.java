@@ -96,7 +96,7 @@ public class FeriasRequerimentoController {
 		RequerimentoFeriasDAO feriasRequerimentoDAO = new RequerimentoFeriasDAO();
 		ArrayList<RequerimentoFerias> requerimentoUsuarios = feriasRequerimentoDAO.pegarTodos();
 		for (int i = 0; i < dbSingle.historico.size(); i++) {
-			if(dbSingle.historico.get(i).getIdentificadorUsuario().equals(idUsuario)) {
+			if(dbSingle.historico.get(i).getId().equals(idUsuario)) {
 				requerimentoUsuarios.add(dbSingle.historico.get(i));
 			}
 		}

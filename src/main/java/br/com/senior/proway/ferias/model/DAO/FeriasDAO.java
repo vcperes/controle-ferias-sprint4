@@ -1,5 +1,7 @@
 package br.com.senior.proway.ferias.model.DAO;
 
+import static org.junit.Assert.fail;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -67,28 +69,29 @@ public class FeriasDAO implements Icrud<IFerias>, IConsultaDeFeriasPorTipoDAO, I
 
 		try {
 			PostgresConector.conectar();
-			String query = "SELECT * FROM ferias WHERE id = " + id;
+			String query = "SELECT * FROM esquemaferias.ferias WHERE id = " + id+";";
 			ResultSet resultSet = PostgresConector.executarQuery(query);
 
 			while (resultSet.next()) {
 				ferias.setId(resultSet.getInt("id"));
 
-				ferias.setIdentificadorUsuario(resultSet.getString("id_colaborador"));
+				ferias.setIdentificadorUsuario(resultSet.getString("idusuario"));
 
-				LocalDate localDateInicio = resultSet.getDate("dataInicio").toLocalDate();
+				LocalDate localDateInicio = resultSet.getDate("datainicio").toLocalDate();
 				ferias.setDataInicio(localDateInicio);
 
-				LocalDate localDateFim = resultSet.getDate("dataFim").toLocalDate();
+				LocalDate localDateFim = resultSet.getDate("datafim").toLocalDate();
 				ferias.setDataFim(localDateFim);
 
-				ferias.setDiasVendidos(resultSet.getShort("diasVendidos"));
+				ferias.setDiasVendidos(resultSet.getShort("diasvendidos"));
 
-				int tipoFerias = resultSet.getInt("id_tipoferias");
+				int tipoFerias = resultSet.getInt("idtipoferias");
 				ferias.setTipo(TiposFerias.pegarPorValor(tipoFerias));
 			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
+			fail(e.getMessage());
 		}
 		return ferias;
 	}

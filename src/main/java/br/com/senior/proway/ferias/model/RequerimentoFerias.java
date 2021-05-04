@@ -18,26 +18,29 @@ import br.com.senior.proway.ferias.model.interfaces.IFeriasRequerimento;
  *         EM_ANALISE, APROVADO, REPROVADO.
  */
 public class RequerimentoFerias implements IFeriasRequerimento{
-	private String identificadorUsuario;
-
+	private String id;
 	private Ferias feriasRequisitada;
 	private EstadosRequerimentos estadoRequisicao;
 	private LocalDate dataSolicitacao;
 	public static short PRAZO_MINIMO_SOLICITACAO_FERIAS = 10;
 
-	public RequerimentoFerias( String identificadorUsuario, Ferias feriasRequisitada, EstadosRequerimentos estadoRequisicao,LocalDate dataSolicitacao) {
-		this.identificadorUsuario = identificadorUsuario;
+	public RequerimentoFerias(String id, Ferias feriasRequisitada, EstadosRequerimentos estadoRequisicao,LocalDate dataSolicitacao) {
+		this.id = id;
 		this.feriasRequisitada = feriasRequisitada;
 		this.estadoRequisicao = estadoRequisicao;
 		this.dataSolicitacao = dataSolicitacao;
 	}
 	
-	public String getIdentificadorUsuario() {
-		return identificadorUsuario;
+	public RequerimentoFerias() {
+	
+	}
+	
+	public String getId() {
+		return id;
 	}
 
-	public void setIdentificadorUsuario(String identificadorUsuario) {
-		this.identificadorUsuario = identificadorUsuario;
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	public Ferias getFeriasRequisitada() {

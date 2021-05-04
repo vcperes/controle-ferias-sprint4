@@ -5,8 +5,33 @@ package br.com.senior.proway.ferias.model.enums;
  *
  */
 public enum EstadosRequerimentos {
-	EM_ANALISE,//Esta sendo verificado as informa��es do requerimento de ferias.
-	APROVADO,//Requerimento de ferias aprovado.
-	REPROVADO,//Requerimento de ferias reprovado pelo RH
-	INVALIDO//Necessita de correcao
+	EM_ANALISE(1),
+	APROVADO(2),
+	REPROVADO(3),
+	INVALIDO(4);
+	
+	private int valor;
+	
+	EstadosRequerimentos(int valor){
+		this.valor = valor;
+	}
+	public int getValor() {
+		return valor;
+	}
+	
+	public static EstadosRequerimentos pegarPorValor(int valor) {
+		switch(valor) {
+		case 1:
+			return EstadosRequerimentos.EM_ANALISE;
+		case 2:
+			return EstadosRequerimentos.APROVADO;
+		case 3:
+			return EstadosRequerimentos.REPROVADO;
+		case 4:
+			return EstadosRequerimentos.INVALIDO;
+		default:
+			return null;
+
+		}
+	}
 }
