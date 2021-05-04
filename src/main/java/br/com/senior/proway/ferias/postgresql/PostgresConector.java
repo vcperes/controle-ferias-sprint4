@@ -15,15 +15,15 @@ public class PostgresConector {
 	public static void conectar() throws SQLException {
 		conexao = DriverManager.getConnection(url, user, password);
 	}
-	
+
 	public static void desconectar() throws SQLException {
 		conexao.close();
 	}
 
 	public static ResultSet executarQuery(String query) throws SQLException {
-			Statement statement = conexao.createStatement();
-			ResultSet resultSet = statement.executeQuery(query);
-			return resultSet;
+		Statement statement = conexao.createStatement();
+		ResultSet resultSet = statement.executeQuery(query);
+		return resultSet;
 	}
 
 	public static void executarUpdateQuery(String query) throws SQLException {

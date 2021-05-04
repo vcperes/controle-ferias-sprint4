@@ -122,19 +122,20 @@ public class FeriasDAO implements Icrud<IFerias>, IConsultaDeFeriasPorTipoDAO, I
 	 * subscricao.
 	 * 
 	 * @return boolean Retorna se o método foi executado com sucesso.
+	 * @author Janaina
 	 */
 	public boolean alterar(int id, IFerias novaFerias) {
 		boolean sucesso = false;
-		ArrayList<IFerias> todasAsFerias = DataBase.getInstance().getFerias();
-		for (IFerias umaFerias : todasAsFerias) {
-			if (umaFerias.getId() == id) {
-				umaFerias = novaFerias;
-				sucesso = true;
-				break;
-			}
+		try {
+		PostgresConector.conectar();
+		String query = "UPDATE ferias SET datainicio = '" + Date.valueOf(novaFerias.getDataInicio()) + "', datafim = '" + Date.valueOf(novaFerias.getDataFim()) + "', diasvendidos = " + novaFerias.getDiasVendidos() + ", id_tipoferias = " + novaFerias.getTipo().getValor() + " WHERE id = " + id;
+		PostgresConector.executarUpdateQuery(query);
+		sucesso = true;
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
 		}
 		return sucesso;
-
 	}
 
 	/**
