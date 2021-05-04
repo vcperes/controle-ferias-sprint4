@@ -59,7 +59,9 @@ public class FeriasDAO implements Icrud<IFerias>, IConsultaDeFeriasPorTipoDAO, I
 	/**
 	 * Metodo que busca e retorna um objeto do tipo IFerias, atraves do id.
 	 * 
+	 * @param int id Id do objeto a ser consultado.
 	 * @return IFerias - Um objeto do tipo IFerias.
+	 * @author Janaina, Vitor, Bruna, Jonata, Daniella.
 	 */
 
 	public IFerias pegarPorID(int id) {
@@ -94,34 +96,25 @@ public class FeriasDAO implements Icrud<IFerias>, IConsultaDeFeriasPorTipoDAO, I
 	}
 
 	/**
-	 * Metodo que cadastra um objeto do tipo IFerias na lista
-	 * database/DataBase/ferias.
+	 * Metodo que cadastra um objeto do tipo IFerias.
 	 * 
+	 * @param IFerias ferias
 	 * @return boolean Retorna se o metodo foi executado com sucesso.
+	 * @author Janaina
 	 */
-	public boolean cadastrar(IFerias objeto) {
-		FeriasDirector feriasDiretor = new FeriasDirector();
-		FeriasBuilder feriasBuilder = new FeriasBuilder();
-		
-		short creditos = 29;
-		int id_colaborador = 1;
-		LocalDate dataInicio = LocalDate.of(2021, 04, 01);
-		LocalDate dataFim = LocalDate.of(2021, 04, 27);
-		feriasDiretor.createFeriasParcial(feriasBuilder, dataInicio, dataFim, creditos);
-		Ferias ferias = feriasBuilder.build(creditos);
-		
+	public boolean cadastrar(IFerias _ferias, int id_colaborador) {
+		IFerias ferias = _ferias;
+
 		try {
-			String query = "INSERT INTO ferias (id_colaborador, datainicio, datafim, diasvendidos, id_tipoferias) VALUES(@id_colaborador, @datainicio, @dataFim, @ )";
+			String query = "INSERT INTO ferias (id_colaborador, datainicio, datafim, diasvendidos, id_tipoferias) VALUES(" + id_colaborador + ", " + ferias.getDataInicio() +", " + ferias.getDataFim() + ", " + ferias.getDiasVendidos() + ", " + ferias.getTipo().getValor() + ")";
 			PostgresConector.conectar();
 			PostgresConector.executarQuery(query);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		
+
 		return true;
-		
+
 	}
 
 	/**
