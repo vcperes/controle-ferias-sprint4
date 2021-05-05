@@ -293,9 +293,7 @@ public class RequerimentoFeriasDAO implements Icrud<RequerimentoFerias> {
 		try {
 
 			PostgresConector.conectar();
-			Date date = new SimpleDateFormat("yyyy-MM-dd").parse(dataParaPesquisa.toString());
-			System.out.println(date);
-			String select = "SELECT * FROM esquemaferias.requerimento WHERE datasolicitacao = " + date +";";
+			String select = "SELECT * FROM esquemaferias.requerimento WHERE datasolicitacao = '" + dataParaPesquisa +"';";
 			ResultSet rs = PostgresConector.executarQuery(select);
 
 			while(rs.next()) {
@@ -324,10 +322,7 @@ public class RequerimentoFeriasDAO implements Icrud<RequerimentoFerias> {
 			e.printStackTrace();
 			fail(e.getMessage());
 			
-		} catch (ParseException e) {
-			e.printStackTrace();
-			fail(e.getMessage());
-		}
+		} 
 		return listaRequerimento;
 	}
 }

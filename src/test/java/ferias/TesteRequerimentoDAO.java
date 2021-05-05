@@ -46,7 +46,8 @@ public class TesteRequerimentoDAO {
 			short diasTotais = 29;
 			short diasVendidos = 0;
 			Ferias ferias = new Ferias(inicio, fim, diasTotais, diasVendidos, tipo);
-			RequerimentoFerias requerimentoFerias = new RequerimentoFerias("0", ferias, estadoRequerimento, LocalDate.now());
+			LocalDate localDateSolicitacao = LocalDate.of(2021, 05, 03);
+			RequerimentoFerias requerimentoFerias = new RequerimentoFerias("0", ferias, estadoRequerimento, local);
 			requerimentoDAO.cadastrar(requerimentoFerias);
 			String select = "SELECT * FROM esquemaferias.requerimento WHERE id = 4;";
 			ResultSet rs = PostgresConector.executarQuery(select);
@@ -170,9 +171,9 @@ public class TesteRequerimentoDAO {
 	@Test
 	public void testeFBuscaRequerimentoPorEstado() {
 		try {
+			PostgresConector.conectar();
 			EstadosRequerimentos estado = EstadosRequerimentos.APROVADO;
 			ArrayList<RequerimentoFerias> listaRequerimento = requerimentoDAO.getRequerimentoPorEstado(estado);
-			PostgresConector.conectar();
 			assertTrue(listaRequerimento.size() == 2);
 
 
@@ -192,7 +193,7 @@ public class TesteRequerimentoDAO {
 			LocalDate localdate = LocalDate.of(2021, 05, 03);
 			ArrayList<RequerimentoFerias> listaRequerimento = requerimentoDAO.getRequerimentoPorData(localdate);
 		
-			assertTrue(listaRequerimento.size() == 2);
+			assertEquals(2, listaRequerimento.size());
 
 
 		}
