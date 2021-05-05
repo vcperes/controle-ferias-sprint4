@@ -47,7 +47,7 @@ public class TesteRequerimentoDAO {
 			short diasVendidos = 0;
 			Ferias ferias = new Ferias(inicio, fim, diasTotais, diasVendidos, tipo);
 			LocalDate localDateSolicitacao = LocalDate.of(2021, 05, 03);
-			RequerimentoFerias requerimentoFerias = new RequerimentoFerias("0", ferias, estadoRequerimento, local);
+			RequerimentoFerias requerimentoFerias = new RequerimentoFerias("0", ferias, estadoRequerimento, localDateSolicitacao);
 			requerimentoDAO.cadastrar(requerimentoFerias);
 			String select = "SELECT * FROM esquemaferias.requerimento WHERE id = 4;";
 			ResultSet rs = PostgresConector.executarQuery(select);
