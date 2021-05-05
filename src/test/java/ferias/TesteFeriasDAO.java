@@ -9,7 +9,6 @@ import java.util.ArrayList;
 
 import org.junit.Test;
 
-import br.com.senior.proway.ferias.database.DataBase;
 import br.com.senior.proway.ferias.model.Ferias;
 import br.com.senior.proway.ferias.model.FeriasBuilder;
 import br.com.senior.proway.ferias.model.FeriasDirector;

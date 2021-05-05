@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 
-import br.com.senior.proway.ferias.database.DataBase;
 import br.com.senior.proway.ferias.model.RequerimentoFerias;
 import br.com.senior.proway.ferias.model.DAO.RequerimentoFeriasDAO;
 import br.com.senior.proway.ferias.model.enums.EstadosRequerimentos;
@@ -80,27 +79,6 @@ public class FeriasRequerimentoController {
 	public void deleteRequerimentoPorId(short id) {
 		RequerimentoFeriasDAO feriasRequerimentoDAO = new RequerimentoFeriasDAO();
 		feriasRequerimentoDAO.deletar(id);
-	}
-	
-	/**
-	 * Get All Requerimentos por Usuario.
-	 * 
-	 * Controlller faz contato com o FeriasRequerimentoDAO recebendo um idUsuario retornando
-	 * uma lista com todos os requerimentos de ferias do usuario informado.
-	 * 
-	 * @param idUsuario (short)
-	 * @return ArrayList<FeriasRequerimento>
-	 */
-	public ArrayList<RequerimentoFerias> getAllRequerimentosPorIdUsuario(short idUsuario) {
-		DataBase dbSingle = DataBase.getInstance();
-		RequerimentoFeriasDAO feriasRequerimentoDAO = new RequerimentoFeriasDAO();
-		ArrayList<RequerimentoFerias> requerimentoUsuarios = feriasRequerimentoDAO.pegarTodos();
-		for (int i = 0; i < dbSingle.historico.size(); i++) {
-			if(dbSingle.historico.get(i).getId().equals(idUsuario)) {
-				requerimentoUsuarios.add(dbSingle.historico.get(i));
-			}
-		}
-		return requerimentoUsuarios;
 	}
 	
 	/*
