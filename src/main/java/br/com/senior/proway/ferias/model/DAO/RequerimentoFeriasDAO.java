@@ -13,7 +13,6 @@ import java.util.Date;
 
 import org.junit.internal.runners.statements.Fail;
 
-import br.com.senior.proway.ferias.database.DataBase;
 import br.com.senior.proway.ferias.model.Ferias;
 import br.com.senior.proway.ferias.model.RequerimentoFerias;
 import br.com.senior.proway.ferias.model.enums.EstadosRequerimentos;
@@ -74,11 +73,11 @@ public class RequerimentoFeriasDAO implements Icrud<RequerimentoFerias> {
 
 	/**
 	 * 
-	 * Método que pega um requerimento por id.
+	 * Mï¿½todo que pega um requerimento por id.
 	 * 
 	 * Pega um id da tabela requerimento do banco de dados e retorna o objeto, RequerimentoFerias.
 	 * 
-	 * @param int id, que é o id puxado do banco de dados.
+	 * @param int id, que ï¿½ o id puxado do banco de dados.
 	 * @return objeto RequerimentoFerias.
 	 * 
 	 * @author Vitor Peres <vitor.peres@senior.com.br>
@@ -124,7 +123,7 @@ public class RequerimentoFeriasDAO implements Icrud<RequerimentoFerias> {
 	 * @author Bruna Carvalho <sh4323202@gmail.com>
 	 * @author Daniella Lira <dev.danilira@gmail.com>
 	 * 
-	 * Método que cadastra objeto requerimento no banco de dados
+	 * Mï¿½todo que cadastra objeto requerimento no banco de dados
 	 * 
 	 * Recebe objeto RequerimentoFerias como parametro, separa por atributos e insere por expressao SQL no 
 	 * banco de dados
@@ -155,7 +154,7 @@ public class RequerimentoFeriasDAO implements Icrud<RequerimentoFerias> {
 	 * @author Bruna Carvalho <sh4323202@gmail.com>
 	 * @author Daniella Lira <dev.danilira@gmail.com>
 	 * 
-	 * Método que altera objeto requerimento no banco de dados
+	 * Mï¿½todo que altera objeto requerimento no banco de dados
 	 * 
 	 * Altera objeto RequerimentoFerias como parametro, separa por atributos e insere por expressao SQL no 
 	 * banco de dados
@@ -190,7 +189,7 @@ public class RequerimentoFeriasDAO implements Icrud<RequerimentoFerias> {
 	 * @author Bruna Carvalho <sh4323202@gmail.com>
 	 * @author Daniella Lira <dev.danilira@gmail.com>
 	 * 
-	 * Método que deleta objeto requerimento no banco de dados
+	 * Mï¿½todo que deleta objeto requerimento no banco de dados
 	 * 
 	 * Deleta objeto RequerimentoFerias atraves do id.
 	 * 
@@ -224,7 +223,7 @@ public class RequerimentoFeriasDAO implements Icrud<RequerimentoFerias> {
 	 * @author Bruna Carvalho <sh4323202@gmail.com>
 	 * @author Daniella Lira <dev.danilira@gmail.com>
 	 * 
-	 * Método que cadastra objeto requerimento no banco de dados
+	 * Mï¿½todo que cadastra objeto requerimento no banco de dados
 	 * 
 	 * Pega todos os objetos RequerimentoFerias que tenham o mesmo estado de requerimento recebido como parametro.
 
@@ -278,7 +277,7 @@ public class RequerimentoFeriasDAO implements Icrud<RequerimentoFerias> {
 	 * @author Bruna Carvalho <sh4323202@gmail.com>
 	 * @author Daniella Lira <dev.danilira@gmail.com>
 	 * 
-	 * Método que busca o requerimento por data no banco de dados
+	 * Mï¿½todo que busca o requerimento por data no banco de dados
 	 * 
 	 * Pega todos os objetos RequerimentoFerias que tenham a mesma data de requerimento recebido como parametro.
 
@@ -325,4 +324,16 @@ public class RequerimentoFeriasDAO implements Icrud<RequerimentoFerias> {
 		} 
 		return listaRequerimento;
 	}
+	
+	//implementar, nÃ£o possui teste 
+//	/**
+//	 * Get All Requerimentos por Usuario.
+//	 * 
+//	 * @param idUsuario (short)
+//	 * @return ArrayList<FeriasRequerimento>
+//	 */
+//	public ArrayList<RequerimentoFerias> getAllRequerimentosPorIdUsuario(short idUsuario) {
+//		ArrayList<RequerimentoFerias> lista = new ArrayList<RequerimentoFerias>();
+//		return lista;
+//	}
 }

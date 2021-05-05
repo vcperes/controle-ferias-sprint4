@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import br.com.senior.proway.ferias.controller.interfaces.ISaldoFeriasCalculos;
 import br.com.senior.proway.ferias.model.Ferias;
 import br.com.senior.proway.ferias.model.RequerimentoFerias;
-import br.com.senior.proway.ferias.model.DAO.ISaldoFeriasDAO;
 import br.com.senior.proway.ferias.model.enums.EstadosRequerimentos;
 import br.com.senior.proway.ferias.model.enums.TiposFerias;
 import br.com.senior.proway.ferias.model.interfaces.ISaldoFerias;

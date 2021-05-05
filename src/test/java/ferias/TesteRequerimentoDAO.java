@@ -18,7 +18,6 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
-import br.com.senior.proway.ferias.database.DataBase;
 import br.com.senior.proway.ferias.model.Ferias;
 import br.com.senior.proway.ferias.model.FeriasBuilder;
 import br.com.senior.proway.ferias.model.FeriasDirector;
@@ -32,7 +31,6 @@ import br.com.senior.proway.ferias.postgresql.PostgresConector;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TesteRequerimentoDAO {
-	DataBase dbSingle = DataBase.getInstance();
 	RequerimentoFeriasDAO requerimentoDAO = new RequerimentoFeriasDAO();
 
 	@Test
