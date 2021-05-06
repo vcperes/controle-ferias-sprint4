@@ -18,7 +18,8 @@ public class FeriasDAO implements Icrud<IFerias>, IConsultaDeFeriasPorTipoDAO, I
 	 * 
 	 * Metodo que realiza a busca de todas as ferias existentes no banco de dados.
 	 * 
-	 * Posteriormente armazena as ferias em uma lista (listaFerias) retornando os dados obtidos.  
+	 * Posteriormente armazena as ferias em uma lista (listaFerias) retornando os
+	 * dados obtidos.
 	 * 
 	 * @author Jonata Cardoso Caetano.
 	 * @return listaFerias.
@@ -37,7 +38,7 @@ public class FeriasDAO implements Icrud<IFerias>, IConsultaDeFeriasPorTipoDAO, I
 
 				ferias.setId(resultSet.getInt("id"));
 
-				ferias.setIdentificadorUsuario(resultSet.getString("id_colaborador"));
+				ferias.setIdentificadorUsuario(resultSet.getString("idusuario"));
 
 				LocalDate localDateInicio = resultSet.getDate("dataInicio").toLocalDate();
 				ferias.setDataInicio(localDateInicio);
@@ -45,7 +46,7 @@ public class FeriasDAO implements Icrud<IFerias>, IConsultaDeFeriasPorTipoDAO, I
 				LocalDate localDateFim = resultSet.getDate("dataFim").toLocalDate();
 				ferias.setDataInicio(localDateFim);
 
-				ferias.setTipo(TiposFerias.pegarPorValor(resultSet.getInt("id_tipoferias")));
+				ferias.setTipo(TiposFerias.pegarPorValor(resultSet.getInt("idtipoferias")));
 
 				listaFerias.add(ferias);
 			}
@@ -61,7 +62,7 @@ public class FeriasDAO implements Icrud<IFerias>, IConsultaDeFeriasPorTipoDAO, I
 	 * Retorna um objeto do tipo IFerias de acordo com o id do objeto.
 	 * 
 	 * @author Janaina, Vitor, Bruna, Jonata, Daniella.
-	 * @param  id int Id do objeto a ser consultado.
+	 * @param id int Id do objeto a ser consultado.
 	 * @return IFerias Um objeto do tipo IFerias.
 	 * 
 	 */
@@ -70,7 +71,7 @@ public class FeriasDAO implements Icrud<IFerias>, IConsultaDeFeriasPorTipoDAO, I
 
 		try {
 			PostgresConector.conectar();
-			String query = "SELECT * FROM esquemaferias.ferias WHERE id = " + id+";";
+			String query = "SELECT * FROM esquemaferias.ferias WHERE id = " + id + ";";
 			ResultSet resultSet = PostgresConector.executarQuery(query);
 
 			while (resultSet.next()) {
@@ -110,7 +111,7 @@ public class FeriasDAO implements Icrud<IFerias>, IConsultaDeFeriasPorTipoDAO, I
 		try {
 			PostgresConector.conectar();
 
-			String query = "INSERT INTO ferias (id_colaborador, datainicio, datafim, diasvendidos, id_tipoferias) VALUES("
+			String query = "INSERT INTO ferias (idusuario, datainicio, datafim, diasvendidos, idtipoferias) VALUES("
 					+ ferias.getIdentificadorUsuario() + ", '" + Date.valueOf(ferias.getDataInicio()) + "', '"
 					+ Date.valueOf(ferias.getDataFim()) + "', " + ferias.getDiasVendidos() + ", "
 					+ ferias.getTipo().getValor() + ")";
@@ -123,7 +124,8 @@ public class FeriasDAO implements Icrud<IFerias>, IConsultaDeFeriasPorTipoDAO, I
 	}
 
 	/**
-	 * Atualiza um objeto do tipo IFerias atraves do id. Localiza o objeto através do id e altera seus dados.
+	 * Atualiza um objeto do tipo IFerias atraves do id. Localiza o objeto através
+	 * do id e altera seus dados.
 	 * 
 	 * @author Janaina
 	 * @param id int Identificador do objeto a ser consultado.
@@ -136,7 +138,7 @@ public class FeriasDAO implements Icrud<IFerias>, IConsultaDeFeriasPorTipoDAO, I
 			PostgresConector.conectar();
 			String query = "UPDATE ferias SET datainicio = '" + Date.valueOf(novaFerias.getDataInicio())
 					+ "', datafim = '" + Date.valueOf(novaFerias.getDataFim()) + "', diasvendidos = "
-					+ novaFerias.getDiasVendidos() + ", id_tipoferias = " + novaFerias.getTipo().getValor()
+					+ novaFerias.getDiasVendidos() + ", idtipoferias = " + novaFerias.getTipo().getValor()
 					+ " WHERE id = " + id;
 			PostgresConector.executarUpdateQuery(query);
 			sucesso = true;
@@ -147,7 +149,8 @@ public class FeriasDAO implements Icrud<IFerias>, IConsultaDeFeriasPorTipoDAO, I
 	}
 
 	/**
-	 * Deleta objeto do tipo IFerias atraves do id. Localiza objeto que possui identificador igual ao id passado no parâmetro, deletando-o.
+	 * Deleta objeto do tipo IFerias atraves do id. Localiza objeto que possui
+	 * identificador igual ao id passado no parâmetro, deletando-o.
 	 * 
 	 * @author Janaina
 	 * @param int Id Id do objeto a ser deletado.
@@ -167,12 +170,13 @@ public class FeriasDAO implements Icrud<IFerias>, IConsultaDeFeriasPorTipoDAO, I
 		return sucesso;
 	}
 
-	
 	/**
 	 * 
-	 * Metodo que realiza a busca de todas as ferias do tipo TOTAL existentes no banco de dados.
+	 * Metodo que realiza a busca de todas as ferias do tipo TOTAL existentes no
+	 * banco de dados.
 	 * 
-	 * Posteriormente armazena as ferias em uma lista (listaTodasAsFeriasTotais) retornando os dados obtidos.  
+	 * Posteriormente armazena as ferias em uma lista (listaTodasAsFeriasTotais)
+	 * retornando os dados obtidos.
 	 * 
 	 * @author Jonata Cardoso Caetano.
 	 * 
@@ -184,24 +188,24 @@ public class FeriasDAO implements Icrud<IFerias>, IConsultaDeFeriasPorTipoDAO, I
 
 		try {
 			PostgresConector.conectar();
-			String query = "SELECT * FROM ferias WHERE id_tipoferias = 2";
+			String query = "SELECT * FROM ferias WHERE idtipoferias = 2";
 			ResultSet resultSet = PostgresConector.executarQuery(query);
 
 			while (resultSet.next()) {
 				Ferias ferias = new Ferias();
 
 				ferias.setId(resultSet.getInt("id"));
-				ferias.setIdentificadorUsuario(resultSet.getString("id_colaborador"));
+				ferias.setIdentificadorUsuario(resultSet.getString("idusuario"));
 
-				LocalDate localDataInicio = resultSet.getDate("DataInicio").toLocalDate();
+				LocalDate localDataInicio = resultSet.getDate("dataInicio").toLocalDate();
 				ferias.setDataInicio(localDataInicio);
 
-				LocalDate localDataFim = resultSet.getDate("DataFim").toLocalDate();
+				LocalDate localDataFim = resultSet.getDate("dataFim").toLocalDate();
 				ferias.setDataFim(localDataFim);
 
 				ferias.setDiasVendidos((short) resultSet.getInt("diasvendidos"));
 
-				ferias.setTipo(TiposFerias.pegarPorValor(resultSet.getInt("id_tipoferias")));
+				ferias.setTipo(TiposFerias.pegarPorValor(resultSet.getInt("idtipoferias")));
 
 				listaTodasAsFeriasTotais.add(ferias);
 			}
@@ -224,24 +228,24 @@ public class FeriasDAO implements Icrud<IFerias>, IConsultaDeFeriasPorTipoDAO, I
 
 		try {
 			PostgresConector.conectar();
-			String query = "SELECT * FROM ferias WHERE id_tipoferias = 1";
+			String query = "SELECT * FROM ferias WHERE idtipoferias = 1";
 			ResultSet resultSet = PostgresConector.executarQuery(query);
 
 			while (resultSet.next()) {
 				Ferias ferias = new Ferias();
 
 				ferias.setId(resultSet.getInt("id"));
-				ferias.setIdentificadorUsuario(resultSet.getString("id_colaborador"));
+				ferias.setIdentificadorUsuario(resultSet.getString("idusuario"));
 
-				LocalDate localDataInicio = resultSet.getDate("DataInicio").toLocalDate();
+				LocalDate localDataInicio = resultSet.getDate("dataInicio").toLocalDate();
 				ferias.setDataInicio(localDataInicio);
 
-				LocalDate localDataFim = resultSet.getDate("DataFim").toLocalDate();
+				LocalDate localDataFim = resultSet.getDate("dataFim").toLocalDate();
 				ferias.setDataFim(localDataFim);
 
 				ferias.setDiasVendidos((short) resultSet.getInt("diasvendidos"));
 
-				ferias.setTipo(TiposFerias.pegarPorValor(resultSet.getInt("id_tipoferias")));
+				ferias.setTipo(TiposFerias.pegarPorValor(resultSet.getInt("idtipoferias")));
 
 				listaTodasAsFeriasInvalidas.add(ferias);
 			}
@@ -253,9 +257,11 @@ public class FeriasDAO implements Icrud<IFerias>, IConsultaDeFeriasPorTipoDAO, I
 
 	/**
 	 * 
-	 * Metodo que realiza a busca de todas as ferias do tipo Parcial existentes no banco de dados.
+	 * Metodo que realiza a busca de todas as ferias do tipo Parcial existentes no
+	 * banco de dados.
 	 * 
-	 * Posteriormente armazena as ferias em uma lista (listaTodasAsFeriasParciais) retornando os dados obtidos.  
+	 * Posteriormente armazena as ferias em uma lista (listaTodasAsFeriasParciais)
+	 * retornando os dados obtidos.
 	 * 
 	 * @author Jonata Cardoso Caetano.
 	 * 
@@ -267,24 +273,24 @@ public class FeriasDAO implements Icrud<IFerias>, IConsultaDeFeriasPorTipoDAO, I
 
 		try {
 			PostgresConector.conectar();
-			String query = "SELECT *FROM ferias WHERE id_tipoferias = 3";
+			String query = "SELECT *FROM ferias WHERE idtipoferias = 3";
 			ResultSet resultSet = PostgresConector.executarQuery(query);
 
 			while (resultSet.next()) {
 				Ferias ferias2 = new Ferias();
 
 				ferias2.setId(resultSet.getInt("id"));
-				ferias2.setIdentificadorUsuario(resultSet.getString("id_colaborador"));
+				ferias2.setIdentificadorUsuario(resultSet.getString("idusuario"));
 
-				LocalDate localDataInicio = resultSet.getDate("DataInicio").toLocalDate();
+				LocalDate localDataInicio = resultSet.getDate("dataInicio").toLocalDate();
 				ferias2.setDataInicio(localDataInicio);
 
-				LocalDate localDataFim = resultSet.getDate("DataFim").toLocalDate();
+				LocalDate localDataFim = resultSet.getDate("dataFim").toLocalDate();
 				ferias2.setDataFim(localDataFim);
 
 				ferias2.setDiasVendidos((short) resultSet.getInt("diasvendidos"));
 
-				ferias2.setTipo(TiposFerias.pegarPorValor(resultSet.getInt("id_tipoferias")));
+				ferias2.setTipo(TiposFerias.pegarPorValor(resultSet.getInt("idtipoferias")));
 
 				listaTodasAsFeriasParciais.add(ferias2);
 			}
@@ -308,24 +314,24 @@ public class FeriasDAO implements Icrud<IFerias>, IConsultaDeFeriasPorTipoDAO, I
 
 		try {
 			PostgresConector.conectar();
-			String query = "SELECT * FROM ferias WHERE id_tipoferias = 4";
+			String query = "SELECT * FROM ferias WHERE idtipoferias = 4";
 			ResultSet resultSet = PostgresConector.executarQuery(query);
 
 			while (resultSet.next()) {
 				Ferias ferias = new Ferias();
 
 				ferias.setId(resultSet.getInt("id"));
-				ferias.setIdentificadorUsuario(resultSet.getString("id_colaborador"));
+				ferias.setIdentificadorUsuario(resultSet.getString("idusuario"));
 
-				LocalDate localDataInicio = resultSet.getDate("DataInicio").toLocalDate();
+				LocalDate localDataInicio = resultSet.getDate("dataInicio").toLocalDate();
 				ferias.setDataInicio(localDataInicio);
 
-				LocalDate localDataFim = resultSet.getDate("DataFim").toLocalDate();
+				LocalDate localDataFim = resultSet.getDate("dataFim").toLocalDate();
 				ferias.setDataFim(localDataFim);
 
 				ferias.setDiasVendidos((short) resultSet.getInt("diasvendidos"));
 
-				ferias.setTipo(TiposFerias.pegarPorValor(resultSet.getInt("id_tipoferias")));
+				ferias.setTipo(TiposFerias.pegarPorValor(resultSet.getInt("idtipoferias")));
 
 				listaTodasAsFeriasFracionadas.add(ferias);
 			}
@@ -347,24 +353,24 @@ public class FeriasDAO implements Icrud<IFerias>, IConsultaDeFeriasPorTipoDAO, I
 
 		try {
 			PostgresConector.conectar();
-			String query = "SELECT * FROM ferias WHERE id_tipoferias = 5";
+			String query = "SELECT * FROM ferias WHERE idtipoferias = 5";
 			ResultSet resultSet = PostgresConector.executarQuery(query);
 
 			while (resultSet.next()) {
 				Ferias ferias = new Ferias();
 
 				ferias.setId(resultSet.getInt("id"));
-				ferias.setIdentificadorUsuario(resultSet.getString("id_colaborador"));
+				ferias.setIdentificadorUsuario(resultSet.getString("idususario"));
 
-				LocalDate localDataInicio = resultSet.getDate("DataInicio").toLocalDate();
+				LocalDate localDataInicio = resultSet.getDate("dataInicio").toLocalDate();
 				ferias.setDataInicio(localDataInicio);
 
-				LocalDate localDataFim = resultSet.getDate("DataFim").toLocalDate();
+				LocalDate localDataFim = resultSet.getDate("dataFim").toLocalDate();
 				ferias.setDataFim(localDataFim);
 
 				ferias.setDiasVendidos((short) resultSet.getInt("diasvendidos"));
 
-				ferias.setTipo(TiposFerias.pegarPorValor(resultSet.getInt("id_tipoferias")));
+				ferias.setTipo(TiposFerias.pegarPorValor(resultSet.getInt("idtipoferias")));
 
 				listaTodasAsFeriasVendidas.add(ferias);
 			}
@@ -375,8 +381,8 @@ public class FeriasDAO implements Icrud<IFerias>, IConsultaDeFeriasPorTipoDAO, I
 	}
 
 	/***
-	 * Retorna uma lista de objetos do tipo IFerias com id_colaborador igual ao id passado no
-	 * parametro.
+	 * Retorna uma lista de objetos do tipo IFerias com id_colaborador igual ao id
+	 * passado no parametro.
 	 * 
 	 * @author Janaina
 	 * @param idColaborador int Identificador do usuário.
@@ -387,24 +393,24 @@ public class FeriasDAO implements Icrud<IFerias>, IConsultaDeFeriasPorTipoDAO, I
 		ArrayList<IFerias> listaFerias = new ArrayList<IFerias>();
 
 		try {
-			String query = "SELECT * FROM ferias WHERE id_colaborador = " + idColaborador;
+			String query = "SELECT * FROM ferias WHERE idcolaborador = " + idColaborador;
 			PostgresConector.conectar();
 			ResultSet resultSet = PostgresConector.executarQuery(query);
 			while (resultSet.next()) {
 				Ferias ferias = new Ferias();
 
 				ferias.setId(resultSet.getInt("id"));
-				ferias.setIdentificadorUsuario(resultSet.getString("id_colaborador"));
+				ferias.setIdentificadorUsuario(resultSet.getString("idusuariro"));
 
-				LocalDate localDataInicio = resultSet.getDate("DataInicio").toLocalDate();
+				LocalDate localDataInicio = resultSet.getDate("dataInicio").toLocalDate();
 				ferias.setDataInicio(localDataInicio);
 
-				LocalDate localDataFim = resultSet.getDate("DataFim").toLocalDate();
+				LocalDate localDataFim = resultSet.getDate("dataFim").toLocalDate();
 				ferias.setDataFim(localDataFim);
 
 				ferias.setDiasVendidos((short) resultSet.getInt("diasvendidos"));
 
-				ferias.setTipo(TiposFerias.pegarPorValor(resultSet.getInt("id_tipoferias")));
+				ferias.setTipo(TiposFerias.pegarPorValor(resultSet.getInt("idtipoferias")));
 
 				listaFerias.add(ferias);
 			}
@@ -412,5 +418,14 @@ public class FeriasDAO implements Icrud<IFerias>, IConsultaDeFeriasPorTipoDAO, I
 			e.printStackTrace();
 		}
 		return listaFerias;
+	}
+
+	public void limparBanco() throws SQLException {
+
+		String limpar = "delete from grupo2.setor";
+		String removerIncremento = "ALTER SEQUENCE grupo2.setor_increment RESTART";
+		PostgresConector.executarUpdateQuery(limpar);
+		PostgresConector.executarUpdateQuery(removerIncremento);
+
 	}
 }
