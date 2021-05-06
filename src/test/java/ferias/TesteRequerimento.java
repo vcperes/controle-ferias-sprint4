@@ -7,7 +7,7 @@ import java.time.LocalDate;
 
 import org.junit.Test;
 
-import br.com.senior.proway.ferias.controller.FeriasRequerimentoController;
+import br.com.senior.proway.ferias.controller.RequerimentoController;
 import br.com.senior.proway.ferias.model.Ferias;
 import br.com.senior.proway.ferias.model.FeriasBuilder;
 import br.com.senior.proway.ferias.model.FeriasDirector;
@@ -36,7 +36,7 @@ public class TesteRequerimento {
 		
 		assertTrue(feriasRequerimento.getEstadoRequisicao() == EstadosRequerimentos.EM_ANALISE);
 		
-		FeriasRequerimentoController controllerReq = new FeriasRequerimentoController();
+		RequerimentoController controllerReq = new RequerimentoController();
 		controllerReq.atualizarEstadoRequisicao(EstadosRequerimentos.APROVADO, feriasRequerimento);
 		
 		assertTrue(feriasRequerimento.getEstadoRequisicao() == EstadosRequerimentos.APROVADO);
@@ -61,7 +61,7 @@ public class TesteRequerimento {
 		requerimentoDirector.createRequerimento(requerimentoBuilder, ferias, "IdentificardorUsuario123");
 		RequerimentoFerias feriasRequerimento = requerimentoBuilder.build();
 		
-		FeriasRequerimentoController controllerReq = new FeriasRequerimentoController();
+		RequerimentoController controllerReq = new RequerimentoController();
 		
 		assertFalse(controllerReq.validacaoPrazoSolicitacaoDeFerias(data1, feriasRequerimento));
 		

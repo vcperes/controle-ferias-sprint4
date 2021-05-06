@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class PostgresConector {
-	static String url = "jdbc:postgresql://localhost:5432/ferias";
+	static String url = "jdbc:postgresql://localhost:5432/postgres";
 	static String user = "postgres";
 	static String password = "admin";
 	static Connection conexao;
