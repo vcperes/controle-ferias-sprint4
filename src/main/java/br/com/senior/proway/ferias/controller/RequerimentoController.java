@@ -8,8 +8,10 @@ import br.com.senior.proway.ferias.model.RequerimentoFerias;
 import br.com.senior.proway.ferias.model.DAO.RequerimentoFeriasDAO;
 import br.com.senior.proway.ferias.model.enums.EstadosRequerimentos;
 
-public class FeriasRequerimentoController {
+public class RequerimentoController {
 	
+		RequerimentoFeriasDAO requerimentoDao = new RequerimentoFeriasDAO();
+		
 	/**
 	 * Get All.
 	 * 
@@ -19,8 +21,7 @@ public class FeriasRequerimentoController {
 	 * @return ArrayList<FeriasRequerimento>
 	 */
 	public ArrayList<RequerimentoFerias> getAllRequerimentos(){
-		RequerimentoFeriasDAO feriasRequerimentoDAO = new RequerimentoFeriasDAO();
-		ArrayList<RequerimentoFerias> feriasRequerimento = feriasRequerimentoDAO.pegarTodos();
+		ArrayList<RequerimentoFerias> feriasRequerimento = requerimentoDao.pegarTodos();
 		return feriasRequerimento;
 	}
 	
@@ -35,8 +36,7 @@ public class FeriasRequerimentoController {
 	 * @return FeriasRequerimento
 	 */
 	public RequerimentoFerias getRequerimentoPorId(short id) {
-		RequerimentoFeriasDAO feriasRequerimentoDAO = new RequerimentoFeriasDAO();
-		RequerimentoFerias  feriasRequerimento = feriasRequerimentoDAO.pegarPorID(id);
+		RequerimentoFerias  feriasRequerimento = requerimentoDao.pegarPorID(id);
 		return feriasRequerimento;
 	}	
 	
@@ -50,6 +50,7 @@ public class FeriasRequerimentoController {
 	 */
 	public void createRequerimento(RequerimentoFerias requerimento) {
 		RequerimentoFeriasDAO feriasRequerimentoDAO = new RequerimentoFeriasDAO();
+		
 		feriasRequerimentoDAO.cadastrar(requerimento);
 	}
 	
@@ -63,9 +64,10 @@ public class FeriasRequerimentoController {
 	 * @param id (short)
 	 * @param feriasRequerimento (FeriasRequerimento)
 	 */
-	public void updateRequerimentoPorId(short id, RequerimentoFerias feriasRequerimento) {
-		RequerimentoFeriasDAO feriasRequerimentoDAO = new RequerimentoFeriasDAO();
-		feriasRequerimentoDAO.alterar(id, feriasRequerimento);
+	public boolean updateRequerimentoPorId(int id, RequerimentoFerias feriasRequerimento) {
+		
+		requerimentoDao.alterar(id, feriasRequerimento);
+		return true;
 	}
 	
 	/**

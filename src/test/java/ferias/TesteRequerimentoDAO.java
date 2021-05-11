@@ -2,22 +2,18 @@ package ferias;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
+import br.com.senior.proway.ferias.controller.RequerimentoController;
 import br.com.senior.proway.ferias.model.Ferias;
 import br.com.senior.proway.ferias.model.FeriasBuilder;
 import br.com.senior.proway.ferias.model.FeriasDirector;
@@ -31,7 +27,7 @@ import br.com.senior.proway.ferias.postgresql.PostgresConector;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TesteRequerimentoDAO {
-	RequerimentoFeriasDAO requerimentoDAO = new RequerimentoFeriasDAO();
+	RequerimentoController requerimentoController = new RequerimentoController();
 
 	@Test
 	public void testeACreate() {
@@ -46,8 +42,8 @@ public class TesteRequerimentoDAO {
 			Ferias ferias = new Ferias(inicio, fim, diasTotais, diasVendidos, tipo);
 			LocalDate localDateSolicitacao = LocalDate.of(2021, 05, 03);
 			RequerimentoFerias requerimentoFerias = new RequerimentoFerias("0", ferias, estadoRequerimento, localDateSolicitacao);
-			requerimentoDAO.cadastrar(requerimentoFerias);
-			String select = "SELECT * FROM esquemaferias.requerimento WHERE id = 4;";
+			requerimentoController.createRequerimento(requerimentoFerias);
+			String select = "SELECT * FROM requerimento WHERE id = 4;";
 			ResultSet rs = PostgresConector.executarQuery(select);
 
 			if(rs.next()) {
@@ -87,9 +83,6 @@ public class TesteRequerimentoDAO {
 			fail(e.getMessage());
 		}
 
-
-		//assertEquals(dbSingle.requerimentos.get(0).getIdentificadorUsuario(), "Roberto");
-		//assertEquals(dbSingle.requerimentos.get(1).getIdentificadorUsuario(), "Joana");
 	}
 
 	@Test
@@ -98,11 +91,8 @@ public class TesteRequerimentoDAO {
 		try {
 
 			PostgresConector.conectar();
-
-
-			ArrayList<RequerimentoFerias> requerimentoFerias = requerimentoDAO.pegarTodos();
-
-			assertTrue (requerimentoFerias.size()>=9);
+			ArrayList<RequerimentoFerias> requerimentoFerias = requerimentoController.getAllRequerimentos();
+			assertTrue(requerimentoFerias.size()==1);
 		}
 		catch (SQLException e) {
 			e.printStackTrace();
@@ -128,7 +118,7 @@ public class TesteRequerimentoDAO {
 			Ferias ferias = new Ferias(inicio, fim, diasTotais, diasVendidos, tipo);
 
 			RequerimentoFerias requerimentoFerias = new RequerimentoFerias("0", ferias, estadoRequerimento, LocalDate.now());
-			assertTrue(requerimentoDAO.alterar(1, requerimentoFerias));
+			assertTrue(requerimentoController.updateRequerimentoPorId(1, requerimentoFerias));
 
 		}
 
@@ -171,7 +161,7 @@ public class TesteRequerimentoDAO {
 		try {
 			PostgresConector.conectar();
 			EstadosRequerimentos estado = EstadosRequerimentos.APROVADO;
-			ArrayList<RequerimentoFerias> listaRequerimento = requerimentoDAO.getRequerimentoPorEstado(estado);
+			ArrayList<RequerimentoFerias> listaRequerimento = requerimentoDao.getRequerimentoPorEstado(estado);
 			assertTrue(listaRequerimento.size() == 2);
 
 
