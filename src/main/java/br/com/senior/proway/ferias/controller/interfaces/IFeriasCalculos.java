@@ -11,7 +11,7 @@ public interface IFeriasCalculos {
 	 *
 	 * Deve ser chamado depois de setar datas.
 	 */
-	public short calcularPeriodoFerias(LocalDate dataInicioFerias, LocalDate dataFimFerias);
+	public void calcularPeriodoFerias();
 	
 	/**
 	 * Calcula os dias a serem vendidos com base nos dias de f�rias disponiveis ao funcionario e no
@@ -20,5 +20,5 @@ public interface IFeriasCalculos {
 	 * @param diasDisponiveisParaFerias - vem da classe SaldoFerias
 	 * @return short dias a serem vendidos
 	 */
-	public short calcularDiasVendidos(IFerias ferias, short diasDisponiveisParaFerias);
+	public void calcularDiasVendidos(short diasDisponiveisParaFerias);
 }
