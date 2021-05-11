@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class PostgresConector {
-	static String url = "jdbc:postgresql://localhost:5432/postgres";
+	static String url = "jdbc:postgresql://localhost:5432/ferias";
 	static String user = "postgres";
 	static String password = "admin";
 	static Connection conexao;
@@ -15,28 +15,35 @@ public class PostgresConector {
 	public static void conectar() throws SQLException {
 		conexao = DriverManager.getConnection(url, user, password);
 	}
-
+	
 	public static void desconectar() throws SQLException {
 		conexao.close();
 	}
 
 	public static ResultSet executarQuery(String query) throws SQLException {
+		conectar();
 		Statement statement = conexao.createStatement();
 		ResultSet resultSet = statement.executeQuery(query);
+		desconectar();
 		return resultSet;
 	}
 
-	public static void executarUpdateQuery(String query) throws SQLException {
+	public static int executarUpdateQuery(String query) throws SQLException {
+		conectar();
 		Statement statement = conexao.createStatement();
-		statement.executeUpdate(query);
+		int i = statement.executeUpdate(query);
+		desconectar();
+		return i;
 	}
-
-	public static String pegarString(ResultSet resultSet) throws SQLException {
-		String resultado = null;
-		if (resultSet.next()) {
-			resultado = resultSet.getString(1);
+	
+	public static void limparTabela(String nomeDaTabela) {
+		try {
+			conectar();
+			Statement statement = conexao.createStatement();
+			statement.executeUpdate("Truncate " + nomeDaTabela + " restart identity;");
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
-		return resultado;
 	}
 
 	public static String dbVersion() {

@@ -18,7 +18,7 @@ public interface IFeriasCalculos {
 	 * tipo de ferias; Apenas os tipos PARCIAL e VENDIDA vao ter dias a serem vendidos.
 	 * 
 	 * @param diasDisponiveisParaFerias - vem da classe SaldoFerias
-	 * @return short dias a serem vendidos
+	 * @return int dias a serem vendidos
 	 */
-	public void calcularDiasVendidos(short diasDisponiveisParaFerias);
+	public void calcularDiasVendidos(int diasDisponiveisParaFerias);
 }

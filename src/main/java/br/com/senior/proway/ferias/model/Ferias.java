@@ -22,15 +22,15 @@ public class Ferias implements IFerias {
 
 	private LocalDate dataInicio;
 	private LocalDate dataFim;
-	private short diasTotaisRequisitados;
-	private short diasVendidos;
+	private int diasTotaisRequisitados;
+	private int diasVendidos;
 	private TiposFerias tipoFerias;
 
 	public Ferias() {
 
 	}
 
-	public Ferias(LocalDate dataInicio, LocalDate dataFim, short diasTotaisRequisitados, short diasVendidos,
+	public Ferias(LocalDate dataInicio, LocalDate dataFim, int diasTotaisRequisitados, int diasVendidos,
 			TiposFerias tipo) {
 		this.dataInicio = dataInicio;
 		this.dataFim = dataFim;
@@ -71,19 +71,19 @@ public class Ferias implements IFerias {
 		this.dataFim = data;
 	}
 
-	public short getDiasTotaisRequisitados() {
+	public int getDiasTotaisRequisitados() {
 		return this.diasTotaisRequisitados;
 	}
 
-	public void setDiasTotaisRequisitados(short valor) {
+	public void setDiasTotaisRequisitados(int valor) {
 		this.diasTotaisRequisitados = valor;
 	}
 
-	public short getDiasVendidos() {
+	public int getDiasVendidos() {
 		return this.diasVendidos;
 	}
 
-	public void setDiasVendidos(short valor) {
+	public void setDiasVendidos(int valor) {
 		this.diasVendidos = valor;
 	}
 

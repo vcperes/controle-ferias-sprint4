@@ -31,8 +31,10 @@ public class RequerimentoFerias implements IFeriasRequerimento{
 		this.dataSolicitacao = dataSolicitacao;
 	}
 	
-	public RequerimentoFerias() {
-	
+	public RequerimentoFerias(Ferias feriasRequisitada, EstadosRequerimentos estadoRequisicao,LocalDate dataSolicitacao) {
+		this.feriasRequisitada = feriasRequisitada;
+		this.estadoRequisicao = estadoRequisicao;
+		this.dataSolicitacao = dataSolicitacao;
 	}
 	
 	public String getId() {

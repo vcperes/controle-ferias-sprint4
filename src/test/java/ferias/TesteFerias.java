@@ -31,8 +31,8 @@ public class TesteFerias {
 	@Test
 	public void feriasParcial() {
 		short creditos = 30;
-		LocalDate data1 = LocalDate.of(2021, 4, 15);
-		LocalDate data2 = LocalDate.of(2021, 5, 5); // 20 dias de ferias
+		LocalDate data1 = LocalDate.of(2221, 4, 10);
+		LocalDate data2 = LocalDate.of(2221, 4, 30); // 20 dias de ferias
 		// lembrando que CREDITOS_MINIMOS_FERIAS_FRACIONADAS = 15; <- creditos que restariam
 		
 		FeriasDirector feriasDirector = new FeriasDirector();

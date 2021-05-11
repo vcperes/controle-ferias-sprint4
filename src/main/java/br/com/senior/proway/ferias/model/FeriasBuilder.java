@@ -12,15 +12,15 @@ import br.com.senior.proway.ferias.model.interfaces.IFeriasBuilder;
  * FeriasDirector
  */
 public class FeriasBuilder implements IFeriasBuilder {
-	protected final short CREDITOS_MINIMOS_FERIAS_FRACIONADAS = 14;
-	protected final short DIAS_MAXIMOS_A_VENDER = 32;
+	protected final int CREDITOS_MINIMOS_FERIAS_FRACIONADAS = 14;
+	protected final int DIAS_MAXIMOS_A_VENDER = 32;
 
 	private int id;
 	private String identificadorUsuario;
 	private LocalDate dataInicio;
 	private LocalDate dataFim;
-	private short diasTotaisRequisitados;
-	private short diasVendidos;
+	private int diasTotaisRequisitados;
+	private int diasVendidos;
 	private TiposFerias tipoFerias;
 
 	/**
@@ -29,7 +29,7 @@ public class FeriasBuilder implements IFeriasBuilder {
 	 * 
 	 * @param creditos Saldo disponivel de creditos para ferias
 	 */
-	public Ferias build(short creditos) {
+	public Ferias build(int creditos) {
 		this.checarValidade(this, creditos);
 		return new Ferias(this.dataInicio, this.dataFim, this.diasTotaisRequisitados, this.diasVendidos,
 				this.tipoFerias);
@@ -68,19 +68,19 @@ public class FeriasBuilder implements IFeriasBuilder {
 		this.dataFim = data;
 	}
 
-	public short getDiasTotaisRequisitados() {
+	public int getDiasTotaisRequisitados() {
 		return this.diasTotaisRequisitados;
 	}
 
-	public void setDiasTotaisRequisitados(short valor) {
+	public void setDiasTotaisRequisitados(int valor) {
 		this.diasTotaisRequisitados = valor;
 	}
 
-	public short getDiasVendidos() {
+	public int getDiasVendidos() {
 		return this.diasVendidos;
 	}
 
-	public void setDiasVendidos(short valor) {
+	public void setDiasVendidos(int valor) {
 		this.diasVendidos = valor;
 	}
 
@@ -94,7 +94,7 @@ public class FeriasBuilder implements IFeriasBuilder {
 
 	// Interface IFeriasValidacoes
 
-	public boolean checarValidade(IFerias ferias, short creditos) {
+	public boolean checarValidade(IFerias ferias, int creditos) {
 		// Checagem de creditos
 		if (ferias.getDiasTotaisRequisitados() + ferias.getDiasVendidos() > creditos) {
 			ferias.setTipo(TiposFerias.INVALIDA);
@@ -116,7 +116,7 @@ public class FeriasBuilder implements IFeriasBuilder {
 						return true;
 					break;
 				case PARCIAL:
-					if (ferias.getDiasVendidos() > 0 && ferias.getDiasTotaisRequisitados() > 0)
+					if (ferias.getDiasVendidos() >= 0 && ferias.getDiasTotaisRequisitados() > 0)
 						return true;
 					break;
 				default:
@@ -129,26 +129,6 @@ public class FeriasBuilder implements IFeriasBuilder {
 		return false;
 	}
 
-	public TiposFerias classificarFerias(IFerias ferias, short diasDisponiveisParaFerias) {
-		// Creditos de férias (diasDisponiveisParaFerias) deve ser maior 0
-		if (diasDisponiveisParaFerias == 0) {
-			return TiposFerias.INVALIDA;
-		}
-
-		// Checagens para tipos de férias
-		if (ferias.getDiasTotaisRequisitados() < diasDisponiveisParaFerias) {
-			return (diasDisponiveisParaFerias
-					- ferias.getDiasTotaisRequisitados() <= CREDITOS_MINIMOS_FERIAS_FRACIONADAS ? TiposFerias.PARCIAL
-							: TiposFerias.FRACIONADA);
-		} else if (ferias.getDiasTotaisRequisitados() == diasDisponiveisParaFerias) {
-			return TiposFerias.TOTAL;
-		} else if (ferias.getDiasTotaisRequisitados() == 0) {
-			return TiposFerias.VENDIDA;
-		} else {
-			return TiposFerias.INVALIDA;
-		}
-	}
-
 	public boolean periodoFeriasValido(LocalDate dataInicio, LocalDate dataFim) {
 		boolean check = dataInicio.isBefore(dataFim) ? true : false;
 		return check;
@@ -159,22 +139,24 @@ public class FeriasBuilder implements IFeriasBuilder {
 	public void calcularPeriodoFerias() {
 		if (this.dataInicio == null || this.dataFim == null) {
 			this.diasTotaisRequisitados = 0;
-		}
-
-		if (periodoFeriasValido(this.dataInicio, this.dataFim)) {
-			this.diasTotaisRequisitados = (short) this.dataInicio.until(this.dataFim, ChronoUnit.DAYS);
 		} else {
-			this.diasTotaisRequisitados = 0;
+			if (periodoFeriasValido(this.dataInicio, this.dataFim)) {
+				this.diasTotaisRequisitados = (int) this.dataInicio.until(this.dataFim, ChronoUnit.DAYS);
+			} else {
+				this.diasTotaisRequisitados = 0;
+			}
 		}
 	}
 
-	public void calcularDiasVendidos(short diasDisponiveisParaFerias) {
+	public void calcularDiasVendidos(int diasDisponiveisParaFerias) {
 		if (getTipo() == TiposFerias.PARCIAL || getTipo() == TiposFerias.VENDIDA) {
-			short diasAVender = (short) (diasDisponiveisParaFerias - getDiasTotaisRequisitados());
-			if (diasAVender > 0)
-				this.diasVendidos = (diasAVender > DIAS_MAXIMOS_A_VENDER) ? DIAS_MAXIMOS_A_VENDER : diasAVender;
+			int diasAVender =  diasDisponiveisParaFerias - getDiasTotaisRequisitados();
+			if (diasAVender > 0) {
+				this.diasVendidos = (diasAVender >= DIAS_MAXIMOS_A_VENDER) ? DIAS_MAXIMOS_A_VENDER : diasAVender;
+			}
+		} else {
+			this.diasVendidos = 0;
 		}
-		this.diasVendidos = 0;
 	}
 
 }

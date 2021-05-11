@@ -17,11 +17,11 @@ public interface IFerias {
 	public void setDataFim(LocalDate dataFim);
 	public LocalDate getDataFim();
 	
-	public void setDiasTotaisRequisitados(short valor);
-	public short getDiasTotaisRequisitados();
+	public void setDiasTotaisRequisitados(int valor);
+	public int getDiasTotaisRequisitados();
 	
-	public void setDiasVendidos(short valor);
-	public short getDiasVendidos();
+	public void setDiasVendidos(int valor);
+	public int getDiasVendidos();
 	
 	public TiposFerias getTipo();
 	public void setTipo(TiposFerias total);

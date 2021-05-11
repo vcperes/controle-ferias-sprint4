@@ -15,7 +15,7 @@ public interface IFeriasValidacoes {
 	 * 
 	 * @return true/false
 	 */
-	public boolean checarValidade(IFerias ferias, short creditos);
+	public boolean checarValidade(IFerias ferias, int creditos);
 
 	/**
 	 * Classifica o tipo de ferias com base nos dias de ferias disponiveis ao
@@ -27,7 +27,7 @@ public interface IFeriasValidacoes {
 	 * @param saldoDiasFerias - vem da classe SaldoFerias
 	 * @return TiposFerias classifica��o
 	 */
-	public TiposFerias classificarFerias(IFerias ferias , short saldoDiasFerias);
+	public TiposFerias classificarFerias(IFerias ferias , int saldoDiasFerias);
 	
 	/** Verifica se a data de inicio de ferias vem antes da data de fim desejado.
 	 * 
