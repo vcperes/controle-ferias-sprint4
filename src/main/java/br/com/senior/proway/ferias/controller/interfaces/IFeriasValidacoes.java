@@ -17,17 +17,6 @@ public interface IFeriasValidacoes {
 	 */
 	public boolean checarValidade(IFerias ferias, int creditos);
 
-	/**
-	 * Classifica o tipo de ferias com base nos dias de ferias disponiveis ao
-	 * funcionario.Realiza a comparacao entre os diasTotaisRequisitados para
-	 * ferias e os dias em credito. 
-	 * 
-	 * Os tipos de ferias estao listados no ENUM TiposFerias
-	 * 
-	 * @param saldoDiasFerias - vem da classe SaldoFerias
-	 * @return TiposFerias classifica��o
-	 */
-	public TiposFerias classificarFerias(IFerias ferias , int saldoDiasFerias);
 	
 	/** Verifica se a data de inicio de ferias vem antes da data de fim desejado.
 	 * 
