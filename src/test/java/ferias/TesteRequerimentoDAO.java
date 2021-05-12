@@ -21,7 +21,7 @@ import br.com.senior.proway.ferias.model.FeriasBuilder;
 import br.com.senior.proway.ferias.model.FeriasDirector;
 import br.com.senior.proway.ferias.model.RequerimentoBuilder;
 import br.com.senior.proway.ferias.model.RequerimentoDirector;
-import br.com.senior.proway.ferias.model.RequerimentoFerias;
+import br.com.senior.proway.ferias.model.Requerimento;
 import br.com.senior.proway.ferias.model.DAO.RequerimentoDAO;
 import br.com.senior.proway.ferias.model.enums.EstadosRequerimentos;
 import br.com.senior.proway.ferias.model.enums.TiposFerias;
@@ -48,7 +48,7 @@ public class TesteRequerimentoDAO {
 			short diasVendidos = 0;
 			Ferias ferias = new Ferias(inicio, fim, diasTotais, diasVendidos, tipo);
 			LocalDate localDateSolicitacao = LocalDate.of(2021, 05, 03);
-			RequerimentoFerias requerimentoFerias = new RequerimentoFerias(0, ferias, estadoRequerimento,
+			Requerimento requerimentoFerias = new Requerimento(0, ferias, estadoRequerimento,
 					localDateSolicitacao);
 			requerimentoDAO.cadastrar(requerimentoFerias);
 			String select = "SELECT * FROM requerimento WHERE id = 4;";
@@ -74,7 +74,7 @@ public class TesteRequerimentoDAO {
 
 			PostgresConector.conectar();
 			RequerimentoDAO requerimentoFeriasDAO = new RequerimentoDAO();
-			RequerimentoFerias requerimentoFerias = requerimentoFeriasDAO.pegarFeriasPorID(1);
+			Requerimento requerimentoFerias = requerimentoFeriasDAO.pegarFeriasPorID(1);
 
 			String select = "SELECT * FROM requerimento WHERE id = 1;";
 			ResultSet rs = PostgresConector.executarQuery(select);
@@ -100,7 +100,7 @@ public class TesteRequerimentoDAO {
 			PostgresConector.conectar();
 			PostgresConector.executarUpdateQuery(
 					"insert into requerimento(idferias, idestadorequisicao, datasolicitacao) values (4, 2, '11/05/2021');");
-			ArrayList<RequerimentoFerias> requerimentoFerias = requerimentoDAO.pegarTodos();
+			ArrayList<Requerimento> requerimentoFerias = requerimentoDAO.pegarTodos();
 			assertTrue(requerimentoFerias.size() == 1);
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -122,7 +122,7 @@ public class TesteRequerimentoDAO {
 			short diasTotais = 29;
 			short diasVendidos = 0;
 			Ferias ferias = new Ferias(inicio, fim, diasTotais, diasVendidos, tipo);
-			RequerimentoFerias requerimentoFerias = new RequerimentoFerias(0, ferias, estadoRequerimento,
+			Requerimento requerimentoFerias = new Requerimento(0, ferias, estadoRequerimento,
 					LocalDate.now());
 			requerimentoDAO.cadastrar(requerimentoFerias);
 			assertTrue(requerimentoDAO.alterar(1, requerimentoFerias));
@@ -153,7 +153,7 @@ public class TesteRequerimentoDAO {
 		RequerimentoBuilder builderRequerimento = new RequerimentoBuilder();
 
 		directorRequerimento.createRequerimento(builderRequerimento, ferias, 123);
-		RequerimentoFerias feriasRequerimento = builderRequerimento.build();
+		Requerimento feriasRequerimento = builderRequerimento.build();
 
 		RequerimentoDAO DAOFerias = new RequerimentoDAO();
 		boolean teste = DAOFerias.cadastrar(feriasRequerimento);
@@ -165,14 +165,14 @@ public class TesteRequerimentoDAO {
 	public void testeFBuscaRequerimentoPorEstado() {
 		try {
 			PostgresConector.conectar();
-			RequerimentoFerias requerimentoFerias = new RequerimentoFerias(new Ferias(), EstadosRequerimentos.APROVADO,
+			Requerimento requerimentoFerias = new Requerimento(new Ferias(), EstadosRequerimentos.APROVADO,
 					LocalDate.now());
-			RequerimentoFerias requerimentoFerias2 = new RequerimentoFerias(new Ferias(), EstadosRequerimentos.APROVADO,
+			Requerimento requerimentoFerias2 = new Requerimento(new Ferias(), EstadosRequerimentos.APROVADO,
 					LocalDate.now());
 			requerimentoDAO.cadastrar(requerimentoFerias);
 			requerimentoDAO.cadastrar(requerimentoFerias2);
 			EstadosRequerimentos estado = EstadosRequerimentos.APROVADO;
-			ArrayList<RequerimentoFerias> listaRequerimento = requerimentoDAO.getRequerimentoPorEstado(estado);
+			ArrayList<Requerimento> listaRequerimento = requerimentoDAO.getRequerimentoPorEstado(estado);
 			assertTrue(listaRequerimento.size() == 2);
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -184,14 +184,14 @@ public class TesteRequerimentoDAO {
 	public void testeGGetRequerimentoPorData() {
 		try {
 			PostgresConector.conectar();
-			RequerimentoFerias requerimentoFerias = new RequerimentoFerias(new Ferias(), EstadosRequerimentos.APROVADO,
+			Requerimento requerimentoFerias = new Requerimento(new Ferias(), EstadosRequerimentos.APROVADO,
 					LocalDate.of(2021, 05, 03));
-			RequerimentoFerias requerimentoFerias2 = new RequerimentoFerias(new Ferias(), EstadosRequerimentos.APROVADO,
+			Requerimento requerimentoFerias2 = new Requerimento(new Ferias(), EstadosRequerimentos.APROVADO,
 					LocalDate.of(2021, 05, 03));
 			requerimentoDAO.cadastrar(requerimentoFerias);
 			requerimentoDAO.cadastrar(requerimentoFerias2);
 			LocalDate localdate = LocalDate.of(2021, 05, 03);
-			ArrayList<RequerimentoFerias> listaRequerimento = requerimentoDAO.getRequerimentoPorData(localdate);
+			ArrayList<Requerimento> listaRequerimento = requerimentoDAO.getRequerimentoPorData(localdate);
 
 			assertEquals(2, listaRequerimento.size());
 
@@ -204,7 +204,7 @@ public class TesteRequerimentoDAO {
 	@Test
 	public void testeHRemove() {
 
-		RequerimentoFerias requerimentoFerias = new RequerimentoFerias(new Ferias(), EstadosRequerimentos.APROVADO,
+		Requerimento requerimentoFerias = new Requerimento(new Ferias(), EstadosRequerimentos.APROVADO,
 				LocalDate.of(2021, 05, 03));
 		requerimentoDAO.cadastrar(requerimentoFerias);
 		assertTrue(requerimentoDAO.deletar(1));
@@ -235,7 +235,7 @@ public class TesteRequerimentoDAO {
 		RequerimentoBuilder builderRequerimento = new RequerimentoBuilder();
 
 		directorRequerimento.createRequerimento(builderRequerimento, ferias, 123);
-		RequerimentoFerias feriasRequerimento = builderRequerimento.build();
+		Requerimento feriasRequerimento = builderRequerimento.build();
 
 		RequerimentoDAO DAOFerias = new RequerimentoDAO();
 		DAOFerias.cadastrar(feriasRequerimento);
@@ -260,7 +260,7 @@ public class TesteRequerimentoDAO {
 		RequerimentoBuilder builderRequerimento = new RequerimentoBuilder();
 
 		directorRequerimento.createRequerimento(builderRequerimento, ferias, 123);
-		RequerimentoFerias feriasRequerimento = builderRequerimento.build();
+		Requerimento feriasRequerimento = builderRequerimento.build();
 
 		RequerimentoDAO DAOFerias = new RequerimentoDAO();
 		DAOFerias.cadastrar(feriasRequerimento);
@@ -285,7 +285,7 @@ public class TesteRequerimentoDAO {
 		RequerimentoBuilder builderRequerimento = new RequerimentoBuilder();
 
 		directorRequerimento.createRequerimento(builderRequerimento, ferias, 123);
-		RequerimentoFerias feriasRequerimento = builderRequerimento.build();
+		Requerimento feriasRequerimento = builderRequerimento.build();
 
 		RequerimentoDAO DAOFerias = new RequerimentoDAO();
 		DAOFerias.alterar(3, feriasRequerimento);

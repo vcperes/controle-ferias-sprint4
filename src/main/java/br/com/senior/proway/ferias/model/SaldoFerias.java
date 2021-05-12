@@ -38,14 +38,14 @@ public class SaldoFerias
 	private LocalDate proximasFerias;
 	private short diasDisponiveisDeFerias; // Vai ser preenchido na data "proximasFerias"
 	private ArrayList<Ferias> historicoFerias;
-	private ArrayList<RequerimentoFerias> historicoRequerimentos;
+	private ArrayList<Requerimento> historicoRequerimentos;
 
 	public SaldoFerias(
 			String identificadorUsuario,
 			LocalDate proximasFerias,
 			short diasDisponiveisDeFerias,
 			ArrayList<Ferias> historicoFerias,
-			ArrayList<RequerimentoFerias> historicoRequerimentos
+			ArrayList<Requerimento> historicoRequerimentos
 			)
 	{	
 		this.identificadorUsuario = identificadorUsuario;
@@ -65,7 +65,7 @@ public class SaldoFerias
 	public void setDiasDisponiveisDeFerias(short diasDisponiveisDeFerias) {this.diasDisponiveisDeFerias = diasDisponiveisDeFerias;}
 
 	public ArrayList<Ferias> getHistoricoFerias() {	return historicoFerias; }
-	public ArrayList<RequerimentoFerias>getHistoricoRequerimentos() {	return historicoRequerimentos; }
+	public ArrayList<Requerimento>getHistoricoRequerimentos() {	return historicoRequerimentos; }
 	
 	/* 
 	 * Nao devemos substituir a lista, ela ja esta instanciada no construtor.
@@ -87,10 +87,10 @@ public class SaldoFerias
 	}
 	
 	// HistoricoRequerimentos
-	public void adicionarHistoricoRequerimentos(RequerimentoFerias req) {
+	public void adicionarHistoricoRequerimentos(Requerimento req) {
 		this.historicoRequerimentos.add(req);
 	}
-	public void removerHistoricoRequerimentos(RequerimentoFerias req) {
+	public void removerHistoricoRequerimentos(Requerimento req) {
 		this.historicoRequerimentos.remove(req);
 	}
 	

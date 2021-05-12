@@ -2,15 +2,13 @@ package br.com.senior.proway.ferias.model;
 
 import java.time.LocalDate;
 
+import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 import br.com.senior.proway.ferias.model.enums.TiposFerias;
@@ -33,11 +31,13 @@ public class Ferias implements IFerias {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	
-	@ManyToOne
+	
 	private int identificadorUsuario;
-	@Temporal(TemporalType.DATE)
+
+	@Basic
 	private LocalDate dataInicio;
-	@Temporal(TemporalType.DATE)
+	
+	@Basic
 	private LocalDate dataFim;
 	@Transient
 	private int diasTotaisRequisitados;

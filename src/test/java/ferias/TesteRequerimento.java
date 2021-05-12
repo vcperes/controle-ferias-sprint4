@@ -11,7 +11,7 @@ import br.com.senior.proway.ferias.controller.RequerimentoController;
 import br.com.senior.proway.ferias.model.Ferias;
 import br.com.senior.proway.ferias.model.FeriasBuilder;
 import br.com.senior.proway.ferias.model.FeriasDirector;
-import br.com.senior.proway.ferias.model.RequerimentoFerias;
+import br.com.senior.proway.ferias.model.Requerimento;
 import br.com.senior.proway.ferias.model.RequerimentoBuilder;
 import br.com.senior.proway.ferias.model.RequerimentoDirector;
 import br.com.senior.proway.ferias.model.enums.EstadosRequerimentos;
@@ -32,7 +32,7 @@ public class TesteRequerimento {
 		RequerimentoDirector requerimentoDirector = new RequerimentoDirector();
 		RequerimentoBuilder requerimentoBuilder = new RequerimentoBuilder();
 		requerimentoDirector.createRequerimento(requerimentoBuilder, ferias, 123);
-		RequerimentoFerias feriasRequerimento = requerimentoBuilder.build();
+		Requerimento feriasRequerimento = requerimentoBuilder.build();
 		
 		assertTrue(feriasRequerimento.getEstadoRequisicao() == EstadosRequerimentos.EM_ANALISE);
 		
@@ -59,7 +59,7 @@ public class TesteRequerimento {
 		RequerimentoBuilder requerimentoBuilder = new RequerimentoBuilder();
 		
 		requerimentoDirector.createRequerimento(requerimentoBuilder, ferias, 123);
-		RequerimentoFerias feriasRequerimento = requerimentoBuilder.build();
+		Requerimento feriasRequerimento = requerimentoBuilder.build();
 		
 		RequerimentoController controllerReq = new RequerimentoController();
 		

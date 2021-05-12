@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 
-import br.com.senior.proway.ferias.model.RequerimentoFerias;
+import br.com.senior.proway.ferias.model.Requerimento;
 import br.com.senior.proway.ferias.model.DAO.RequerimentoDAO;
 import br.com.senior.proway.ferias.model.enums.EstadosRequerimentos;
 
@@ -21,8 +21,8 @@ public class RequerimentoController {
 	 * 
 	 * @return ArrayList<FeriasRequerimento>
 	 */
-	public ArrayList<RequerimentoFerias> getAllRequerimentos() {
-		ArrayList<RequerimentoFerias> feriasRequerimento = requerimentoDao.pegarTodos();
+	public ArrayList<Requerimento> getAllRequerimentos() {
+		ArrayList<Requerimento> feriasRequerimento = requerimentoDao.pegarTodos();
 		return feriasRequerimento;
 	}
 
@@ -35,8 +35,8 @@ public class RequerimentoController {
 	 * @param short id
 	 * @return FeriasRequerimento
 	 */
-	public RequerimentoFerias getRequerimentoPorId(short id) {
-		RequerimentoFerias feriasRequerimento = requerimentoDao.pegarFeriasPorID(id);
+	public Requerimento getRequerimentoPorId(short id) {
+		Requerimento feriasRequerimento = requerimentoDao.pegarFeriasPorID(id);
 		return feriasRequerimento;
 	}
 
@@ -47,9 +47,9 @@ public class RequerimentoController {
 	 * objeto do tipo FeriasRequerimento, insere o mesmo em nossa Persistencia
 	 * atrav�s do DAO.
 	 * 
-	 * @param RequerimentoFerias requerimento
+	 * @param Requerimento requerimento
 	 */
-	public void createRequerimento(RequerimentoFerias requerimento) {
+	public void createRequerimento(Requerimento requerimento) {
 		RequerimentoDAO feriasRequerimentoDAO = new RequerimentoDAO();
 
 		feriasRequerimentoDAO.cadastrar(requerimento);
@@ -65,7 +65,7 @@ public class RequerimentoController {
 	 * @param id                 (int)
 	 * @param feriasRequerimento (FeriasRequerimento)
 	 */
-	public boolean updateRequerimentoPorId(int id, RequerimentoFerias feriasRequerimento) throws SQLException {
+	public boolean updateRequerimentoPorId(int id, Requerimento feriasRequerimento) throws SQLException {
 
 		requerimentoDao.alterar(id, feriasRequerimento);
 		return true;
@@ -92,7 +92,7 @@ public class RequerimentoController {
 	 * 
 	 * @return true/false sucesso da operacao.
 	 */
-	public void atualizarEstadoRequisicao(EstadosRequerimentos novoEstado, RequerimentoFerias feriasRequerimento) {
+	public void atualizarEstadoRequisicao(EstadosRequerimentos novoEstado, Requerimento feriasRequerimento) {
 		// Verificar os estados dentro do ENUM);
 		// Futuramente fazer outras validacoes necessarias aqui. Por enquanto o mmetodo
 		// esta redundante com o setEstadoRequisicao;
@@ -134,9 +134,9 @@ public class RequerimentoController {
 	 * @return True/False sucesso da validacao.
 	 * 
 	 */
-	public boolean validacaoPrazoSolicitacaoDeFerias(LocalDate dataInicio, RequerimentoFerias feriasRequerimento) {
+	public boolean validacaoPrazoSolicitacaoDeFerias(LocalDate dataInicio, Requerimento feriasRequerimento) {
 		int intervalo = retornarIntervaloEmDiasEntreAsDatas(feriasRequerimento.getDataSolicitacao(), dataInicio);
-		if (intervalo >= RequerimentoFerias.PRAZO_MINIMO_SOLICITACAO_FERIAS) {
+		if (intervalo >= Requerimento.PRAZO_MINIMO_SOLICITACAO_FERIAS) {
 			return true;
 		} else {
 			feriasRequerimento.setEstadoRequisicao(EstadosRequerimentos.INVALIDO);

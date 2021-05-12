@@ -3,12 +3,12 @@ package br.com.senior.proway.ferias.model.interfaces;
 import java.util.ArrayList;
 
 import br.com.senior.proway.ferias.model.Ferias;
-import br.com.senior.proway.ferias.model.RequerimentoFerias;
+import br.com.senior.proway.ferias.model.Requerimento;
 
 public interface ISaldoBuilder extends ISaldoFerias {
 
 	void setHistoricoFerias(ArrayList<Ferias> arrayList);
 
-	void setHistoricoRequerimentos(ArrayList<RequerimentoFerias> arrayList);
+	void setHistoricoRequerimentos(ArrayList<Requerimento> arrayList);
 
 }

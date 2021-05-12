@@ -13,7 +13,7 @@ public class SaldoFeriasBuilder implements ISaldoBuilder {
 	private LocalDate proximasFerias;
 	private short diasDisponiveisDeFerias;
 	private ArrayList<Ferias> historicoFerias;
-	private ArrayList<RequerimentoFerias> historicoRequerimentos;
+	private ArrayList<Requerimento> historicoRequerimentos;
 	
 	/** Instancia e retorna um objeto de SaldoFerias
 	 */
@@ -38,13 +38,13 @@ public class SaldoFeriasBuilder implements ISaldoBuilder {
 	public void setDiasDisponiveisDeFerias(short diasDisponiveisDeFerias) {this.diasDisponiveisDeFerias = diasDisponiveisDeFerias;}
 
 	public ArrayList<Ferias> getHistoricoFerias() {	return historicoFerias; }
-	public ArrayList<RequerimentoFerias>getHistoricoRequerimentos() {	return historicoRequerimentos; }
+	public ArrayList<Requerimento>getHistoricoRequerimentos() {	return historicoRequerimentos; }
 
 	public void setHistoricoFerias(ArrayList<Ferias> arrayList) {
 		this.historicoFerias = arrayList;
 		
 	}
-	public void setHistoricoRequerimentos(ArrayList<RequerimentoFerias> arrayList) {
+	public void setHistoricoRequerimentos(ArrayList<Requerimento> arrayList) {
 		this.historicoRequerimentos = arrayList;
 		
 	}

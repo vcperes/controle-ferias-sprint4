@@ -1,6 +1,6 @@
 package br.com.senior.proway.ferias.model.interfaces;
 
-import br.com.senior.proway.ferias.model.RequerimentoFerias;
+import br.com.senior.proway.ferias.model.Requerimento;
 import br.com.senior.proway.ferias.model.enums.EstadosRequerimentos;
 
 public interface IHistoricoRequerimentos {
@@ -8,13 +8,13 @@ public interface IHistoricoRequerimentos {
 	 * Adiciona um item de ferias na lista de HistoricoRequerimentos
 	 * @param ferias
 	 */
-	public void adicionarHistoricoRequerimentos(RequerimentoFerias req);
+	public void adicionarHistoricoRequerimentos(Requerimento req);
 	
 	/**
 	 * Remove um item de ferias na lista de HistoricoFerias
 	 * @param ferias
 	 */
-	public void removerHistoricoRequerimentos(RequerimentoFerias req);
+	public void removerHistoricoRequerimentos(Requerimento req);
 	
 	/**
 	 * Verificar se existem requerimentos.

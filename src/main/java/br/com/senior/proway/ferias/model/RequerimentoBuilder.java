@@ -13,12 +13,12 @@ public class RequerimentoBuilder implements IRequerimentoFeriasBuilder {
 	private EstadosRequerimentos estadoRequisicao;
 	private LocalDate dataSolicitacao;
 	
-	public RequerimentoFerias build() {
+	public Requerimento build() {
 		// checar as informacoes antes de montar o objeto
 		if (this.feriasRequisitadas.getTipo()==TiposFerias.INVALIDA) {
 			this.estadoRequisicao = EstadosRequerimentos.INVALIDO;
 		}
-		return new RequerimentoFerias(this.identificadorUsuario, this.feriasRequisitadas,this.estadoRequisicao,this.dataSolicitacao);
+		return new Requerimento(this.identificadorUsuario, this.feriasRequisitadas,this.estadoRequisicao,this.dataSolicitacao);
 	}
 	
 	public EstadosRequerimentos getEstadoRequisicao() {

@@ -7,11 +7,11 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import br.com.senior.proway.ferias.model.Ferias;
-import br.com.senior.proway.ferias.model.RequerimentoFerias;
+import br.com.senior.proway.ferias.model.Requerimento;
 import br.com.senior.proway.ferias.model.enums.EstadosRequerimentos;
 import br.com.senior.proway.ferias.postgresql.PostgresConector;
 
-public class RequerimentoDAO implements Icrud<RequerimentoFerias> {
+public class RequerimentoDAO implements Icrud<Requerimento> {
 
 	FeriasDAO feriasDao = new FeriasDAO();
 
@@ -27,9 +27,9 @@ public class RequerimentoDAO implements Icrud<RequerimentoFerias> {
 	 * @author Bruna Carvalho <sh4323202@gmail.com>
 	 * @author Daniella Lira <dev.danilira@gmail.com>
 	 */
-	public ArrayList<RequerimentoFerias> pegarTodos() {
+	public ArrayList<Requerimento> pegarTodos() {
 
-		ArrayList<RequerimentoFerias> requerimentosFerias = new ArrayList<RequerimentoFerias>();
+		ArrayList<Requerimento> requerimentosFerias = new ArrayList<Requerimento>();
 		String select = "SELECT * FROM requerimento;";
 		try {
 
@@ -40,7 +40,7 @@ public class RequerimentoDAO implements Icrud<RequerimentoFerias> {
 				Ferias ferias = (Ferias) feriasDao.pegarFeriasPorID(rs.getInt("idferias"));
 				EstadosRequerimentos estado = EstadosRequerimentos.pegarPorValor(rs.getInt("idestadorequisicao"));
 				LocalDate dataSolicitacao = rs.getDate("datasolicitacao").toLocalDate();
-				RequerimentoFerias requerimentoFerias = new RequerimentoFerias(rs.getInt("id"), ferias, estado,
+				Requerimento requerimentoFerias = new Requerimento(rs.getInt("id"), ferias, estado,
 						dataSolicitacao);
 				requerimentosFerias.add(requerimentoFerias);
 			}
@@ -68,7 +68,7 @@ public class RequerimentoDAO implements Icrud<RequerimentoFerias> {
 	 * @author Daniella Lira <dev.danilira@gmail.com>
 	 * 
 	 */
-	public RequerimentoFerias pegarFeriasPorID(int id) {
+	public Requerimento pegarFeriasPorID(int id) {
 		try {
 
 			PostgresConector.conectar();
@@ -86,7 +86,7 @@ public class RequerimentoDAO implements Icrud<RequerimentoFerias> {
 				FeriasDAO feriasDao = new FeriasDAO();
 				Ferias ferias = (Ferias) feriasDao.pegarFeriasPorID(idFerias);
 
-				RequerimentoFerias requerimentoFerias = new RequerimentoFerias(idRequerimento, ferias,
+				Requerimento requerimentoFerias = new Requerimento(idRequerimento, ferias,
 						idEstadoRequisicao, dataSolicitacao);
 
 				return requerimentoFerias;
@@ -111,11 +111,11 @@ public class RequerimentoDAO implements Icrud<RequerimentoFerias> {
 	 *         Recebe objeto RequerimentoFerias como parametro, separa por atributos
 	 *         e insere por expressao SQL no banco de dados
 	 * 
-	 * @param RequerimentoFerias objeto
+	 * @param Requerimento objeto
 	 * @return boolean verdadeiro se cadastrado com sucesso.
 	 * 
 	 */
-	public boolean cadastrar(RequerimentoFerias objeto) {
+	public boolean cadastrar(Requerimento objeto) {
 		String idFerias = "" + objeto.getFeriasRequisitada().getId();
 		String idEstadoRequisicao = "" + objeto.getEstadoRequisicao().getValor();
 		String dataSolicitacao = "" + objeto.getDataSolicitacao();
@@ -146,7 +146,7 @@ public class RequerimentoDAO implements Icrud<RequerimentoFerias> {
 	 * 
 	 */
 
-	public boolean alterar(int id, RequerimentoFerias objeto) throws SQLException {
+	public boolean alterar(int id, Requerimento objeto) throws SQLException {
 
 		boolean alterado = false;
 		String query = "UPDATE requerimento SET idestadorequisicao = " + objeto.getEstadoRequisicao().getValor()
@@ -215,9 +215,9 @@ public class RequerimentoDAO implements Icrud<RequerimentoFerias> {
 	 * 
 	 */
 
-	public ArrayList<RequerimentoFerias> getRequerimentoPorEstado(EstadosRequerimentos estado) {
+	public ArrayList<Requerimento> getRequerimentoPorEstado(EstadosRequerimentos estado) {
 
-		ArrayList<RequerimentoFerias> listaRequerimento = new ArrayList<RequerimentoFerias>();
+		ArrayList<Requerimento> listaRequerimento = new ArrayList<Requerimento>();
 
 		try {
 
@@ -231,7 +231,7 @@ public class RequerimentoDAO implements Icrud<RequerimentoFerias> {
 				int idFerias = rs.getInt("idFerias");
 				Ferias ferias = (Ferias) feriasDao.pegarFeriasPorID(idFerias);
 				LocalDate localDate = rs.getDate("datasolicitacao").toLocalDate();
-				RequerimentoFerias requerimento = new RequerimentoFerias(id, ferias, estado, localDate);
+				Requerimento requerimento = new Requerimento(id, ferias, estado, localDate);
 				listaRequerimento.add(requerimento);
 			}
 
@@ -259,8 +259,8 @@ public class RequerimentoDAO implements Icrud<RequerimentoFerias> {
 	 * @return ArrayList<RequerimentoFerias>
 	 */
 
-	public ArrayList<RequerimentoFerias> getRequerimentoPorData(LocalDate dataParaPesquisa) {
-		ArrayList<RequerimentoFerias> listaRequerimento = new ArrayList<RequerimentoFerias>();
+	public ArrayList<Requerimento> getRequerimentoPorData(LocalDate dataParaPesquisa) {
+		ArrayList<Requerimento> listaRequerimento = new ArrayList<Requerimento>();
 
 		try {
 
@@ -275,7 +275,7 @@ public class RequerimentoDAO implements Icrud<RequerimentoFerias> {
 				EstadosRequerimentos estadorequerimento = EstadosRequerimentos
 						.pegarPorValor(rs.getInt("idestadorequisicao"));
 				LocalDate localDate = rs.getDate("datasolicitacao").toLocalDate();
-				RequerimentoFerias requerimento = new RequerimentoFerias(rs.getInt("id"), ferias, estadorequerimento,
+				Requerimento requerimento = new Requerimento(rs.getInt("id"), ferias, estadorequerimento,
 						localDate);
 				listaRequerimento.add(requerimento);
 			}

@@ -11,8 +11,8 @@ public interface Icrud<T> {
 	
 	public boolean cadastrar(T objeto);
 	
-	public boolean alterar(int id, T objeto) throws SQLException;
+	public boolean alterar(T objeto) throws SQLException;
 	
-	public boolean deletar(int id);
+	public boolean deletar(T objeto);
 	
 }
