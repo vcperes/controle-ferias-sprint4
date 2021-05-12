@@ -14,7 +14,7 @@ public class RequerimentoDirector {
 //		
 //	} 
 	
-	public void createRequerimento(IRequerimentoFeriasBuilder builder, Ferias ferias, String identificadorUsuario) {
+	public void createRequerimento(IRequerimentoFeriasBuilder builder, Ferias ferias, int identificadorUsuario) {
 		ferias.setIdentificadorUsuario(identificadorUsuario);
 		builder.setFeriasRequisitadas(ferias);
 		builder.setIdentificadorUsuario(identificadorUsuario);

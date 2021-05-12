@@ -8,8 +8,8 @@ public interface IFerias {
 	public void setId(int id);
 	public int getId();
 	
-	public void setIdentificadorUsuario(String valor);
-	public String getIdentificadorUsuario();
+	public void setIdentificadorUsuario(int valor);
+	public int getIdentificadorUsuario();
 	
 	public void setDataInicio(LocalDate dataInicio);
 	public LocalDate getDataInicio();

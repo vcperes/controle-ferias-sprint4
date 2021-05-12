@@ -8,7 +8,7 @@ import br.com.senior.proway.ferias.model.interfaces.IRequerimentoFeriasBuilder;
 
 public class RequerimentoBuilder implements IRequerimentoFeriasBuilder {
 
-	private String identificadorUsuario;
+	private int identificadorUsuario;
 	private Ferias feriasRequisitadas;
 	private EstadosRequerimentos estadoRequisicao;
 	private LocalDate dataSolicitacao;
@@ -37,11 +37,11 @@ public class RequerimentoBuilder implements IRequerimentoFeriasBuilder {
 		this.dataSolicitacao = dataSolicitacao;
 	}
 
-	public void setIdentificadorUsuario(String identificadorUsuario) {
+	public void setIdentificadorUsuario(int identificadorUsuario) {
 		this.identificadorUsuario = identificadorUsuario;		
 	}
 	
-	public String getIdentificadorUsuario() {
+	public int getIdentificadorUsuario() {
 		return identificadorUsuario;
 	}
 

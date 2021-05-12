@@ -16,7 +16,7 @@ public class FeriasBuilder implements IFeriasBuilder {
 	protected final int DIAS_MAXIMOS_A_VENDER = 32;
 
 	private int id;
-	private String identificadorUsuario;
+	private int identificadorUsuario;
 	private LocalDate dataInicio;
 	private LocalDate dataFim;
 	private int diasTotaisRequisitados;
@@ -44,11 +44,11 @@ public class FeriasBuilder implements IFeriasBuilder {
 		return this.id;
 	}
 
-	public String getIdentificadorUsuario() {
+	public int getIdentificadorUsuario() {
 		return this.identificadorUsuario;
 	}
 
-	public void setIdentificadorUsuario(String valor) {
+	public void setIdentificadorUsuario(int valor) {
 		this.identificadorUsuario = valor;
 	}
 

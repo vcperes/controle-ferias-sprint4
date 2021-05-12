@@ -40,7 +40,7 @@ public class RequerimentoDAO implements Icrud<RequerimentoFerias> {
 				Ferias ferias = (Ferias) feriasDao.pegarFeriasPorID(rs.getInt("idferias"));
 				EstadosRequerimentos estado = EstadosRequerimentos.pegarPorValor(rs.getInt("idestadorequisicao"));
 				LocalDate dataSolicitacao = rs.getDate("datasolicitacao").toLocalDate();
-				RequerimentoFerias requerimentoFerias = new RequerimentoFerias(rs.getString("id"), ferias, estado,
+				RequerimentoFerias requerimentoFerias = new RequerimentoFerias(rs.getInt("id"), ferias, estado,
 						dataSolicitacao);
 				requerimentosFerias.add(requerimentoFerias);
 			}
@@ -77,7 +77,7 @@ public class RequerimentoDAO implements Icrud<RequerimentoFerias> {
 
 			if (rs.next()) {
 
-				String idRequerimento = rs.getString("id");
+				int idRequerimento = rs.getInt("id");
 				int idFerias = rs.getInt("idferias");
 				EstadosRequerimentos idEstadoRequisicao = EstadosRequerimentos
 						.pegarPorValor(rs.getInt("idestadorequisicao"));
@@ -226,7 +226,7 @@ public class RequerimentoDAO implements Icrud<RequerimentoFerias> {
 			ResultSet rs = PostgresConector.executarQuery(select);
 
 			while (rs.next()) {
-				String id = rs.getString("id");
+				int id = rs.getInt("id");
 				FeriasDAO feriasDao = new FeriasDAO();
 				int idFerias = rs.getInt("idFerias");
 				Ferias ferias = (Ferias) feriasDao.pegarFeriasPorID(idFerias);
@@ -275,7 +275,7 @@ public class RequerimentoDAO implements Icrud<RequerimentoFerias> {
 				EstadosRequerimentos estadorequerimento = EstadosRequerimentos
 						.pegarPorValor(rs.getInt("idestadorequisicao"));
 				LocalDate localDate = rs.getDate("datasolicitacao").toLocalDate();
-				RequerimentoFerias requerimento = new RequerimentoFerias(rs.getString("id"), ferias, estadorequerimento,
+				RequerimentoFerias requerimento = new RequerimentoFerias(rs.getInt("id"), ferias, estadorequerimento,
 						localDate);
 				listaRequerimento.add(requerimento);
 			}
