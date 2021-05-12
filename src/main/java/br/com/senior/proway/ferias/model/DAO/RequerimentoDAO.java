@@ -6,14 +6,33 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+
+import org.hibernate.Session;
+import org.hibernate.query.NativeQuery;
+
 import br.com.senior.proway.ferias.model.Ferias;
 import br.com.senior.proway.ferias.model.Requerimento;
 import br.com.senior.proway.ferias.model.enums.EstadosRequerimentos;
 import br.com.senior.proway.ferias.postgresql.PostgresConector;
 
 public class RequerimentoDAO implements Icrud<Requerimento> {
-
-	FeriasDAO feriasDao = new FeriasDAO();
+	
+	
+	private Session session;
+	FeriasDAO feriasDao;
+	private static RequerimentoDAO requerimentoDAO;
+	
+	private RequerimentoDAO(Session session) {
+		this.feriasDao = FeriasDAO.getInstance(session);
+		this.session = session;
+	}
+	
+	public static RequerimentoDAO getInstance(Session session) {
+		if(requerimentoDAO == null) {
+			requerimentoDAO = new RequerimentoDAO(session);
+		}
+		return requerimentoDAO;
+	}
 
 	/**
 	 * Lista todos os objetos de Requerimento.
@@ -116,19 +135,12 @@ public class RequerimentoDAO implements Icrud<Requerimento> {
 	 * 
 	 */
 	public boolean cadastrar(Requerimento objeto) {
-		String idFerias = "" + objeto.getFeriasRequisitada().getId();
-		String idEstadoRequisicao = "" + objeto.getEstadoRequisicao().getValor();
-		String dataSolicitacao = "" + objeto.getDataSolicitacao();
-		try {
-			PostgresConector.conectar();
-			String insert = "INSERT INTO requerimento(idferias, idestadorequisicao, datasolicitacao)" + " VALUES("
-					+ idFerias + ", " + idEstadoRequisicao + ", '" + dataSolicitacao + "');";
-			PostgresConector.executarUpdateQuery(insert);
-		} catch (SQLException e) {
-			e.printStackTrace();
-			fail(e.getMessage());
+		if (!session.getTransaction().isActive()) {
+			session.beginTransaction();             
 		}
-		return false;
+		session.save(objeto);
+		session.getTransaction().commit();
+		return true;
 	}
 
 	/**
@@ -291,6 +303,12 @@ public class RequerimentoDAO implements Icrud<Requerimento> {
 	}
 
 	public void limparTabela() {
-		PostgresConector.limparTabela("requerimento");
+		if (!session.getTransaction().isActive()) {
+			session.beginTransaction();             
+		}
+		String hql = String.format("delete from ferias");
+	    NativeQuery nq = session.createNativeQuery(hql);
+	    nq.executeUpdate();
+	    session.getTransaction().commit();
 	}
 }

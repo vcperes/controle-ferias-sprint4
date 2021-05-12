@@ -29,7 +29,7 @@ public class TesteFeriasDAO {
 	
 	@Before
 	public void limparBanco() throws SQLException {
-		session.clear();
+		feriasDAO.limparTabela();
 	}
 
 	@Ignore

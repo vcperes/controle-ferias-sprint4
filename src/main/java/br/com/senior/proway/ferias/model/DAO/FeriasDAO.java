@@ -1,14 +1,12 @@
 package br.com.senior.proway.ferias.model.DAO;
 
-import static org.junit.Assert.fail;
-
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
 import org.hibernate.Session;
+import org.hibernate.query.NativeQuery;
 
 import br.com.senior.proway.ferias.model.Ferias;
 import br.com.senior.proway.ferias.model.enums.TiposFerias;
@@ -32,7 +30,7 @@ public class FeriasDAO implements Icrud<IFerias>, IConsultaDeFeriasPorTipoDAO, I
 	}
 	
 	/**
-	 * 
+	 * TODO
 	 * Metodo que realiza a busca de todas as ferias existentes no banco de dados.
 	 * 
 	 * Posteriormente armazena as ferias em uma lista (listaFerias) retornando os
@@ -167,8 +165,13 @@ public class FeriasDAO implements Icrud<IFerias>, IConsultaDeFeriasPorTipoDAO, I
 	}
 
 	public void limparTabela() {
-		PostgresConector.limparTabela("ferias");
-
+		if (!session.getTransaction().isActive()) {
+			session.beginTransaction();             
+		}
+		String hql = String.format("delete from ferias");
+	    NativeQuery nq = session.createNativeQuery(hql);
+	    nq.executeUpdate();
+	    session.getTransaction().commit();
 	}
 
 	public ArrayList<IFerias> pegarTodasAsFeriasPorTipo(TiposFerias tipo) {

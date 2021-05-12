@@ -7,7 +7,7 @@ public interface Icrud<T> {
 
 	public ArrayList<T> pegarTodos();
 	
-	public T pegarFeriasPorID(int id);
+	public T pegarFeriasPorID(String nomeDaTabela, int id);
 	
 	public boolean cadastrar(T objeto);
 	
