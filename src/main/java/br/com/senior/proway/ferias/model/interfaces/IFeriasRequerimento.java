@@ -7,9 +7,9 @@ import br.com.senior.proway.ferias.model.enums.EstadosRequerimentos;
 
 public interface IFeriasRequerimento {
 
-	public String getId();
+	public int getId();
 
-	public void setId(String identificadorUsuario);
+	public void setId(int identificadorUsuario);
 
 	public Ferias getFeriasRequisitada();
 

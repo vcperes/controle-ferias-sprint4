@@ -31,7 +31,7 @@ public class TesteRequerimento {
 		
 		RequerimentoDirector requerimentoDirector = new RequerimentoDirector();
 		RequerimentoBuilder requerimentoBuilder = new RequerimentoBuilder();
-		requerimentoDirector.createRequerimento(requerimentoBuilder, ferias, "IdentificardorUsuario123");
+		requerimentoDirector.createRequerimento(requerimentoBuilder, ferias, 123);
 		RequerimentoFerias feriasRequerimento = requerimentoBuilder.build();
 		
 		assertTrue(feriasRequerimento.getEstadoRequisicao() == EstadosRequerimentos.EM_ANALISE);
@@ -58,7 +58,7 @@ public class TesteRequerimento {
 		RequerimentoDirector requerimentoDirector = new RequerimentoDirector();
 		RequerimentoBuilder requerimentoBuilder = new RequerimentoBuilder();
 		
-		requerimentoDirector.createRequerimento(requerimentoBuilder, ferias, "IdentificardorUsuario123");
+		requerimentoDirector.createRequerimento(requerimentoBuilder, ferias, 123);
 		RequerimentoFerias feriasRequerimento = requerimentoBuilder.build();
 		
 		RequerimentoController controllerReq = new RequerimentoController();

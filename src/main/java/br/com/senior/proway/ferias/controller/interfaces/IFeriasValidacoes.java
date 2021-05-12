@@ -16,7 +16,6 @@ public interface IFeriasValidacoes {
 	 * @return true/false
 	 */
 	public boolean checarValidade(IFerias ferias, int creditos);
-
 	
 	/** Verifica se a data de inicio de ferias vem antes da data de fim desejado.
 	 * 

@@ -47,7 +47,7 @@ public class FeriasControllerTest {
 	@Test
 	public void testCadastrar() throws SQLException{
 		IFerias ferias = new Ferias();
-		ferias.setIdentificadorUsuario("0");
+		ferias.setIdentificadorUsuario(0);
 		ferias.setDataInicio(LocalDate.of(2021, 04, 01));
 		ferias.setDataFim(LocalDate.of(2021, 04, 10));
 		ferias.setDiasVendidos(0);
@@ -66,7 +66,7 @@ public class FeriasControllerTest {
 	@Test
 	public void testAlterar() throws SQLException {
 		IFerias ferias = new Ferias();
-		ferias.setIdentificadorUsuario("0");
+		ferias.setIdentificadorUsuario(0);
 		ferias.setDataInicio(LocalDate.of(2221, 04, 01));
 		ferias.setDataFim(LocalDate.of(2221, 04, 10));
 		ferias.setDiasVendidos(0);
@@ -74,7 +74,7 @@ public class FeriasControllerTest {
 		feriasController.cadastrar(ferias);
 		
 		IFerias ferias2 = new Ferias();
-		ferias2.setIdentificadorUsuario("1");
+		ferias2.setIdentificadorUsuario(1);
 		ferias2.setDataInicio(LocalDate.of(2221, 04, 01));
 		ferias2.setDataFim(LocalDate.of(2221, 04, 10));
 		ferias2.setDiasVendidos(0);
@@ -92,7 +92,7 @@ public class FeriasControllerTest {
 	@Test
 	public void testDeletar() throws SQLException {
 		IFerias ferias = new Ferias();
-		ferias.setIdentificadorUsuario("0");
+		ferias.setIdentificadorUsuario(0);
 		ferias.setDataInicio(LocalDate.of(2221, 04, 01));
 		ferias.setDataFim(LocalDate.of(2221, 04, 10));
 		ferias.setDiasVendidos(0);
@@ -111,7 +111,7 @@ public class FeriasControllerTest {
 	@Test
 	public void testPegarTodasAsFeriasPorTiposIguais() {
 		IFerias ferias = new Ferias();
-		ferias.setIdentificadorUsuario("0");
+		ferias.setIdentificadorUsuario(0);
 		ferias.setDataInicio(LocalDate.of(2221, 04, 01));
 		ferias.setDataFim(LocalDate.of(2221, 04, 10));
 		ferias.setDiasVendidos(0);
@@ -119,7 +119,7 @@ public class FeriasControllerTest {
 		feriasController.cadastrar(ferias);
 		
 		IFerias ferias2 = new Ferias();
-		ferias2.setIdentificadorUsuario("0");
+		ferias2.setIdentificadorUsuario(0);
 		ferias2.setDataInicio(LocalDate.of(2221, 04, 01));
 		ferias2.setDataFim(LocalDate.of(2221, 04, 10));
 		ferias2.setDiasVendidos(0);
@@ -133,7 +133,7 @@ public class FeriasControllerTest {
 	@Test
 	public void testPegarTodasAsFeriasPorTiposDiferentes() {
 		IFerias ferias = new Ferias();
-		ferias.setIdentificadorUsuario("0");
+		ferias.setIdentificadorUsuario(0);
 		ferias.setDataInicio(LocalDate.of(2221, 04, 01));
 		ferias.setDataFim(LocalDate.of(2221, 04, 10));
 		ferias.setDiasVendidos(0);
@@ -141,7 +141,7 @@ public class FeriasControllerTest {
 		feriasController.cadastrar(ferias);
 		
 		IFerias ferias2 = new Ferias();
-		ferias2.setIdentificadorUsuario("0");
+		ferias2.setIdentificadorUsuario(0);
 		ferias2.setDataInicio(LocalDate.of(2221, 04, 01));
 		ferias2.setDataFim(LocalDate.of(2221, 04, 10));
 		ferias2.setDiasVendidos(0);

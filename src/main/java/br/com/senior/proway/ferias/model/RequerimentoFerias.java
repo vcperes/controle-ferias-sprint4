@@ -3,6 +3,16 @@ package br.com.senior.proway.ferias.model;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.persistence.Transient;
+
 import br.com.senior.proway.ferias.model.enums.EstadosRequerimentos;
 import br.com.senior.proway.ferias.model.interfaces.IFeriasRequerimento;
 
@@ -17,14 +27,20 @@ import br.com.senior.proway.ferias.model.interfaces.IFeriasRequerimento;
  *         metodo de trazer o estado da requisicao que podera ser
  *         EM_ANALISE, APROVADO, REPROVADO.
  */
+@Entity
 public class RequerimentoFerias implements IFeriasRequerimento{
-	private String id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private int id;
 	private Ferias feriasRequisitada;
+	@Enumerated(EnumType.ORDINAL)
 	private EstadosRequerimentos estadoRequisicao;
+	@Temporal(TemporalType.DATE)
 	private LocalDate dataSolicitacao;
+	@Transient
 	public static short PRAZO_MINIMO_SOLICITACAO_FERIAS = 10;
 
-	public RequerimentoFerias(String id, Ferias feriasRequisitada, EstadosRequerimentos estadoRequisicao,LocalDate dataSolicitacao) {
+	public RequerimentoFerias(int id, Ferias feriasRequisitada, EstadosRequerimentos estadoRequisicao,LocalDate dataSolicitacao) {
 		this.id = id;
 		this.feriasRequisitada = feriasRequisitada;
 		this.estadoRequisicao = estadoRequisicao;
@@ -37,11 +53,11 @@ public class RequerimentoFerias implements IFeriasRequerimento{
 		this.dataSolicitacao = dataSolicitacao;
 	}
 	
-	public String getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 

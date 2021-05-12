@@ -38,7 +38,7 @@ public class FeriasDAO implements Icrud<IFerias>, IConsultaDeFeriasPorTipoDAO, I
 
 				ferias.setId(resultSet.getInt("id"));
 
-				ferias.setIdentificadorUsuario(resultSet.getString("idusuario"));
+				ferias.setIdentificadorUsuario(resultSet.getInt("idusuario"));
 
 				LocalDate localDateInicio = resultSet.getDate("dataInicio").toLocalDate();
 				ferias.setDataInicio(localDateInicio);
@@ -77,7 +77,7 @@ public class FeriasDAO implements Icrud<IFerias>, IConsultaDeFeriasPorTipoDAO, I
 			while (resultSet.next()) {
 				ferias.setId(resultSet.getInt("id"));
 
-				ferias.setIdentificadorUsuario(resultSet.getString("idusuario"));
+				ferias.setIdentificadorUsuario(resultSet.getInt("idusuario"));
 
 				LocalDate localDateInicio = resultSet.getDate("datainicio").toLocalDate();
 				ferias.setDataInicio(localDateInicio);
@@ -189,7 +189,7 @@ public class FeriasDAO implements Icrud<IFerias>, IConsultaDeFeriasPorTipoDAO, I
 				Ferias ferias = new Ferias();
 
 				ferias.setId(resultSet.getInt("id"));
-				ferias.setIdentificadorUsuario(resultSet.getString("idusuario"));
+				ferias.setIdentificadorUsuario(resultSet.getInt("idusuario"));
 
 				LocalDate localDataInicio = resultSet.getDate("dataInicio").toLocalDate();
 				ferias.setDataInicio(localDataInicio);
@@ -227,7 +227,7 @@ public class FeriasDAO implements Icrud<IFerias>, IConsultaDeFeriasPorTipoDAO, I
 				Ferias ferias2 = new Ferias();
 
 				ferias2.setId(resultSet.getInt("id"));
-				ferias2.setIdentificadorUsuario(resultSet.getString("idusuario"));
+				ferias2.setIdentificadorUsuario(resultSet.getInt("idusuario"));
 
 				LocalDate localDataInicio = resultSet.getDate("dataInicio").toLocalDate();
 				ferias2.setDataInicio(localDataInicio);

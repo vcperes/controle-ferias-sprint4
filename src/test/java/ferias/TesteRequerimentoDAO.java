@@ -48,7 +48,7 @@ public class TesteRequerimentoDAO {
 			short diasVendidos = 0;
 			Ferias ferias = new Ferias(inicio, fim, diasTotais, diasVendidos, tipo);
 			LocalDate localDateSolicitacao = LocalDate.of(2021, 05, 03);
-			RequerimentoFerias requerimentoFerias = new RequerimentoFerias("0", ferias, estadoRequerimento,
+			RequerimentoFerias requerimentoFerias = new RequerimentoFerias(0, ferias, estadoRequerimento,
 					localDateSolicitacao);
 			requerimentoDAO.cadastrar(requerimentoFerias);
 			String select = "SELECT * FROM requerimento WHERE id = 4;";
@@ -122,7 +122,7 @@ public class TesteRequerimentoDAO {
 			short diasTotais = 29;
 			short diasVendidos = 0;
 			Ferias ferias = new Ferias(inicio, fim, diasTotais, diasVendidos, tipo);
-			RequerimentoFerias requerimentoFerias = new RequerimentoFerias("0", ferias, estadoRequerimento,
+			RequerimentoFerias requerimentoFerias = new RequerimentoFerias(0, ferias, estadoRequerimento,
 					LocalDate.now());
 			requerimentoDAO.cadastrar(requerimentoFerias);
 			assertTrue(requerimentoDAO.alterar(1, requerimentoFerias));
@@ -152,7 +152,7 @@ public class TesteRequerimentoDAO {
 		RequerimentoDirector directorRequerimento = new RequerimentoDirector();
 		RequerimentoBuilder builderRequerimento = new RequerimentoBuilder();
 
-		directorRequerimento.createRequerimento(builderRequerimento, ferias, "Roberto");
+		directorRequerimento.createRequerimento(builderRequerimento, ferias, 123);
 		RequerimentoFerias feriasRequerimento = builderRequerimento.build();
 
 		RequerimentoDAO DAOFerias = new RequerimentoDAO();
@@ -234,7 +234,7 @@ public class TesteRequerimentoDAO {
 		RequerimentoDirector directorRequerimento = new RequerimentoDirector();
 		RequerimentoBuilder builderRequerimento = new RequerimentoBuilder();
 
-		directorRequerimento.createRequerimento(builderRequerimento, ferias, "Joana");
+		directorRequerimento.createRequerimento(builderRequerimento, ferias, 123);
 		RequerimentoFerias feriasRequerimento = builderRequerimento.build();
 
 		RequerimentoDAO DAOFerias = new RequerimentoDAO();
@@ -259,7 +259,7 @@ public class TesteRequerimentoDAO {
 		RequerimentoDirector directorRequerimento = new RequerimentoDirector();
 		RequerimentoBuilder builderRequerimento = new RequerimentoBuilder();
 
-		directorRequerimento.createRequerimento(builderRequerimento, ferias, "Joana");
+		directorRequerimento.createRequerimento(builderRequerimento, ferias, 123);
 		RequerimentoFerias feriasRequerimento = builderRequerimento.build();
 
 		RequerimentoDAO DAOFerias = new RequerimentoDAO();
@@ -284,7 +284,7 @@ public class TesteRequerimentoDAO {
 		RequerimentoDirector directorRequerimento = new RequerimentoDirector();
 		RequerimentoBuilder builderRequerimento = new RequerimentoBuilder();
 
-		directorRequerimento.createRequerimento(builderRequerimento, ferias, "Thiago");
+		directorRequerimento.createRequerimento(builderRequerimento, ferias, 123);
 		RequerimentoFerias feriasRequerimento = builderRequerimento.build();
 
 		RequerimentoDAO DAOFerias = new RequerimentoDAO();

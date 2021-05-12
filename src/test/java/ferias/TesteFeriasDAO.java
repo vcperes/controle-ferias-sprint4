@@ -60,7 +60,7 @@ public class TesteFeriasDAO {
 	@Test
 	public void testCadastrar() throws SQLException {
 		IFerias ferias = new Ferias();
-		ferias.setIdentificadorUsuario("0");
+		ferias.setIdentificadorUsuario(0);
 		ferias.setDataInicio(LocalDate.of(2021, 04, 01));
 		ferias.setDataFim(LocalDate.of(2021, 04, 10));
 		ferias.setDiasVendidos((short) 0);
@@ -83,7 +83,7 @@ public class TesteFeriasDAO {
 		}
 
 		IFerias ferias = new Ferias();
-		ferias.setIdentificadorUsuario("0");
+		ferias.setIdentificadorUsuario(0);
 		ferias.setDataInicio(LocalDate.of(2021, 04, 01));
 		ferias.setDataFim(LocalDate.of(2021, 04, 10));
 		ferias.setDiasVendidos((short) 0);

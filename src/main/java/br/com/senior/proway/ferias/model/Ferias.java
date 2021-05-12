@@ -2,6 +2,17 @@ package br.com.senior.proway.ferias.model;
 
 import java.time.LocalDate;
 
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.persistence.Transient;
+
 import br.com.senior.proway.ferias.model.enums.TiposFerias;
 import br.com.senior.proway.ferias.model.interfaces.IFerias;
 
@@ -15,15 +26,23 @@ import br.com.senior.proway.ferias.model.interfaces.IFerias;
  * @author Sprint2
  *
  */
+@Entity
 public class Ferias implements IFerias {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-	private String identificadorUsuario;
-	// FK Foreign Key do usuário - Setar no requerimento
-
+	
+	@ManyToOne
+	private int identificadorUsuario;
+	@Temporal(TemporalType.DATE)
 	private LocalDate dataInicio;
+	@Temporal(TemporalType.DATE)
 	private LocalDate dataFim;
+	@Transient
 	private int diasTotaisRequisitados;
 	private int diasVendidos;
+	@Enumerated(EnumType.ORDINAL)
 	private TiposFerias tipoFerias;
 
 	public Ferias() {
@@ -47,11 +66,11 @@ public class Ferias implements IFerias {
 		return this.id;
 	}
 
-	public String getIdentificadorUsuario() {
+	public int getIdentificadorUsuario() {
 		return this.identificadorUsuario;
 	}
 
-	public void setIdentificadorUsuario(String valor) {
+	public void setIdentificadorUsuario(int valor) {
 		this.identificadorUsuario = valor;
 	}
 
