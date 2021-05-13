@@ -30,7 +30,7 @@ public class DBConnection {
 					.setProperty("hibernate.jdbc.time_zone", "UTC")
 					.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect")
 					.setProperty("hibernate.show_sql", "true").setProperty("hibernate.format_sql", "false")
-					.setProperty("hibernate.hbm2ddl.auto", "update")
+					.setProperty("hibernate.hbm2ddl.auto", "create")
 					.setProperty("hibernate.connection.autocommit", "true").addAnnotatedClass(Ferias.class)
 					.addAnnotatedClass(Requerimento.class).buildSessionFactory();
 		} catch (Throwable e) {
