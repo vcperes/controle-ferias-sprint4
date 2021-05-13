@@ -4,6 +4,9 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.List;
+
+import org.hibernate.Session;
 
 import br.com.senior.proway.ferias.model.Requerimento;
 import br.com.senior.proway.ferias.model.DAO.RequerimentoDAO;
@@ -11,18 +14,27 @@ import br.com.senior.proway.ferias.model.enums.EstadosRequerimentos;
 
 public class RequerimentoController {
 
-	RequerimentoDAO requerimentoDao = new RequerimentoDAO();
-
+	private static RequerimentoDAO requerimentoDao;
+	private static RequerimentoController requerimentoController;
+		
+	public static RequerimentoController getInstance(Session session) {
+		requerimentoDao = RequerimentoDAO.getInstance(session);
+		if(requerimentoController == null) {
+			requerimentoController = new RequerimentoController();
+		}
+		return requerimentoController;
+	}	
+		
 	/**
 	 * Get All.
 	 * 
-	 * Controlller faz contato com o FeriasRequerimentoDAO, que retorna uma lista de
+	 * Controlller faz contato com o RequerimentoDAO, que retorna uma lista de
 	 * todos os requerimentos de ferias.
 	 * 
 	 * @return ArrayList<FeriasRequerimento>
 	 */
-	public ArrayList<Requerimento> getAllRequerimentos() {
-		ArrayList<Requerimento> feriasRequerimento = requerimentoDao.pegarTodos();
+	public List<Requerimento> getAllRequerimentos() {
+		List<Requerimento> feriasRequerimento = requerimentoDao.pegarTodos();
 		return feriasRequerimento;
 	}
 
@@ -35,8 +47,8 @@ public class RequerimentoController {
 	 * @param short id
 	 * @return FeriasRequerimento
 	 */
-	public Requerimento getRequerimentoPorId(short id) {
-		Requerimento feriasRequerimento = requerimentoDao.pegarFeriasPorID(id);
+	public Requerimento getRequerimentoPorId(Integer id) {
+		Requerimento feriasRequerimento = requerimentoDao.pegarRequerimentoPorID(id);
 		return feriasRequerimento;
 	}
 
@@ -65,9 +77,9 @@ public class RequerimentoController {
 	 * @param id                 (int)
 	 * @param feriasRequerimento (FeriasRequerimento)
 	 */
-	public boolean updateRequerimentoPorId(int id, Requerimento feriasRequerimento) throws SQLException {
+	public boolean updateRequerimentoPorId(Requerimento feriasRequerimento) {
 
-		requerimentoDao.alterar(id, feriasRequerimento);
+		requerimentoDao.alterar(feriasRequerimento);
 		return true;
 	}
 
@@ -79,9 +91,9 @@ public class RequerimentoController {
 	 * 
 	 * @param id (short)
 	 */
-	public void deleteRequerimentoPorId(short id) {
+	public void deleteRequerimentoPorId(Requerimento requerimento) {
 		RequerimentoDAO feriasRequerimentoDAO = new RequerimentoDAO();
-		feriasRequerimentoDAO.deletar(id);
+		feriasRequerimentoDAO.deletar(requerimento);
 	}
 
 	/*
