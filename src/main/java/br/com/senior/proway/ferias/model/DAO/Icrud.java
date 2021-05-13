@@ -10,7 +10,7 @@ public interface Icrud<T> {
 	public List<Ferias> pegarTodos();
 	
 	public T pegarFeriasPorID(Integer id);
-	
+
 	public boolean cadastrar(T objeto);
 	
 	public boolean alterar(T objeto) throws SQLException;

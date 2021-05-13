@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import br.com.senior.proway.ferias.model.enums.EstadosRequerimentos;
@@ -26,6 +27,7 @@ import br.com.senior.proway.ferias.model.interfaces.IFeriasRequerimento;
  *         EM_ANALISE, APROVADO, REPROVADO.
  */
 @Entity
+@Table (name = "requerimento")
 public class Requerimento implements IFeriasRequerimento{
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

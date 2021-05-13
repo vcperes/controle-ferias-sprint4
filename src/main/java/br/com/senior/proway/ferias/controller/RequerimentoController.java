@@ -36,7 +36,7 @@ public class RequerimentoController {
 	 * @return FeriasRequerimento
 	 */
 	public Requerimento getRequerimentoPorId(short id) {
-		Requerimento feriasRequerimento = requerimentoDao.pegarFeriasPorID(id);
+		Requerimento feriasRequerimento = requerimentoDao.pegarRequerimentoPorID(id);
 		return feriasRequerimento;
 	}
 

@@ -1,5 +1,4 @@
 package br.com.senior.proway.ferias.model.DAO;
-
 import java.util.List;
 
 import javax.persistence.Query;
@@ -7,8 +6,13 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaDelete;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.ArrayList;
 
 import org.hibernate.Session;
+import org.hibernate.query.NativeQuery;
 
 import br.com.senior.proway.ferias.model.Ferias;
 import br.com.senior.proway.ferias.model.enums.TiposFerias;
@@ -31,7 +35,7 @@ public class FeriasDAO implements Icrud<IFerias>, IConsultaDeFeriasPorTipoDAO, I
 	}
 
 	/**
-	 * 
+	 * TODO
 	 * Metodo que realiza a busca de todas as ferias existentes no banco de dados.
 	 * 
 	 * Posteriormente armazena as ferias em uma lista (listaFerias) retornando os
