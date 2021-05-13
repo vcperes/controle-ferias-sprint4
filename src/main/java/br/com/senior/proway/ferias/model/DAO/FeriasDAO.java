@@ -42,13 +42,13 @@ public class FeriasDAO implements Icrud<IFerias>, IConsultaDeFeriasPorTipoDAO, I
 	 * @return listaFerias.
 	 * 
 	 */
-	public List<Ferias> pegarTodos() {
+	public List<IFerias> pegarTodos() {
 		CriteriaBuilder builder = session.getCriteriaBuilder();
 		CriteriaQuery<Ferias> criteria = builder.createQuery(Ferias.class);
 		Root<Ferias> root = criteria.from(Ferias.class);
 		CriteriaQuery<Ferias> rootQuery = criteria.select(root);
 		Query query = session.createQuery(rootQuery);
-		List<Ferias> selectedFerias = query.getResultList();
+		List<IFerias> selectedFerias = query.getResultList();
 		return selectedFerias;
 		// return listaFerias;
 	}
@@ -150,7 +150,7 @@ public class FeriasDAO implements Icrud<IFerias>, IConsultaDeFeriasPorTipoDAO, I
 	 * @return ArrayList<IFerias> Lista de objetos do tipo IFerias.
 	 * 
 	 */
-	public List<Ferias> pegarTodasAsFeriasPorIDColaborador(int idUsuarioEntrada) {
+	public List<IFerias> pegarTodasAsFeriasPorIDColaborador(int idUsuarioEntrada) {
 
 		CriteriaBuilder builder = session.getCriteriaBuilder();
 		CriteriaQuery<Ferias> criteria = builder.createQuery(Ferias.class);
@@ -159,11 +159,11 @@ public class FeriasDAO implements Icrud<IFerias>, IConsultaDeFeriasPorTipoDAO, I
 
 		criteria.select(root).where(builder.equal(root.get("identificadorUsuario"), idUsuarioEntrada));
 		Query query = session.createQuery(criteria);
-		List<Ferias> todasFerias = query.getResultList();
+		List<IFerias> todasFerias = query.getResultList();
 		return todasFerias;
 	}
 
-	public List<Ferias> pegarTodasAsFeriasPorTipo(TiposFerias tipoEntrada) {
+	public List<IFerias> pegarTodasAsFeriasPorTipo(TiposFerias tipoEntrada) {
 
 		CriteriaBuilder builder = session.getCriteriaBuilder();
 		CriteriaQuery<Ferias> criteria = builder.createQuery(Ferias.class);
@@ -172,12 +172,12 @@ public class FeriasDAO implements Icrud<IFerias>, IConsultaDeFeriasPorTipoDAO, I
 
 		criteria.select(root).where(builder.equal(root.get("tipoFerias"), tipoEntrada.getValor()));
 		Query query = session.createQuery(criteria);
-		List<Ferias> todasFerias = query.getResultList();
+		List<IFerias> todasFerias = query.getResultList();
 		return todasFerias;
 
 	}
 
-	public List<Ferias> pegarTodasAsFeriasPorDataInicio(LocalDate dataRecebida) {
+	public List<IFerias> pegarTodasAsFeriasPorDataInicio(LocalDate dataRecebida) {
 
 		CriteriaBuilder builder = session.getCriteriaBuilder();
 		CriteriaQuery<Ferias> criteria = builder.createQuery(Ferias.class);
@@ -186,7 +186,7 @@ public class FeriasDAO implements Icrud<IFerias>, IConsultaDeFeriasPorTipoDAO, I
 
 		criteria.select(root).where(builder.equal(root.get("dataInicio"), dataRecebida));
 		Query query = session.createQuery(criteria);
-		List<Ferias> todasFerias = query.getResultList();
+		List<IFerias> todasFerias = query.getResultList();
 		return todasFerias;
 
 	}

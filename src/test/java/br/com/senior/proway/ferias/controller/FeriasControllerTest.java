@@ -7,46 +7,33 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
-import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 
 import br.com.senior.proway.ferias.model.Ferias;
-import br.com.senior.proway.ferias.model.DAO.FeriasDAO;
+import br.com.senior.proway.ferias.model.FeriasBuilder;
+import br.com.senior.proway.ferias.model.FeriasDirector;
 import br.com.senior.proway.ferias.model.enums.TiposFerias;
 import br.com.senior.proway.ferias.model.interfaces.IFerias;
 import br.com.senior.proway.ferias.postgresql.PostgresConector;
 
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class FeriasControllerTest {
-	
+
 	FeriasController feriasController = new FeriasController();
-	FeriasDAO feriasDAO = new FeriasDAO();
-	
-	@Before
-	public void limparBanco () {
-		feriasDAO.limparTabela();
-	}
 
 	@Test
-	public void testPegarTodos() throws SQLException {
-		String inserir = "INSERT INTO ferias (idusuario, datainicio, datafim, diasvendidos, idtipoferias) VALUES(0, '03/05/2021', '13/06/2021', 0, 3)";
-		PostgresConector.executarUpdateQuery(inserir);
-		String inserir2 = "INSERT INTO ferias (idusuario, datainicio, datafim, diasvendidos, idtipoferias) VALUES(0, '03/05/2021', '13/06/2021', 0, 3)";
-		PostgresConector.executarUpdateQuery(inserir2);
-		assertEquals(feriasController.pegarTodos().size(), 2);
-	}
-
-	@Test
-	public void testPegarFeriasPorId() throws SQLException {
-		String inserir = "INSERT INTO ferias (idusuario, datainicio, datafim, diasvendidos, idtipoferias) VALUES(0, '03/05/2021', '13/06/2021', 0, 3)";
-		PostgresConector.executarUpdateQuery(inserir);
-		
-		assertEquals(feriasController.pegarFeriasPorId(1).getDataInicio(), LocalDate.of(2021, 05, 03) );
-	}
-
-	@Test
-	public void testCadastrar() throws SQLException{
+	public void AtestCadastrar() throws SQLException {
 		IFerias ferias = new Ferias();
+		FeriasDirector director = new FeriasDirector();
+		FeriasBuilder builder = new FeriasBuilder();
+
+		director.createFeriasParcial(builder, LocalDate.of(2021, 5, 1), LocalDate.of(2021, 5, 22), (short) 30);
+		Ferias ferias2 = builder.build(30);
+		feriasController.cadastrar(ferias2);
 		ferias.setIdentificadorUsuario(0);
 		ferias.setDataInicio(LocalDate.of(2021, 04, 01));
 		ferias.setDataFim(LocalDate.of(2021, 04, 10));
@@ -54,102 +41,72 @@ public class FeriasControllerTest {
 		ferias.setTipo(TiposFerias.PARCIAL);
 
 		feriasController.cadastrar(ferias);
-		String select = "Select * from ferias;";
-		ResultSet rs = PostgresConector.executarQuery(select);
-		if(rs.next()) {
-			assertEquals(0, rs.getInt(2));
-		} else {
-			fail("Não foi encontrado nenhum item no banco de dados");
-		}
+		Ferias feriasdb = (Ferias) feriasController.pegarFeriasPorId(1);
+		assertEquals(1, feriasdb.getId());
 	}
 
 	@Test
-	public void testAlterar() throws SQLException {
+	public void BtestAlterar() throws SQLException {
 		IFerias ferias = new Ferias();
-		ferias.setIdentificadorUsuario(0);
+		ferias.setIdentificadorUsuario(1);
 		ferias.setDataInicio(LocalDate.of(2221, 04, 01));
 		ferias.setDataFim(LocalDate.of(2221, 04, 10));
 		ferias.setDiasVendidos(0);
 		ferias.setTipo(TiposFerias.PARCIAL);
 		feriasController.cadastrar(ferias);
-		
-		IFerias ferias2 = new Ferias();
-		ferias2.setIdentificadorUsuario(1);
-		ferias2.setDataInicio(LocalDate.of(2221, 04, 01));
-		ferias2.setDataFim(LocalDate.of(2221, 04, 10));
-		ferias2.setDiasVendidos(0);
-		ferias2.setTipo(TiposFerias.PARCIAL);
-		feriasController.alterar(1, ferias2);
-		String select = "Select * from ferias;";
-		ResultSet rs = PostgresConector.executarQuery(select);
-		if(rs.next()) {
-			assertEquals(1, rs.getInt(2));
-		} else {
-			fail("Não foi encontrado nenhum item no banco de dados");
-		}
+		ferias.setDiasVendidos(2);
+		feriasController.alterar(ferias);
+		assertEquals(2, feriasController.pegarFeriasPorId(2).getDiasVendidos());
 	}
 
 	@Test
-	public void testDeletar() throws SQLException {
-		IFerias ferias = new Ferias();
-		ferias.setIdentificadorUsuario(0);
+	public void CtestPegarTodos() throws SQLException {
+		assertEquals(2, feriasController.pegarTodos().size());
+	}
+
+	@Test
+	public void DtestPegarFeriasPorId() throws SQLException {
+		Ferias ferias = new Ferias();
+		ferias.setIdentificadorUsuario(1);
 		ferias.setDataInicio(LocalDate.of(2221, 04, 01));
 		ferias.setDataFim(LocalDate.of(2221, 04, 10));
 		ferias.setDiasVendidos(0);
 		ferias.setTipo(TiposFerias.PARCIAL);
 		feriasController.cadastrar(ferias);
-		
-		feriasController.deletar(1);
-		
-		String select = "Select * from ferias;";
-		ResultSet rs = PostgresConector.executarQuery(select);
-		if(rs.next()) {
-			fail("O banco não está vazio");
-		} 
+		assertEquals(ferias, feriasController.pegarFeriasPorId(3));
 	}
 
 	@Test
-	public void testPegarTodasAsFeriasPorTiposIguais() {
+	public void EtestCPegarFeriasPorTipo() {
 		IFerias ferias = new Ferias();
 		ferias.setIdentificadorUsuario(0);
-		ferias.setDataInicio(LocalDate.of(2221, 04, 01));
+		ferias.setDataInicio(LocalDate.of(2220, 02, 9));
 		ferias.setDataFim(LocalDate.of(2221, 04, 10));
 		ferias.setDiasVendidos(0);
 		ferias.setTipo(TiposFerias.TOTAL);
 		feriasController.cadastrar(ferias);
-		
-		IFerias ferias2 = new Ferias();
-		ferias2.setIdentificadorUsuario(0);
-		ferias2.setDataInicio(LocalDate.of(2221, 04, 01));
-		ferias2.setDataFim(LocalDate.of(2221, 04, 10));
-		ferias2.setDiasVendidos(0);
-		ferias2.setTipo(TiposFerias.TOTAL);
-		feriasController.cadastrar(ferias);
-		
-		ArrayList<IFerias> feriases = feriasController.pegarTodasAsFeriasPorTipo(TiposFerias.TOTAL);
-		assertEquals(feriases.size(), 2);
+
+		assertEquals(3, feriasController.pegarTodasAsFeriasPorTipo(TiposFerias.PARCIAL).size());
 	}
-	
+
 	@Test
-	public void testPegarTodasAsFeriasPorTiposDiferentes() {
+	public void FtestPegarFeriasPorData() {
+
+		assertEquals(2, feriasController.pegarTodasAsFeriasPorDataInicio(LocalDate.of(2221, 04, 01)).size());
+	}
+
+	@Test
+	public void GtestDeletar() throws SQLException {
 		IFerias ferias = new Ferias();
 		ferias.setIdentificadorUsuario(0);
-		ferias.setDataInicio(LocalDate.of(2221, 04, 01));
+		ferias.setDataInicio(LocalDate.of(2220, 02, 9));
 		ferias.setDataFim(LocalDate.of(2221, 04, 10));
 		ferias.setDiasVendidos(0);
 		ferias.setTipo(TiposFerias.TOTAL);
 		feriasController.cadastrar(ferias);
-		
-		IFerias ferias2 = new Ferias();
-		ferias2.setIdentificadorUsuario(0);
-		ferias2.setDataInicio(LocalDate.of(2221, 04, 01));
-		ferias2.setDataFim(LocalDate.of(2221, 04, 10));
-		ferias2.setDiasVendidos(0);
-		ferias2.setTipo(TiposFerias.PARCIAL);
-		feriasController.cadastrar(ferias2);
-		
-		ArrayList<IFerias> feriases = feriasController.pegarTodasAsFeriasPorTipo(TiposFerias.TOTAL);
-		assertEquals(feriases.size(), 1);
+
+		feriasController.deletar(ferias);
+		assertEquals(4, feriasController.pegarTodos().size());
 	}
 
 }
