@@ -1,13 +1,15 @@
 package br.com.senior.proway.ferias.model.DAO;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.List;
+
+import br.com.senior.proway.ferias.model.Ferias;
 
 public interface Icrud<T> {
 
-	public ArrayList<T> pegarTodos();
+	public List<Ferias> pegarTodos();
 	
-	public T pegarFeriasPorID(int id);
+	public T pegarFeriasPorID(Integer id);
 	
 	public boolean cadastrar(T objeto);
 	
