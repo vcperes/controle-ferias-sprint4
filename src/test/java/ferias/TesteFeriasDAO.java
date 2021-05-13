@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Session;
-import org.junit.Ignore;
+import org.junit.Before;
 import org.junit.Test;
 
 import br.com.senior.proway.ferias.model.Ferias;
@@ -24,7 +24,7 @@ public class TesteFeriasDAO {
 	FeriasDAO feriasDAO = FeriasDAO.getInstance(session);
 	ArrayList<Ferias> ferias = new ArrayList<Ferias>();
 	
-	@Ignore
+	@Before
 	public void limparBanco() throws SQLException {
 		feriasDAO.limparTabela();
 	}
@@ -40,8 +40,6 @@ public class TesteFeriasDAO {
 		ferias.setTipo(TiposFerias.VENDIDA); 
 		feriasDAO.cadastrar(ferias);
 		assertTrue(feriasDAO.pegarTodos().size()==1);
-		
-		
 	}
 	@Test
 	public void testPegarTodos() throws SQLException {
@@ -53,7 +51,7 @@ public class TesteFeriasDAO {
 		ferias.setTipo(TiposFerias.VENDIDA);
 		feriasDAO.cadastrar(ferias);
 		
-		List<Ferias> listaFerias = feriasDAO.pegarTodos();
+		List<IFerias> listaFerias = feriasDAO.pegarTodos();
 		assertTrue(listaFerias.size() == 10);
 		feriasDAO.deletar(ferias);
 	}
@@ -69,7 +67,7 @@ public class TesteFeriasDAO {
 		feriasDAO.cadastrar(ferias);
 		
 		Ferias feriasRecebido = feriasDAO.pegarFeriasPorID(18);
-		assertEquals(18, feriasRecebido.getId());
+		assertEquals(feriasDAO.pegarTodos().get(0).getId(), feriasRecebido.getId());
 		feriasDAO.deletar(ferias);
 	}
 
@@ -120,7 +118,7 @@ public class TesteFeriasDAO {
 		feriasDAO.cadastrar(ferias);
 		List<Ferias> listaFerias = feriasDAO.pegarTodasAsFeriasPorIDColaborador(0);
 		
-		assertTrue(listaFerias.size() == 4);
+		assertTrue(listaFerias.size() == 1);
 		feriasDAO.deletar(ferias);
 	}
 
@@ -132,11 +130,11 @@ public class TesteFeriasDAO {
 		ferias.setDataInicio(LocalDate.of(2021, 04, 01));
 		ferias.setDataFim(LocalDate.of(2021, 04, 10));
 		ferias.setDiasVendidos((short) 0);
-		ferias.setTipo(TiposFerias.PARCIAL);
+		ferias.setTipo(TiposFerias.VENDIDA);
 		feriasDAO.cadastrar(ferias);
 		List<Ferias> listaFerias = feriasDAO.pegarTodasAsFeriasPorTipo(TiposFerias.VENDIDA);
 		
-		assertTrue(listaFerias.size() == 4);
+		assertTrue(listaFerias.size() == 1);
 		feriasDAO.deletar(ferias);
 		
 	}

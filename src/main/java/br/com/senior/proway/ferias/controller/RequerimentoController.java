@@ -11,7 +11,19 @@ import br.com.senior.proway.ferias.model.enums.EstadosRequerimentos;
 
 public class RequerimentoController {
 
-	RequerimentoDAO requerimentoDao = new RequerimentoDAO();
+	RequerimentoDAO requerimentoDao;
+	private RequerimentoController requerimentoController;
+	
+	private RequerimentoController getInstance() {
+		if(requerimentoController == null) {
+			this.requerimentoController = new RequerimentoController();
+		} 
+		return this.requerimentoController;
+	}
+	
+	public RequerimentoController() {
+		
+	}
 
 	/**
 	 * Get All.

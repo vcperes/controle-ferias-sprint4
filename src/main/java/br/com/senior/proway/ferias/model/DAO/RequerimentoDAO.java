@@ -1,24 +1,18 @@
 package br.com.senior.proway.ferias.model.DAO;
 
-import static org.junit.Assert.fail;
-
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
 import org.hibernate.Session;
-import org.hibernate.query.NativeQuery;
 
-import br.com.senior.proway.ferias.model.Ferias;
 import br.com.senior.proway.ferias.model.Requerimento;
 import br.com.senior.proway.ferias.model.enums.EstadosRequerimentos;
-import br.com.senior.proway.ferias.postgresql.PostgresConector;
 
 public class RequerimentoDAO implements Icrud<Requerimento> {
 	
@@ -51,7 +45,7 @@ public class RequerimentoDAO implements Icrud<Requerimento> {
 	 * @author Bruna Carvalho <sh4323202@gmail.com>
 	 * @author Daniella Lira <dev.danilira@gmail.com>
 	 */
-	public ArrayList<Requerimento> pegarTodos() {
+	public List<Requerimento> pegarTodos() {
 		CriteriaBuilder cb = session.getCriteriaBuilder();
 	    CriteriaQuery<Requerimento> cq = cb.createQuery(Requerimento.class);
 	    Root<Requerimento> rootEntry = cq.from(Requerimento.class);
@@ -59,7 +53,7 @@ public class RequerimentoDAO implements Icrud<Requerimento> {
 
 
 	    TypedQuery<Requerimento> allQuery = session.createQuery(all);
-	    return  (ArrayList<Requerimento>) allQuery.getResultList();
+	    return  allQuery.getResultList();
 	}
 
 	/**
@@ -173,33 +167,17 @@ public class RequerimentoDAO implements Icrud<Requerimento> {
 	 * 
 	 */
 
-	public ArrayList<Requerimento> getRequerimentoPorEstado(EstadosRequerimentos estado) {
+	public List<Requerimento> getRequerimentoPorEstado(EstadosRequerimentos estado) {
 
-		ArrayList<Requerimento> listaRequerimento = new ArrayList<Requerimento>();
+		CriteriaBuilder builder = session.getCriteriaBuilder();
+		CriteriaQuery<Requerimento> criteria = builder.createQuery(Requerimento.class);
 
-		try {
+		Root<Requerimento> root = criteria.from(Requerimento.class);
 
-			PostgresConector.conectar();
-			String select = "SELECT * FROM requerimento WHERE idestadorequisicao = " + estado.getValor() + ";";
-			ResultSet rs = PostgresConector.executarQuery(select);
-
-			while (rs.next()) {
-				int id = rs.getInt("id");
-				FeriasDAO feriasDao = new FeriasDAO();
-				int idFerias = rs.getInt("idFerias");
-				Ferias ferias = (Ferias) feriasDao.pegarRequerimentoPorID(idFerias);
-				LocalDate localDate = rs.getDate("datasolicitacao").toLocalDate();
-				Requerimento requerimento = new Requerimento(id, ferias, estado, localDate);
-				listaRequerimento.add(requerimento);
-			}
-
-			return listaRequerimento;
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-			fail(e.getMessage());
-		}
-		return listaRequerimento;
+		criteria.select(root).where(builder.equal(root.get("estadoRequisicao"), estado.getValor()));
+		Query query = session.createQuery(criteria);
+		List<Requerimento> requerimentos = query.getResultList();
+		return requerimentos;
 	}
 
 	/**
@@ -217,42 +195,24 @@ public class RequerimentoDAO implements Icrud<Requerimento> {
 	 * @return ArrayList<RequerimentoFerias>
 	 */
 
-	public ArrayList<Requerimento> getRequerimentoPorData(LocalDate dataParaPesquisa) {
-		ArrayList<Requerimento> listaRequerimento = new ArrayList<Requerimento>();
+	public List<Requerimento> getRequerimentoPorData(LocalDate dataParaPesquisa) {
 
-		try {
+		CriteriaBuilder builder = session.getCriteriaBuilder();
+		CriteriaQuery<Requerimento> criteria = builder.createQuery(Requerimento.class);
 
-			PostgresConector.conectar();
-			String select = "SELECT * FROM requerimento WHERE datasolicitacao = '" + dataParaPesquisa + "';";
-			ResultSet rs = PostgresConector.executarQuery(select);
+		Root<Requerimento> root = criteria.from(Requerimento.class);
 
-			while (rs.next()) {
-				FeriasDAO feriasDao = new FeriasDAO();
-				int idFerias = rs.getInt("idFerias");
-				Ferias ferias = (Ferias) feriasDao.pegarRequerimentoPorID(idFerias);
-				EstadosRequerimentos estadorequerimento = EstadosRequerimentos
-						.pegarPorValor(rs.getInt("idestadorequisicao"));
-				LocalDate localDate = rs.getDate("datasolicitacao").toLocalDate();
-				Requerimento requerimento = new Requerimento(rs.getInt("id"), ferias, estadorequerimento,
-						localDate);
-				listaRequerimento.add(requerimento);
-			}
-
-			return listaRequerimento;
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-			fail(e.getMessage());
-
-		}
-		return listaRequerimento;
+		criteria.select(root).where(builder.equal(root.get("dataSolicitacao"), dataParaPesquisa));
+		Query query = session.createQuery(criteria);
+		List<Requerimento> requerimentos = query.getResultList();
+		return requerimentos;
 	}
 
 	public void limparTabela() {
 		if (!session.getTransaction().isActive()) {
 			session.beginTransaction();             
 		}
-       	String hql = String.format("drop table requerimento");
+       	String hql = String.format("truncate table requerimento");
 	    session.createSQLQuery(hql).executeUpdate();
 	    session.getTransaction().commit();
 	}

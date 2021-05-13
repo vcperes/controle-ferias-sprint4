@@ -5,10 +5,10 @@ package br.com.senior.proway.ferias.model.enums;
  *
  */
 public enum EstadosRequerimentos {
-	EM_ANALISE(1),
-	APROVADO(2),
-	REPROVADO(3),
-	INVALIDO(4);
+	EM_ANALISE(0),
+	APROVADO(1),
+	REPROVADO(2),
+	INVALIDO(3);
 	
 	private int valor;
 	
@@ -21,13 +21,13 @@ public enum EstadosRequerimentos {
 	
 	public static EstadosRequerimentos pegarPorValor(int valor) {
 		switch(valor) {
-		case 1:
+		case 0:
 			return EstadosRequerimentos.EM_ANALISE;
-		case 2:
+		case 1:
 			return EstadosRequerimentos.APROVADO;
-		case 3:
+		case 2:
 			return EstadosRequerimentos.REPROVADO;
-		case 4:
+		case 3:
 			return EstadosRequerimentos.INVALIDO;
 		default:
 			return null;
