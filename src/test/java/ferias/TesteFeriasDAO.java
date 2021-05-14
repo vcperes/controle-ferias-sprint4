@@ -8,7 +8,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 import org.hibernate.Session;
-import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -56,7 +55,7 @@ public class TesteFeriasDAO {
 		ferias.setTipo(TiposFerias.VENDIDA);
 		feriasDAO.cadastrar(ferias);
 
-		List<Ferias> listaFerias = feriasDAO.pegarTodos();
+		List<IFerias> listaFerias = feriasDAO.pegarTodos();
 		assertTrue(listaFerias.size() == 1);
 		feriasDAO.deletar(ferias);
 	}
@@ -120,7 +119,7 @@ public class TesteFeriasDAO {
 		ferias.setDiasVendidos((short) 0);
 		ferias.setTipo(TiposFerias.PARCIAL);
 		feriasDAO.cadastrar(ferias);
-		List<Ferias> listaFerias = feriasDAO.pegarTodasAsFeriasPorIDColaborador(0);
+		List<IFerias> listaFerias = feriasDAO.pegarTodasAsFeriasPorIDColaborador(0);
 
 		assertTrue(listaFerias.size() == 1);
 		feriasDAO.deletar(ferias);
@@ -136,7 +135,7 @@ public class TesteFeriasDAO {
 		ferias.setDiasVendidos((short) 0);
 		ferias.setTipo(TiposFerias.PARCIAL);
 		feriasDAO.cadastrar(ferias);
-		List<Ferias> listaFerias = feriasDAO.pegarTodasAsFeriasPorTipo(TiposFerias.VENDIDA);
+		List<IFerias> listaFerias = feriasDAO.pegarTodasAsFeriasPorTipo(TiposFerias.VENDIDA);
 
 		assertTrue(listaFerias.size() == 1);
 		feriasDAO.deletar(ferias);
@@ -153,7 +152,7 @@ public class TesteFeriasDAO {
 		ferias.setDiasVendidos((short) 0);
 		ferias.setTipo(TiposFerias.TOTAL);
 		feriasDAO.cadastrar(ferias);
-		List<Ferias> listaFerias = feriasDAO.pegarTodasAsFeriasPorDataInicio(LocalDate.of(2021, 7, 10));
+		List<IFerias> listaFerias = feriasDAO.pegarTodasAsFeriasPorDataInicio(LocalDate.of(2021, 7, 10));
 		assertTrue(listaFerias.size() == 1);
 	}
 }
