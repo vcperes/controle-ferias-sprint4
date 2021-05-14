@@ -4,9 +4,6 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.List;
-
-import org.hibernate.Session;
 
 import br.com.senior.proway.ferias.model.Requerimento;
 import br.com.senior.proway.ferias.model.DAO.RequerimentoDAO;
@@ -14,29 +11,18 @@ import br.com.senior.proway.ferias.model.enums.EstadosRequerimentos;
 
 public class RequerimentoController {
 
-	private static RequerimentoDAO requerimentoDao;
-	private static RequerimentoController requerimentoController;
-	private static Session session;
-		
-	public static RequerimentoController getInstance(Session session) {
-		requerimentoDao = RequerimentoDAO.getInstance(session);
-		RequerimentoController.session = session;
-		if(requerimentoController == null) {
-			requerimentoController = new RequerimentoController();
-		}
-		return requerimentoController;
-	}	
-		
+	RequerimentoDAO requerimentoDao = new RequerimentoDAO();
+
 	/**
 	 * Get All.
 	 * 
-	 * Controlller faz contato com o RequerimentoDAO, que retorna uma lista de
+	 * Controlller faz contato com o FeriasRequerimentoDAO, que retorna uma lista de
 	 * todos os requerimentos de ferias.
 	 * 
 	 * @return ArrayList<FeriasRequerimento>
 	 */
-	public List<Requerimento> getAllRequerimentos() {
-		List<Requerimento> feriasRequerimento = requerimentoDao.pegarTodos();
+	public ArrayList<Requerimento> getAllRequerimentos() {
+		ArrayList<Requerimento> feriasRequerimento = requerimentoDao.pegarTodos();
 		return feriasRequerimento;
 	}
 
@@ -49,8 +35,8 @@ public class RequerimentoController {
 	 * @param short id
 	 * @return FeriasRequerimento
 	 */
-	public Requerimento getRequerimentoPorId(Integer id) {
-		Requerimento feriasRequerimento = requerimentoDao.pegarRequerimentoPorID(id);
+	public Requerimento getRequerimentoPorId(short id) {
+		Requerimento feriasRequerimento = requerimentoDao.pegarFeriasPorID(id);
 		return feriasRequerimento;
 	}
 
@@ -64,7 +50,7 @@ public class RequerimentoController {
 	 * @param Requerimento requerimento
 	 */
 	public void createRequerimento(Requerimento requerimento) {
-		RequerimentoDAO feriasRequerimentoDAO = RequerimentoDAO.getInstance(session);
+		RequerimentoDAO feriasRequerimentoDAO = new RequerimentoDAO();
 
 		feriasRequerimentoDAO.cadastrar(requerimento);
 	}
@@ -79,9 +65,9 @@ public class RequerimentoController {
 	 * @param id                 (int)
 	 * @param feriasRequerimento (FeriasRequerimento)
 	 */
-	public boolean updateRequerimentoPorId(Requerimento feriasRequerimento) {
+	public boolean updateRequerimentoPorId(int id, Requerimento feriasRequerimento) throws SQLException {
 
-		requerimentoDao.alterar(feriasRequerimento);
+		requerimentoDao.alterar(id, feriasRequerimento);
 		return true;
 	}
 
@@ -93,9 +79,24 @@ public class RequerimentoController {
 	 * 
 	 * @param id (short)
 	 */
-	public void deleteRequerimento(Requerimento requerimento) {
-		RequerimentoDAO feriasRequerimentoDAO = RequerimentoDAO.getInstance(session);
-		feriasRequerimentoDAO.deletar(requerimento);
+	public void deleteRequerimentoPorId(short id) {
+		RequerimentoDAO feriasRequerimentoDAO = new RequerimentoDAO();
+		feriasRequerimentoDAO.deletar(id);
+	}
+
+	/*
+	 * Atualiza o estado da requisicao
+	 * 
+	 * Verifica se o novoEstado esta registrado nas ENUMS do sistema Atualiza o
+	 * estado do requerimento
+	 * 
+	 * @return true/false sucesso da operacao.
+	 */
+	public void atualizarEstadoRequisicao(EstadosRequerimentos novoEstado, Requerimento feriasRequerimento) {
+		// Verificar os estados dentro do ENUM);
+		// Futuramente fazer outras validacoes necessarias aqui. Por enquanto o mmetodo
+		// esta redundante com o setEstadoRequisicao;
+		feriasRequerimento.setEstadoRequisicao(novoEstado);
 	}
 
 	/**
@@ -133,11 +134,9 @@ public class RequerimentoController {
 	 * @return True/False sucesso da validacao.
 	 * 
 	 */
-	public boolean validacaoPrazoSolicitacaoDeFerias(Requerimento feriasRequerimento) {
-		int intervalo = retornarIntervaloEmDiasEntreAsDatas(feriasRequerimento.
-				getDataSolicitacao(), feriasRequerimento.getFeriasRequisitada().
-				getDataInicio());
-		if (intervalo >= Requerimento.PRAZO_MINIMO_SOLICITACAO_FERIAS + 1) {
+	public boolean validacaoPrazoSolicitacaoDeFerias(LocalDate dataInicio, Requerimento feriasRequerimento) {
+		int intervalo = retornarIntervaloEmDiasEntreAsDatas(feriasRequerimento.getDataSolicitacao(), dataInicio);
+		if (intervalo >= Requerimento.PRAZO_MINIMO_SOLICITACAO_FERIAS) {
 			return true;
 		} else {
 			feriasRequerimento.setEstadoRequisicao(EstadosRequerimentos.INVALIDO);
