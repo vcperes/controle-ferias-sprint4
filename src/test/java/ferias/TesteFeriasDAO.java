@@ -3,69 +3,80 @@ package ferias;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.ArrayList;
+import java.util.List;
 
 import org.hibernate.Session;
-import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 
 import br.com.senior.proway.ferias.model.Ferias;
 import br.com.senior.proway.ferias.model.DAO.FeriasDAO;
 import br.com.senior.proway.ferias.model.enums.TiposFerias;
 import br.com.senior.proway.ferias.model.interfaces.IFerias;
 import br.com.senior.proway.ferias.postgresql.DBConnection;
-import br.com.senior.proway.ferias.postgresql.PostgresConector;
 
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TesteFeriasDAO {
 	Session session = DBConnection.getSession();
-	
+
 	FeriasDAO feriasDAO = FeriasDAO.getInstance(session);
-	
-	ArrayList<Ferias> ferias = new ArrayList<Ferias>();
-	
-	@Before
+
+	@Ignore
 	public void limparBanco() throws SQLException {
-		session.clear();
-	}
-
-	@Ignore
-	@Test
-	public void testPegarTodos() throws SQLException {
-
-		String inserir = "INSERT INTO ferias (idusuario, datainicio, datafim, diasvendidos, idtipoferias) VALUES(0, '03/05/2021', '13/06/2021', 0, 3)";
-		PostgresConector.executarUpdateQuery(inserir);
-		String inserir2 = "INSERT INTO ferias (idusuario, datainicio, datafim, diasvendidos, idtipoferias) VALUES(0, '03/05/2021', '13/06/2021', 0, 3)";
-		PostgresConector.executarUpdateQuery(inserir2);
-
-		ArrayList<IFerias> ferias = feriasDAO.pegarTodos();
-		assertTrue(ferias.size() >= 2);
-	}
-
-	@Ignore
-	@Test
-	public void testPegarPorID() throws SQLException {
-		PostgresConector.conectar();
-		String inserir = "INSERT INTO ferias (idusuario, datainicio, datafim, diasvendidos, idtipoferias) VALUES(0, '03/05/2021', '13/05/2021', 0, 3)";
-		PostgresConector.executarUpdateQuery(inserir);
-
-		String consultar = "SELECT * FROM ferias WHERE idusuario = 0 AND datafim = '13/05/2021' AND idtipoferias = 3";
-		ResultSet resultSet = PostgresConector.executarQuery(consultar);
-		int id = 111;
-		if (resultSet.next()) {
-			id = resultSet.getInt("id");
-		}
-
-		IFerias ferias = feriasDAO.pegarFeriasPorID("ferias", id);
-		assertEquals(id, ferias.getId());
-		assertEquals(3, ferias.getTipo().getValor());
+		feriasDAO.limparTabela();
 	}
 
 	@Test
-	public void testCadastrar() {
+	public void testALimparBanco() {
+		feriasDAO.limparTabela();
+		IFerias ferias = new Ferias();
+		ferias.setIdentificadorUsuario(0);
+		ferias.setDataInicio(LocalDate.of(2021, 04, 01));
+		ferias.setDataFim(LocalDate.of(2021, 04, 10));
+		ferias.setDiasVendidos((short) 5);
+		ferias.setTipo(TiposFerias.VENDIDA);
+		feriasDAO.cadastrar(ferias);
+		assertTrue(feriasDAO.pegarTodos().size() == 1);
+		feriasDAO.deletar(ferias);
+
+	}
+
+	@Test
+	public void testBPegarTodos() throws SQLException {
+		IFerias ferias = new Ferias();
+		ferias.setIdentificadorUsuario(0);
+		ferias.setDataInicio(LocalDate.of(2021, 04, 01));
+		ferias.setDataFim(LocalDate.of(2021, 04, 10));
+		ferias.setDiasVendidos((short) 5);
+		ferias.setTipo(TiposFerias.VENDIDA);
+		feriasDAO.cadastrar(ferias);
+
+		List<IFerias> listaFerias = feriasDAO.pegarTodos();
+		assertTrue(listaFerias.size() == 1);
+		feriasDAO.deletar(ferias);
+	}
+
+	@Test
+	public void testCPegarPorID() throws SQLException {
+		IFerias ferias = new Ferias();
+		ferias.setIdentificadorUsuario(0);
+		ferias.setDataInicio(LocalDate.of(2021, 04, 01));
+		ferias.setDataFim(LocalDate.of(2021, 04, 10));
+		ferias.setDiasVendidos((short) 5);
+		ferias.setTipo(TiposFerias.VENDIDA);
+		feriasDAO.cadastrar(ferias);
+
+		Ferias feriasRecebido = feriasDAO.pegarFeriasPorID(3);
+		assertEquals(3, feriasRecebido.getId());
+		feriasDAO.deletar(ferias);
+	}
+
+	@Test
+	public void testDCadastrar() {
 		IFerias ferias = new Ferias();
 		ferias.setIdentificadorUsuario(0);
 		ferias.setDataInicio(LocalDate.of(2021, 04, 01));
@@ -76,74 +87,72 @@ public class TesteFeriasDAO {
 		assertTrue(sucesso);
 	}
 
-	@Ignore
 	@Test
-	public void testAlterar() throws SQLException {
-		PostgresConector.conectar();
-		String inserir = "INSERT INTO ferias (idusuario, datainicio, datafim, diasvendidos, idtipoferias) VALUES(0, '03/05/2021', '15/05/2021', 0, 3)";
-		PostgresConector.executarUpdateQuery(inserir);
+	public void testEAlterar() throws SQLException {
+		Ferias ferias = feriasDAO.pegarFeriasPorID(4);
+		ferias.setDataFim(LocalDate.now());
+		boolean sucesso = feriasDAO.alterar(ferias);
 
-		String consultar = "SELECT * FROM ferias WHERE idusuario = 0 AND datafim = '15/05/2021'";
-		ResultSet resultSet = PostgresConector.executarQuery(consultar);
-		int id = 111;
-		if (resultSet.next()) {
-			id = resultSet.getInt("id");
-		}
+		assertTrue(sucesso);
+	}
 
+	@Test
+	public void testFDelete() throws SQLException {
 		IFerias ferias = new Ferias();
 		ferias.setIdentificadorUsuario(0);
 		ferias.setDataInicio(LocalDate.of(2021, 04, 01));
 		ferias.setDataFim(LocalDate.of(2021, 04, 10));
+		ferias.setDiasVendidos((short) 5);
+		ferias.setTipo(TiposFerias.VENDIDA);
+		feriasDAO.cadastrar(ferias);
+		feriasDAO.deletar(ferias);
+		assertTrue(feriasDAO.pegarTodos().size() == 1);
+	}
+
+	@Test
+	public void testGPegarFeriasPorIDColaborador() throws SQLException {
+
+		IFerias ferias = new Ferias();
+		ferias.setIdentificadorUsuario(5);
+		ferias.setDataInicio(LocalDate.of(2021, 04, 01));
+		ferias.setDataFim(LocalDate.of(2021, 04, 10));
 		ferias.setDiasVendidos((short) 0);
 		ferias.setTipo(TiposFerias.PARCIAL);
-		boolean sucesso = feriasDAO.alterar(id, ferias);
+		feriasDAO.cadastrar(ferias);
+		List<IFerias> listaFerias = feriasDAO.pegarTodasAsFeriasPorIDColaborador(0);
 
-		assertTrue(sucesso);
+		assertTrue(listaFerias.size() == 1);
+		feriasDAO.deletar(ferias);
 	}
 
-	@Ignore
 	@Test
-	public void testDelete() throws SQLException {
-		String inserir = "INSERT INTO ferias (idusuario, datainicio, datafim, diasvendidos, idtipoferias) VALUES(0, '03/05/2021', '15/05/2021', 0, 3)";
-		PostgresConector.executarUpdateQuery(inserir);
+	public void testHPegarTodasAsFeriasPorTipo() throws SQLException {
 
-		String consultar = "SELECT * FROM ferias WHERE idusuario = 0 AND datafim = '15/05/2021'";
-		ResultSet resultSet = PostgresConector.executarQuery(consultar);
-		int id = 111;
-		if (resultSet.next()) {
-			id = resultSet.getInt("id");
-		}
+		IFerias ferias = new Ferias();
+		ferias.setIdentificadorUsuario(5);
+		ferias.setDataInicio(LocalDate.of(2021, 04, 01));
+		ferias.setDataFim(LocalDate.of(2021, 04, 10));
+		ferias.setDiasVendidos((short) 0);
+		ferias.setTipo(TiposFerias.PARCIAL);
+		feriasDAO.cadastrar(ferias);
+		List<IFerias> listaFerias = feriasDAO.pegarTodasAsFeriasPorTipo(TiposFerias.VENDIDA);
 
-		boolean sucesso = feriasDAO.deletar(id);
-		assertTrue(sucesso);
+		assertTrue(listaFerias.size() == 1);
+		feriasDAO.deletar(ferias);
+
 	}
 
-	@Ignore
 	@Test
-	public void testPegarFeriasPorIDColaborador() throws SQLException {
-		PostgresConector.conectar();
-		String inserir = "INSERT INTO ferias (idusuario, datainicio, datafim, diasvendidos, idtipoferias) VALUES(0, '03/05/2021', '13/05/2021', 0, 4)";
-		PostgresConector.executarUpdateQuery(inserir);
-		String inserir2 = "INSERT INTO ferias (idusuario, datainicio, datafim, diasvendidos, idtipoferias) VALUES(0, '03/05/2021', '13/06/2021', 0, 2)";
-		PostgresConector.executarUpdateQuery(inserir2);
+	public void testIPegarTodasAsFeriasPorDataInicio() throws SQLException {
 
-		ArrayList<IFerias> listaFerias = feriasDAO.pegarTodasAsFeriasPorIDColaborador(0);
-		
-		assertTrue(listaFerias.size() == 2);
-	}
-
-	@Ignore
-	@Test
-	public void testPegarTodasAsFeriasPorTipo() throws SQLException {
-
-		String inserir = "INSERT INTO ferias (idusuario, datainicio, datafim, diasvendidos, idtipoferias) VALUES(3, '03/05/2021', '13/06/2021', 0, 3)";
-		PostgresConector.executarUpdateQuery(inserir);
-		String inserir2 = "INSERT INTO ferias (idusuario, datainicio, datafim, diasvendidos, idtipoferias) VALUES(4, '03/05/2021', '13/06/2021', 0, 3)";
-		PostgresConector.executarUpdateQuery(inserir2);
-
-		ArrayList<IFerias> listaTodasAsFeriasPorTipo = feriasDAO.pegarTodasAsFeriasPorTipo(TiposFerias.PARCIAL);
-		for (IFerias iFerias2 : listaTodasAsFeriasPorTipo) {
-			assertTrue(iFerias2.getTipo().getValor() == 3);
-		}
+		IFerias ferias = new Ferias();
+		ferias.setIdentificadorUsuario(5);
+		ferias.setDataInicio(LocalDate.of(2021, 7, 10));
+		ferias.setDataFim(LocalDate.of(2021, 8, 10));
+		ferias.setDiasVendidos((short) 0);
+		ferias.setTipo(TiposFerias.TOTAL);
+		feriasDAO.cadastrar(ferias);
+		List<IFerias> listaFerias = feriasDAO.pegarTodasAsFeriasPorDataInicio(LocalDate.of(2021, 7, 10));
+		assertTrue(listaFerias.size() == 1);
 	}
 }

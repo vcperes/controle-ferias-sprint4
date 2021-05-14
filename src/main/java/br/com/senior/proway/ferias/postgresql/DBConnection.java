@@ -1,5 +1,13 @@
 package br.com.senior.proway.ferias.postgresql;
 
+import java.util.List;
+
+import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -22,7 +30,7 @@ public class DBConnection {
 					.setProperty("hibernate.jdbc.time_zone", "UTC")
 					.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect")
 					.setProperty("hibernate.show_sql", "true").setProperty("hibernate.format_sql", "false")
-					.setProperty("hibernate.hbm2ddl.auto", "update")
+					.setProperty("hibernate.hbm2ddl.auto", "create")
 					.setProperty("hibernate.connection.autocommit", "true").addAnnotatedClass(Ferias.class)
 					.addAnnotatedClass(Requerimento.class).buildSessionFactory();
 		} catch (Throwable e) {
@@ -48,4 +56,5 @@ public class DBConnection {
 			session = sessionFactory.openSession();
 		return session;
 	}
+	
 }
