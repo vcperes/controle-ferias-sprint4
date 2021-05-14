@@ -42,13 +42,13 @@ public class FeriasDAO implements Icrud<IFerias>, IConsultaDeFeriasPorTipoDAO, I
 	 * @return listaFerias.
 	 * 
 	 */
-	public List<Ferias> pegarTodos() {
+	public List<IFerias> pegarTodos() {
 		CriteriaBuilder builder = session.getCriteriaBuilder();
 		CriteriaQuery<Ferias> criteria = builder.createQuery(Ferias.class);
 		Root<Ferias> root = criteria.from(Ferias.class);
 		CriteriaQuery<Ferias> rootQuery = criteria.select(root);
 		Query query = session.createQuery(rootQuery);
-		List<Ferias> selectedFerias = query.getResultList();
+		List<IFerias> selectedFerias = query.getResultList();
 		return selectedFerias;
 		// return listaFerias;
 	}

@@ -1,6 +1,9 @@
 package br.com.senior.proway.ferias.controller;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.sql.SQLException;
@@ -58,43 +61,85 @@ public class RequerimentoControllerTest {
 		requerimentoDAO.cadastrar(requerimentoFerias);
 		requerimentoDAO.cadastrar(requerimentoFerias2);
 		assertEquals(requerimentoController.getAllRequerimentos().size(), 2);
-
-							
 	}
 
 	@Test
 	public void testGetRequerimentoPorId() {
-		fail("Not yet implemented");
+		Ferias ferias = new Ferias(inicio, fim, diasTotais, diasVendidos, tipo);
+		feriasDAO.cadastrar(ferias);
+		Requerimento requerimentoFerias = new Requerimento(0, ferias, estadoRequerimento,
+				localDateSolicitacao);
+		requerimentoDAO.cadastrar(requerimentoFerias);
+		assertEquals(requerimentoFerias, requerimentoController.
+				getRequerimentoPorId(requerimentoController.getAllRequerimentos().
+						get(0).getId()));
 	}
 
 	@Test
 	public void testCreateRequerimento() {
-		fail("Not yet implemented");
+		Ferias ferias = new Ferias(inicio, fim, diasTotais, diasVendidos, tipo);
+		feriasDAO.cadastrar(ferias);
+		Requerimento requerimentoFerias = new Requerimento(0, ferias, estadoRequerimento,
+				localDateSolicitacao);
+		requerimentoController.createRequerimento(requerimentoFerias);
+		Requerimento requerimentoDB = (Requerimento) requerimentoController.
+				getRequerimentoPorId(requerimentoController.getAllRequerimentos().
+						get(0).getId());
+		assertNotNull(requerimentoDB);
 	}
 
 	@Test
 	public void testUpdateRequerimentoPorId() {
-		fail("Not yet implemented");
+		Ferias ferias = new Ferias(inicio, fim, diasTotais, diasVendidos, tipo);
+		feriasDAO.cadastrar(ferias);
+		Requerimento requerimentoFerias = new Requerimento(0, ferias, estadoRequerimento,
+				localDateSolicitacao);
+		requerimentoDAO.cadastrar(requerimentoFerias);
+		requerimentoFerias = requerimentoDAO.pegarRequerimentoPorID(requerimentoController.
+				getAllRequerimentos().get(0).getId());
+		requerimentoFerias.setDataSolicitacao(LocalDate.of(2022, 8, 5));
+		requerimentoController.updateRequerimentoPorId(requerimentoFerias);
+		assertEquals(LocalDate.of(2022, 8, 5), 
+				requerimentoDAO.pegarRequerimentoPorID(requerimentoController.
+						getAllRequerimentos().get(0).getId()).getDataSolicitacao());
 	}
 
 	@Test
-	public void testDeleteRequerimentoPorId() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testAtualizarEstadoRequisicao() {
-		fail("Not yet implemented");
+	public void testDeleteRequerimento() {
+		Ferias ferias = new Ferias(inicio, fim, diasTotais, diasVendidos, tipo);
+		feriasDAO.cadastrar(ferias);
+		Requerimento requerimentoFerias = new Requerimento(0, ferias, estadoRequerimento,
+				localDateSolicitacao);
+		requerimentoDAO.cadastrar(requerimentoFerias);
+		requerimentoFerias = requerimentoDAO.pegarRequerimentoPorID(requerimentoController.
+				getAllRequerimentos().get(0).getId());
+		requerimentoFerias.setDataSolicitacao(LocalDate.of(2022, 8, 5));
+		requerimentoController.deleteRequerimento(requerimentoFerias);
+		assertEquals(0, requerimentoDAO.pegarTodos().size());
 	}
 
 	@Test
 	public void testRetornarIntervaloEmDiasEntreAsDatas() {
-		fail("Not yet implemented");
+		assertEquals(10, RequerimentoController.retornarIntervaloEmDiasEntreAsDatas(LocalDate.of(2022, 8, 5), LocalDate.of(2022, 8, 15)));
 	}
 
 	@Test
 	public void testValidacaoPrazoSolicitacaoDeFerias() {
-		fail("Not yet implemented");
+		Ferias ferias = new Ferias(LocalDate.of(2022, 8, 15), 
+				fim, diasTotais, diasVendidos, tipo);
+		Requerimento requerimentoFerias = new Requerimento(0, ferias, estadoRequerimento,
+				localDateSolicitacao);
+		requerimentoFerias.setDataSolicitacao(LocalDate.of(2022, 8, 4));
+		assertTrue(requerimentoController.validacaoPrazoSolicitacaoDeFerias(requerimentoFerias));
 	}
-
+	
+	@Test
+	public void testValidacaoPrazoSolicitacaoDeFeriasInvalido() {
+		Ferias ferias = new Ferias(LocalDate.of(2022, 8, 15), 
+				fim, diasTotais, diasVendidos, tipo);
+		Requerimento requerimentoFerias = new Requerimento(0, ferias, estadoRequerimento,
+				localDateSolicitacao);
+		requerimentoFerias.setDataSolicitacao(LocalDate.of(2022, 8, 10));
+		assertFalse(requerimentoController.validacaoPrazoSolicitacaoDeFerias(requerimentoFerias));
+	}
 }
