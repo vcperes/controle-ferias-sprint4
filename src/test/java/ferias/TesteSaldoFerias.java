@@ -1,12 +1,15 @@
 package ferias;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 import org.junit.Test;
 
 import br.com.senior.proway.ferias.controller.SaldoFeriasController;
+import br.com.senior.proway.ferias.model.Ferias;
+import br.com.senior.proway.ferias.model.Requerimento;
 import br.com.senior.proway.ferias.model.SaldoFerias;
 import br.com.senior.proway.ferias.model.SaldoFeriasBuilder;
 import br.com.senior.proway.ferias.model.SaldoFeriasDirector;
@@ -131,6 +134,84 @@ public class TesteSaldoFerias {
 		GroundControl.atualizarDiasDeFerias(saldo, faltas);
 		assertEquals(GroundControl.CREDITOS_FALTAS_4, saldo.getDiasDisponiveisDeFerias());	
 	}
+	@Test 
+	public void getESetIdentificadorUsuario() {
+		SaldoFerias saldoFerias = new SaldoFerias("1", LocalDate.of(2021, 5, 5), (short)5, new ArrayList<Ferias>(), new ArrayList<Requerimento>());
+		saldoFerias.setIdentificadorUsuario("1");
+		assertEquals("1", saldoFerias.getIdentificadorUsuario());
+	}
 	
-
+	@Test 
+	public void GetESetHistoricoFerias() {
+		SaldoFerias saldoFerias = new SaldoFerias("1", LocalDate.of(2021, 5, 5), (short)5, new ArrayList<Ferias>(), new ArrayList<Requerimento>());
+		ArrayList<Ferias> historicoFerias = new ArrayList<Ferias>();
+		saldoFerias.setHistoricoFerias(historicoFerias);
+		assertEquals(0, saldoFerias.getHistoricoFerias().size());
+	}
+	@Test 
+	public void GetESetHistoricoRequerimento() {
+		SaldoFerias saldoFerias = new SaldoFerias("1", LocalDate.of(2021, 5, 5), (short)5, new ArrayList<Ferias>(), new ArrayList<Requerimento>());
+		ArrayList<Requerimento> historicoFerias = new ArrayList<Requerimento>();
+		saldoFerias.setHistoricoRequerimentos(historicoFerias);
+		assertEquals(0, saldoFerias.getHistoricoRequerimentos().size());
+	}
+	@Test 
+	public void TesteAdicionarHistoricoDeFerias() {
+		Ferias ferias = new Ferias();
+		SaldoFerias saldoFerias = new SaldoFerias("1", LocalDate.of(2021, 5, 5), (short)0, new ArrayList<Ferias>(), new ArrayList<Requerimento>());
+		saldoFerias.adicionarHistoricoFerias(ferias);	
+		assertEquals(1, saldoFerias.getHistoricoFerias().size());
+	}
+	
+	@Test 
+	public void TesteRemoverHistoricoDeFerias() {
+		Ferias ferias = new Ferias();
+		SaldoFerias saldoFerias = new SaldoFerias("1", LocalDate.of(2021, 5, 5), (short)0, new ArrayList<Ferias>(), new ArrayList<Requerimento>());
+		saldoFerias.removerHistoricoFerias(ferias);	
+		assertEquals(0, saldoFerias.getHistoricoFerias().size());
+	}
+	
+	@Test 
+	public void TesteVerificaQuantidadeHistoricoFerias() {
+		ArrayList<Ferias> historicoFerias = new ArrayList<Ferias>();
+		historicoFerias.add(new Ferias());
+		SaldoFerias saldoFerias = new SaldoFerias("1", LocalDate.of(2021, 5, 5), (short)1, historicoFerias, new ArrayList<Requerimento>());
+		saldoFerias.verificaQuantidadeHistoricoFerias();	
+		assertEquals(1, saldoFerias.verificaQuantidadeHistoricoFerias());
+	}
+	
+	@Test 
+	public void TesteAdicionarHistoricoRequerimentos() {
+		Requerimento requerimento = new Requerimento();
+		SaldoFerias saldoFerias = new SaldoFerias("1", LocalDate.of(2021, 5, 5), (short)0, new ArrayList<Ferias>(), new ArrayList<Requerimento>());
+		saldoFerias.adicionarHistoricoRequerimentos(requerimento);;	
+		assertEquals(1, saldoFerias.getHistoricoRequerimentos().size());
+	}
+	
+	@Test 
+	public void TesteRemoverHistoricoRequerimentos() {
+		Requerimento requerimento = new Requerimento();
+		SaldoFerias saldoFerias = new SaldoFerias("1", LocalDate.of(2021, 5, 5), (short)0, new ArrayList<Ferias>(), new ArrayList<Requerimento>());
+		saldoFerias.removerHistoricoRequerimentos(requerimento);;	
+		assertEquals(0, saldoFerias.getHistoricoRequerimentos().size());
+	}
+	
+	@Test 
+	public void TesteVerificaQuantiaRequerimentos() {
+		ArrayList<Requerimento> historicoRequerimentos = new ArrayList<Requerimento>();
+		historicoRequerimentos.add(new Requerimento());
+		SaldoFerias saldoFerias = new SaldoFerias("1", LocalDate.of(2021, 5, 5), (short)1, new ArrayList<Ferias>(), historicoRequerimentos);
+		saldoFerias.verificaQuantiaRequerimentos();	
+		assertEquals(1, saldoFerias.verificaQuantiaRequerimentos());
+	}
+	
+	public void TesteChecarSaldoPositivo() {
+		ArrayList<Requerimento> historicoRequerimentos = new ArrayList<Requerimento>();
+		historicoRequerimentos.add(new Requerimento());
+		SaldoFerias saldoFerias = new SaldoFerias("1", LocalDate.of(2021, 5, 5), (short)1, new ArrayList<Ferias>(), new ArrayList<Requerimento>());
+		saldoFerias.checarSaldoPositivo();	
+		assertEquals(1, saldoFerias.checarSaldoPositivo());
+	}
+	
+	
 }
