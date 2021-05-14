@@ -6,15 +6,27 @@ import java.util.List;
 import org.hibernate.Session;
 
 import br.com.senior.proway.ferias.model.DAO.FeriasDAO;
+import br.com.senior.proway.ferias.model.DAO.RequerimentoDAO;
 import br.com.senior.proway.ferias.model.enums.TiposFerias;
 import br.com.senior.proway.ferias.model.interfaces.IFerias;
 import br.com.senior.proway.ferias.postgresql.DBConnection;
 
 public class FeriasController {
 	
-	private  FeriasDAO feriasDAO;
-	Session session; 
+	private static FeriasController feriasController;
+	private static Session session;
 	
+	public static FeriasController getInstance(Session session) {
+		feriasDAO = FeriasDAO.getInstance(session);
+		FeriasController.session = session;
+		if(feriasController == null) {
+			feriasController = new FeriasController();
+		}
+		return feriasController;
+	}		
+	
+	private static  FeriasDAO feriasDAO;
+		
 	public FeriasController() {
 		session = DBConnection.getSession();
 		feriasDAO = FeriasDAO.getInstance(session);
@@ -25,7 +37,7 @@ public class FeriasController {
 	}
 	
 	public IFerias pegarFeriasPorId(int id){
-		return feriasDAO.pegarRequerimentoPorID(id);
+		return feriasDAO.pegarFeriasPorID(id);
 	}
 	
 	public boolean cadastrar(IFerias ferias) {
