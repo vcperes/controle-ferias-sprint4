@@ -13,7 +13,6 @@ import br.com.senior.proway.ferias.model.DAO.RequerimentoDAO;
 import br.com.senior.proway.ferias.model.enums.EstadosRequerimentos;
 
 public class RequerimentoController {
-
 	private static RequerimentoDAO requerimentoDao;
 	private static RequerimentoController requerimentoController;
 	private static Session session;

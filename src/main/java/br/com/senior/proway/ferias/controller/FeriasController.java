@@ -25,7 +25,7 @@ public class FeriasController {
 	}
 	
 	public IFerias pegarFeriasPorId(int id){
-		return feriasDAO.pegarFeriasPorID(id);
+		return feriasDAO.pegarRequerimentoPorID(id);
 	}
 	
 	public boolean cadastrar(IFerias ferias) {

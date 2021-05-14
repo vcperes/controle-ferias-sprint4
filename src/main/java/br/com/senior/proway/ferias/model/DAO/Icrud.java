@@ -6,7 +6,7 @@ import java.util.List;
 public interface Icrud<T> {
 
 	public List<T> pegarTodos();
-	
+
 	public boolean cadastrar(T objeto);
 	
 	public boolean alterar(T objeto);

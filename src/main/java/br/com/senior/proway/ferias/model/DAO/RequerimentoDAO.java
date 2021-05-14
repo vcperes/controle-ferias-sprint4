@@ -1,10 +1,7 @@
 package br.com.senior.proway.ferias.model.DAO;
 
-import static org.junit.Assert.fail;
-
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.time.LocalDate;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,19 +12,14 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
 import org.hibernate.Session;
-
 import br.com.senior.proway.ferias.model.Ferias;
 import br.com.senior.proway.ferias.model.Requerimento;
 import br.com.senior.proway.ferias.model.enums.EstadosRequerimentos;
-import br.com.senior.proway.ferias.postgresql.PostgresConector;
 
 public class RequerimentoDAO implements Icrud<Requerimento> {
-
 	private Session session;
 	FeriasDAO feriasDao;
 	private static RequerimentoDAO requerimentoDAO;
-	
-	public RequerimentoDAO() {}
 	
 	private RequerimentoDAO(Session session) {
 		this.feriasDao = FeriasDAO.getInstance(session);
@@ -176,12 +168,10 @@ public class RequerimentoDAO implements Icrud<Requerimento> {
 	 */
 
 	public List<Requerimento> getRequerimentoPorEstado(EstadosRequerimentos estado) {
-
 		CriteriaBuilder builder = session.getCriteriaBuilder();
 		CriteriaQuery<Requerimento> criteria = builder.createQuery(Requerimento.class);
 
 		Root<Requerimento> root = criteria.from(Requerimento.class);
-
 		criteria.select(root).where(builder.equal(root.get("estadoRequisicao"), estado.getValor()));
 		Query query = session.createQuery(criteria);
 		List<Requerimento> requerimentos = query.getResultList();

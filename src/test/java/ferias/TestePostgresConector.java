@@ -8,10 +8,12 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import br.com.senior.proway.ferias.postgresql.PostgresConector;
 
+@Ignore
 public class TestePostgresConector {
 	
 	@Before
