@@ -40,6 +40,7 @@ public class Requerimento implements IFeriasRequerimento{
 	private EstadosRequerimentos estadoRequisicao;
 	
 	private LocalDate dataSolicitacao;
+	
 	@Transient
 	public static short PRAZO_MINIMO_SOLICITACAO_FERIAS = 10;
 	
