@@ -141,7 +141,7 @@ public class FeriasBuilder implements IFeriasBuilder {
 			this.diasTotaisRequisitados = 0;
 		} else {
 			if (periodoFeriasValido(this.dataInicio, this.dataFim)) {
-				this.diasTotaisRequisitados = (int) this.dataInicio.until(this.dataFim, ChronoUnit.DAYS);
+				this.diasTotaisRequisitados = (int) this.dataInicio.until(this.dataFim, ChronoUnit.DAYS) + 1;
 			} else {
 				this.diasTotaisRequisitados = 0;
 			}
