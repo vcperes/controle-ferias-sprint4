@@ -6,6 +6,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+
+import org.hibernate.Session;
+
 import br.com.senior.proway.ferias.model.Ferias;
 import br.com.senior.proway.ferias.model.Requerimento;
 import br.com.senior.proway.ferias.model.enums.EstadosRequerimentos;
@@ -13,7 +23,23 @@ import br.com.senior.proway.ferias.postgresql.PostgresConector;
 
 public class RequerimentoDAO implements Icrud<Requerimento> {
 
-	FeriasDAO feriasDao = new FeriasDAO();
+	private Session session;
+	FeriasDAO feriasDao;
+	private static RequerimentoDAO requerimentoDAO;
+	
+	public RequerimentoDAO() {}
+	
+	private RequerimentoDAO(Session session) {
+		this.feriasDao = FeriasDAO.getInstance(session);
+		this.session = session;
+	}
+	
+	public static RequerimentoDAO getInstance(Session session) {
+		if(requerimentoDAO == null) {
+			requerimentoDAO = new RequerimentoDAO(session);
+		}
+		return requerimentoDAO;
+	}
 
 	/**
 	 * Lista todos os objetos de Requerimento.
@@ -27,30 +53,15 @@ public class RequerimentoDAO implements Icrud<Requerimento> {
 	 * @author Bruna Carvalho <sh4323202@gmail.com>
 	 * @author Daniella Lira <dev.danilira@gmail.com>
 	 */
-	public ArrayList<Requerimento> pegarTodos() {
+	public List<Requerimento> pegarTodos() {
+		CriteriaBuilder cb = session.getCriteriaBuilder();
+	    CriteriaQuery<Requerimento> cq = cb.createQuery(Requerimento.class);
+	    Root<Requerimento> rootEntry = cq.from(Requerimento.class);
+	    CriteriaQuery<Requerimento> all = cq.select(rootEntry);
 
-		ArrayList<Requerimento> requerimentosFerias = new ArrayList<Requerimento>();
-		String select = "SELECT * FROM requerimento;";
-		try {
 
-			PostgresConector.conectar();
-			ResultSet rs = PostgresConector.executarQuery(select);
-
-			while (rs.next()) {
-				Ferias ferias = (Ferias) feriasDao.pegarFeriasPorID(rs.getInt("idferias"));
-				EstadosRequerimentos estado = EstadosRequerimentos.pegarPorValor(rs.getInt("idestadorequisicao"));
-				LocalDate dataSolicitacao = rs.getDate("datasolicitacao").toLocalDate();
-				Requerimento requerimentoFerias = new Requerimento(rs.getInt("id"), ferias, estado,
-						dataSolicitacao);
-				requerimentosFerias.add(requerimentoFerias);
-			}
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-			fail(e.getMessage());
-		}
-
-		return requerimentosFerias;
+	    TypedQuery<Requerimento> allQuery = session.createQuery(all);
+	    return  allQuery.getResultList();
 	}
 
 	/**
@@ -68,37 +79,12 @@ public class RequerimentoDAO implements Icrud<Requerimento> {
 	 * @author Daniella Lira <dev.danilira@gmail.com>
 	 * 
 	 */
-	public Requerimento pegarFeriasPorID(int id) {
-		try {
-
-			PostgresConector.conectar();
-			String select = "SELECT * FROM requerimento WHERE id = " + id + ";";
-			ResultSet rs = PostgresConector.executarQuery(select);
-
-			if (rs.next()) {
-
-				int idRequerimento = rs.getInt("id");
-				int idFerias = rs.getInt("idferias");
-				EstadosRequerimentos idEstadoRequisicao = EstadosRequerimentos
-						.pegarPorValor(rs.getInt("idestadorequisicao"));
-				LocalDate dataSolicitacao = rs.getDate("datasolicitacao").toLocalDate();
-
-				FeriasDAO feriasDao = new FeriasDAO();
-				Ferias ferias = (Ferias) feriasDao.pegarFeriasPorID(idFerias);
-
-				Requerimento requerimentoFerias = new Requerimento(idRequerimento, ferias,
-						idEstadoRequisicao, dataSolicitacao);
-
-				return requerimentoFerias;
-			}
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-			fail(e.getMessage());
-
+	public Requerimento pegarRequerimentoPorID(Integer id) {
+		
+		if (!session.getTransaction().isActive()) {
+			session.beginTransaction();             
 		}
-		return null;
-
+		return session.get(Requerimento.class, id);
 	}
 
 	/**
@@ -116,19 +102,12 @@ public class RequerimentoDAO implements Icrud<Requerimento> {
 	 * 
 	 */
 	public boolean cadastrar(Requerimento objeto) {
-		String idFerias = "" + objeto.getFeriasRequisitada().getId();
-		String idEstadoRequisicao = "" + objeto.getEstadoRequisicao().getValor();
-		String dataSolicitacao = "" + objeto.getDataSolicitacao();
-		try {
-			PostgresConector.conectar();
-			String insert = "INSERT INTO requerimento(idferias, idestadorequisicao, datasolicitacao)" + " VALUES("
-					+ idFerias + ", " + idEstadoRequisicao + ", '" + dataSolicitacao + "');";
-			PostgresConector.executarUpdateQuery(insert);
-		} catch (SQLException e) {
-			e.printStackTrace();
-			fail(e.getMessage());
+		if (!session.getTransaction().isActive()) {
+			session.beginTransaction();             
 		}
-		return false;
+		session.save(objeto);
+		session.getTransaction().commit();
+		return true;
 	}
 
 	/**
@@ -146,24 +125,14 @@ public class RequerimentoDAO implements Icrud<Requerimento> {
 	 * 
 	 */
 
-	public boolean alterar(int id, Requerimento objeto) throws SQLException {
-
-		boolean alterado = false;
-		String query = "UPDATE requerimento SET idestadorequisicao = " + objeto.getEstadoRequisicao().getValor()
-				+ " WHERE id = " + id + ";";
-		int retorno = 0;
-		try {
-			retorno = PostgresConector.executarUpdateQuery(query);
-		} catch (SQLException e) {
-			e.printStackTrace();
+	public boolean alterar(Requerimento objeto) {
+		
+		if (!session.getTransaction().isActive()) {
+			session.beginTransaction();             
 		}
-		if (retorno != 0) {
-			alterado = true;
-		} else {
-			throw new SQLException("Nenhuma linha alterada");
-		}
-
-		return alterado;
+		session.update(objeto);
+		session.getTransaction().commit();
+		return true;
 	}
 
 	/**
@@ -180,23 +149,14 @@ public class RequerimentoDAO implements Icrud<Requerimento> {
 	 * 
 	 */
 
-	public boolean deletar(int id) {
+	public boolean deletar(Requerimento objeto) {
 
-		boolean deletado = false;
-		String query = "DELETE FROM requerimento WHERE id =" + id + ";";
-
-		try {
-			int i = PostgresConector.executarUpdateQuery(query);
-			if (i != 0) {
-				deletado = true;
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-			fail(e.getMessage());
+		if (!session.getTransaction().isActive()) {
+			session.beginTransaction();             
 		}
-
-		return deletado;
-
+		session.delete(objeto);
+		session.getTransaction().commit();
+		return true;
 	}
 
 	/**
@@ -215,33 +175,17 @@ public class RequerimentoDAO implements Icrud<Requerimento> {
 	 * 
 	 */
 
-	public ArrayList<Requerimento> getRequerimentoPorEstado(EstadosRequerimentos estado) {
+	public List<Requerimento> getRequerimentoPorEstado(EstadosRequerimentos estado) {
 
-		ArrayList<Requerimento> listaRequerimento = new ArrayList<Requerimento>();
+		CriteriaBuilder builder = session.getCriteriaBuilder();
+		CriteriaQuery<Requerimento> criteria = builder.createQuery(Requerimento.class);
 
-		try {
+		Root<Requerimento> root = criteria.from(Requerimento.class);
 
-			PostgresConector.conectar();
-			String select = "SELECT * FROM requerimento WHERE idestadorequisicao = " + estado.getValor() + ";";
-			ResultSet rs = PostgresConector.executarQuery(select);
-
-			while (rs.next()) {
-				int id = rs.getInt("id");
-				FeriasDAO feriasDao = new FeriasDAO();
-				int idFerias = rs.getInt("idFerias");
-				Ferias ferias = (Ferias) feriasDao.pegarFeriasPorID(idFerias);
-				LocalDate localDate = rs.getDate("datasolicitacao").toLocalDate();
-				Requerimento requerimento = new Requerimento(id, ferias, estado, localDate);
-				listaRequerimento.add(requerimento);
-			}
-
-			return listaRequerimento;
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-			fail(e.getMessage());
-		}
-		return listaRequerimento;
+		criteria.select(root).where(builder.equal(root.get("estadoRequisicao"), estado.getValor()));
+		Query query = session.createQuery(criteria);
+		List<Requerimento> requerimentos = query.getResultList();
+		return requerimentos;
 	}
 
 	/**
@@ -259,38 +203,26 @@ public class RequerimentoDAO implements Icrud<Requerimento> {
 	 * @return ArrayList<RequerimentoFerias>
 	 */
 
-	public ArrayList<Requerimento> getRequerimentoPorData(LocalDate dataParaPesquisa) {
-		ArrayList<Requerimento> listaRequerimento = new ArrayList<Requerimento>();
+	public List<Requerimento> getRequerimentoPorData(LocalDate dataParaPesquisa) {
 
-		try {
+		CriteriaBuilder builder = session.getCriteriaBuilder();
+		CriteriaQuery<Requerimento> criteria = builder.createQuery(Requerimento.class);
 
-			PostgresConector.conectar();
-			String select = "SELECT * FROM requerimento WHERE datasolicitacao = '" + dataParaPesquisa + "';";
-			ResultSet rs = PostgresConector.executarQuery(select);
+		Root<Requerimento> root = criteria.from(Requerimento.class);
 
-			while (rs.next()) {
-				FeriasDAO feriasDao = new FeriasDAO();
-				int idFerias = rs.getInt("idFerias");
-				Ferias ferias = (Ferias) feriasDao.pegarFeriasPorID(idFerias);
-				EstadosRequerimentos estadorequerimento = EstadosRequerimentos
-						.pegarPorValor(rs.getInt("idestadorequisicao"));
-				LocalDate localDate = rs.getDate("datasolicitacao").toLocalDate();
-				Requerimento requerimento = new Requerimento(rs.getInt("id"), ferias, estadorequerimento,
-						localDate);
-				listaRequerimento.add(requerimento);
-			}
-
-			return listaRequerimento;
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-			fail(e.getMessage());
-
-		}
-		return listaRequerimento;
+		criteria.select(root).where(builder.equal(root.get("dataSolicitacao"), dataParaPesquisa));
+		Query query = session.createQuery(criteria);
+		List<Requerimento> requerimentos = query.getResultList();
+		return requerimentos;
 	}
 
 	public void limparTabela() {
-		PostgresConector.limparTabela("requerimento");
+		if (!session.getTransaction().isActive()) {
+			session.beginTransaction();             
+		}
+       	String hql = String.format("truncate table requerimento");
+	    session.createSQLQuery(hql).executeUpdate();
+	    session.getTransaction().commit();
 	}
+	
 }
