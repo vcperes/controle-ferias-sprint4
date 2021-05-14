@@ -1,4 +1,6 @@
 package br.com.senior.proway.ferias.model.DAO;
+
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.Query;
@@ -46,7 +48,6 @@ public class FeriasDAO implements Icrud<IFerias>, IConsultaDeFeriasPorTipoDAO, I
 	 * 
 	 */
 	public List<IFerias> pegarTodos() {
-
 		CriteriaBuilder builder = session.getCriteriaBuilder();
 		CriteriaQuery<Ferias> criteria = builder.createQuery(Ferias.class);
 		Root<Ferias> root = criteria.from(Ferias.class);
@@ -54,7 +55,6 @@ public class FeriasDAO implements Icrud<IFerias>, IConsultaDeFeriasPorTipoDAO, I
 		Query query = session.createQuery(rootQuery);
 		List<IFerias> selectedFerias = query.getResultList();
 		return selectedFerias;
-
 		// return listaFerias;
 	}
 
@@ -86,9 +86,15 @@ public class FeriasDAO implements Icrud<IFerias>, IConsultaDeFeriasPorTipoDAO, I
 		if (!session.getTransaction().isActive()) {
 			session.beginTransaction();
 		}
-		session.save(ferias);
-		session.getTransaction().commit();
-		return true;
+		try {
+			session.save(ferias);
+			session.getTransaction().commit();
+			return true;
+
+		} catch (Exception e) {
+			e.getMessage();
+			return false;
+		}
 	}
 
 	/**
@@ -102,12 +108,18 @@ public class FeriasDAO implements Icrud<IFerias>, IConsultaDeFeriasPorTipoDAO, I
 	 */
 	public boolean alterar(IFerias novaFerias) {
 
-		if (!session.getTransaction().isActive())
+		if (!session.getTransaction().isActive()) {
 			session.beginTransaction();
-		session.update(novaFerias);
-		session.getTransaction().commit();
-		return true;
+		}
+		try {
+			session.update(novaFerias);
+			session.getTransaction().commit();
+			return true;
 
+		} catch (Exception e) {
+			e.getMessage();
+			return false;
+		}
 	}
 
 	/**
@@ -123,9 +135,15 @@ public class FeriasDAO implements Icrud<IFerias>, IConsultaDeFeriasPorTipoDAO, I
 		if (!session.getTransaction().isActive()) {
 			session.beginTransaction();
 		}
-		session.delete(ferias);
-		session.getTransaction().commit();
-		return true;
+		try {
+			session.delete(ferias);
+			session.getTransaction().commit();
+			return true;
+
+		} catch (Exception e) {
+			e.getMessage();
+			return false;
+		}
 	}
 
 	/***
@@ -137,7 +155,7 @@ public class FeriasDAO implements Icrud<IFerias>, IConsultaDeFeriasPorTipoDAO, I
 	 * @return ArrayList<IFerias> Lista de objetos do tipo IFerias.
 	 * 
 	 */
-	public List<Ferias> pegarTodasAsFeriasPorIDColaborador(int idUsuarioEntrada) {
+	public List<IFerias> pegarTodasAsFeriasPorIDColaborador(int idUsuarioEntrada) {
 
 		CriteriaBuilder builder = session.getCriteriaBuilder();
 		CriteriaQuery<Ferias> criteria = builder.createQuery(Ferias.class);
@@ -146,11 +164,11 @@ public class FeriasDAO implements Icrud<IFerias>, IConsultaDeFeriasPorTipoDAO, I
 
 		criteria.select(root).where(builder.equal(root.get("identificadorUsuario"), idUsuarioEntrada));
 		Query query = session.createQuery(criteria);
-		List<Ferias> todasFerias = query.getResultList();
+		List<IFerias> todasFerias = query.getResultList();
 		return todasFerias;
 	}
 
-	public List<Ferias> pegarTodasAsFeriasPorTipo(TiposFerias tipoEntrada) {
+	public List<IFerias> pegarTodasAsFeriasPorTipo(TiposFerias tipoEntrada) {
 
 		CriteriaBuilder builder = session.getCriteriaBuilder();
 		CriteriaQuery<Ferias> criteria = builder.createQuery(Ferias.class);
@@ -159,20 +177,40 @@ public class FeriasDAO implements Icrud<IFerias>, IConsultaDeFeriasPorTipoDAO, I
 
 		criteria.select(root).where(builder.equal(root.get("tipoFerias"), tipoEntrada.getValor()));
 		Query query = session.createQuery(criteria);
-		List<Ferias> todasFerias = query.getResultList();
+		List<IFerias> todasFerias = query.getResultList();
 		return todasFerias;
 
 	}
 
-	public void limparTabela() {
+	public List<IFerias> pegarTodasAsFeriasPorDataInicio(LocalDate dataRecebida) {
+
+		CriteriaBuilder builder = session.getCriteriaBuilder();
+		CriteriaQuery<Ferias> criteria = builder.createQuery(Ferias.class);
+
+		Root<Ferias> root = criteria.from(Ferias.class);
+
+		criteria.select(root).where(builder.equal(root.get("dataInicio"), dataRecebida));
+		Query query = session.createQuery(criteria);
+		List<IFerias> todasFerias = query.getResultList();
+		return todasFerias;
+
+	}
+
+	public boolean limparTabela() {
 		if (!session.getTransaction().isActive()) {
 			session.beginTransaction();
 		}
-		CriteriaBuilder builder = session.getCriteriaBuilder();
-		CriteriaDelete<Ferias> criteriaDelete = builder.createCriteriaDelete(Ferias.class);
-		criteriaDelete.from(Ferias.class);
-		Query query = session.createQuery(criteriaDelete);
-		query.executeUpdate();
-		session.getTransaction().commit();
+		try {
+			CriteriaBuilder builder = session.getCriteriaBuilder();
+			CriteriaDelete<Ferias> criteriaDelete = builder.createCriteriaDelete(Ferias.class);
+			criteriaDelete.from(Ferias.class);
+			Query query = session.createQuery(criteriaDelete);
+			query.executeUpdate();
+			session.getTransaction().commit();
+			return true;
+		} catch (Exception e) {
+			e.getMessage();
+			return false;
+		}
 	}
 }

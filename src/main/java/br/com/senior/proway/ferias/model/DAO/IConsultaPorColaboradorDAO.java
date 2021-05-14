@@ -2,8 +2,8 @@ package br.com.senior.proway.ferias.model.DAO;
 
 import java.util.List;
 
-import br.com.senior.proway.ferias.model.Ferias;
+import br.com.senior.proway.ferias.model.interfaces.IFerias;
 
 public interface IConsultaPorColaboradorDAO {
-	public List<Ferias> pegarTodasAsFeriasPorIDColaborador(int id);
+	public List<IFerias> pegarTodasAsFeriasPorIDColaborador(int id);
 }

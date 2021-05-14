@@ -9,7 +9,7 @@ public interface Icrud<T> {
 
 	public boolean cadastrar(T objeto);
 	
-	public boolean alterar(T objeto) throws SQLException;
+	public boolean alterar(T objeto);
 	
 	public boolean deletar(T objeto);
 	
