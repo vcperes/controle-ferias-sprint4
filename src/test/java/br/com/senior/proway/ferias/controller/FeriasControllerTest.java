@@ -1,13 +1,9 @@
 package br.com.senior.proway.ferias.controller;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -17,8 +13,6 @@ import br.com.senior.proway.ferias.model.Ferias;
 import br.com.senior.proway.ferias.model.FeriasBuilder;
 import br.com.senior.proway.ferias.model.FeriasDirector;
 import br.com.senior.proway.ferias.model.enums.TiposFerias;
-import br.com.senior.proway.ferias.model.interfaces.IFerias;
-import br.com.senior.proway.ferias.postgresql.PostgresConector;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class FeriasControllerTest {
@@ -27,36 +21,30 @@ public class FeriasControllerTest {
 
 	@Test
 	public void AtestCadastrar() throws SQLException {
-		IFerias ferias = new Ferias();
+		
 		FeriasDirector director = new FeriasDirector();
 		FeriasBuilder builder = new FeriasBuilder();
-
 		director.createFeriasParcial(builder, LocalDate.of(2021, 5, 1), LocalDate.of(2021, 5, 22), (short) 30);
 		Ferias ferias2 = builder.build(30);
 		feriasController.cadastrar(ferias2);
-		ferias.setIdentificadorUsuario(0);
-		ferias.setDataInicio(LocalDate.of(2021, 04, 01));
-		ferias.setDataFim(LocalDate.of(2021, 04, 10));
-		ferias.setDiasVendidos(0);
-		ferias.setTipo(TiposFerias.PARCIAL);
-
-		feriasController.cadastrar(ferias);
 		Ferias feriasdb = (Ferias) feriasController.pegarFeriasPorId(1);
-		assertEquals(1, feriasdb.getId());
+		
+		assertEquals(9, feriasdb.getDiasVendidos());
 	}
 
 	@Test
 	public void BtestAlterar() throws SQLException {
-		IFerias ferias = new Ferias();
-		ferias.setIdentificadorUsuario(1);
-		ferias.setDataInicio(LocalDate.of(2221, 04, 01));
-		ferias.setDataFim(LocalDate.of(2221, 04, 10));
-		ferias.setDiasVendidos(0);
-		ferias.setTipo(TiposFerias.PARCIAL);
-		feriasController.cadastrar(ferias);
-		ferias.setDiasVendidos(2);
-		feriasController.alterar(ferias);
-		assertEquals(2, feriasController.pegarFeriasPorId(2).getDiasVendidos());
+		
+		FeriasDirector director = new FeriasDirector();
+		FeriasBuilder builder = new FeriasBuilder();
+		director.createFeriasParcial(builder, LocalDate.of(2221, 04, 01), LocalDate.of(2221, 04, 10), (short) 30);
+		Ferias ferias2 = builder.build(30);
+		feriasController.cadastrar(ferias2);
+		Ferias feriasdb = (Ferias) feriasController.pegarFeriasPorId(2);
+		feriasdb.setIdentificadorUsuario(7);
+		feriasController.alterar(feriasdb);
+		
+		assertEquals(7, feriasController.pegarFeriasPorId(2).getIdentificadorUsuario());
 	}
 
 	@Test
@@ -66,24 +54,22 @@ public class FeriasControllerTest {
 
 	@Test
 	public void DtestPegarFeriasPorId() throws SQLException {
-		Ferias ferias = new Ferias();
-		ferias.setIdentificadorUsuario(1);
-		ferias.setDataInicio(LocalDate.of(2221, 04, 01));
-		ferias.setDataFim(LocalDate.of(2221, 04, 10));
-		ferias.setDiasVendidos(0);
-		ferias.setTipo(TiposFerias.PARCIAL);
+		
+		FeriasDirector director = new FeriasDirector();
+		FeriasBuilder builder = new FeriasBuilder();
+		director.createFeriasParcial(builder, LocalDate.of(2221, 04, 01), LocalDate.of(2221, 04, 10), (short) 30);
+		Ferias ferias = builder.build(30);
 		feriasController.cadastrar(ferias);
+		
 		assertEquals(ferias, feriasController.pegarFeriasPorId(3));
 	}
 
 	@Test
 	public void EtestCPegarFeriasPorTipo() {
-		IFerias ferias = new Ferias();
-		ferias.setIdentificadorUsuario(0);
-		ferias.setDataInicio(LocalDate.of(2220, 02, 9));
-		ferias.setDataFim(LocalDate.of(2221, 04, 10));
-		ferias.setDiasVendidos(0);
-		ferias.setTipo(TiposFerias.TOTAL);
+		FeriasDirector director = new FeriasDirector();
+		FeriasBuilder builder = new FeriasBuilder();
+		director.createFeriasTotal(builder, LocalDate.of(2021, 4, 1), LocalDate.of(2021, 4, 30));
+		Ferias ferias = builder.build(30);
 		feriasController.cadastrar(ferias);
 
 		assertEquals(3, feriasController.pegarTodasAsFeriasPorTipo(TiposFerias.PARCIAL).size());
@@ -97,16 +83,51 @@ public class FeriasControllerTest {
 
 	@Test
 	public void GtestDeletar() throws SQLException {
-		IFerias ferias = new Ferias();
-		ferias.setIdentificadorUsuario(0);
-		ferias.setDataInicio(LocalDate.of(2220, 02, 9));
-		ferias.setDataFim(LocalDate.of(2221, 04, 10));
-		ferias.setDiasVendidos(0);
-		ferias.setTipo(TiposFerias.TOTAL);
+		FeriasDirector director = new FeriasDirector();
+		FeriasBuilder builder = new FeriasBuilder();
+		director.createFeriasTotal(builder, LocalDate.of(2021, 5, 1), LocalDate.of(2021, 5, 31));
+		Ferias ferias = builder.build(30);
 		feriasController.cadastrar(ferias);
-
 		feriasController.deletar(ferias);
 		assertEquals(4, feriasController.pegarTodos().size());
+	}
+	@Test
+	public void HtestCadastrarFracionada() throws SQLException {
+		
+		FeriasDirector director = new FeriasDirector();
+		FeriasBuilder builder = new FeriasBuilder();
+		director.createFeriasFracionada(builder, LocalDate.of(2021, 5, 1), LocalDate.of(2021, 5, 15));
+		Ferias ferias = builder.build(30);
+		feriasController.cadastrar(ferias);
+		Ferias feriasdb = (Ferias) feriasController.pegarFeriasPorId(6);
+		assertEquals(14, feriasdb.getDiasTotaisRequisitados());
+	}
+	@Test
+	public void ItestCadastrarVendida() throws SQLException {
+		
+		FeriasDirector director = new FeriasDirector();
+		FeriasBuilder builder = new FeriasBuilder();
+		director.createFeriasVendida(builder, (short) 5);
+		Ferias ferias = builder.build(5);
+		feriasController.cadastrar(ferias);
+		Ferias feriasdb = (Ferias) feriasController.pegarFeriasPorId(7);
+		assertEquals(5, feriasdb.getDiasVendidos());
+	}
+	@Test
+	public void JtestCadastrarVendidaEspecifica() throws SQLException {
+		
+		FeriasDirector director = new FeriasDirector();
+		FeriasBuilder builder = new FeriasBuilder();
+		director.createFeriasVendidaEspecifica(builder, (short) 7);
+		Ferias ferias = builder.build(7);
+		feriasController.cadastrar(ferias);
+		Ferias feriasdb = (Ferias) feriasController.pegarFeriasPorId(8);
+		assertEquals(7, feriasdb.getDiasVendidos());
+	}
+	@Test
+	public void KtestPegarFeriasPorIdColaborador() throws SQLException {
+
+		assertEquals(6, feriasController.pegarTodasAsFeriasPorIDColaborador(0).size());
 	}
 
 }
