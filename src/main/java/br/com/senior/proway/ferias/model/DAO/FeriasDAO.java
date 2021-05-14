@@ -48,6 +48,9 @@ public class FeriasDAO implements Icrud<IFerias>, IConsultaDeFeriasPorTipoDAO, I
 	 * 
 	 */
 	public List<IFerias> pegarTodos() {
+		if (!session.getTransaction().isActive()) {
+			session.beginTransaction();             
+		}
 		CriteriaBuilder builder = session.getCriteriaBuilder();
 		CriteriaQuery<Ferias> criteria = builder.createQuery(Ferias.class);
 		Root<Ferias> root = criteria.from(Ferias.class);
@@ -92,7 +95,7 @@ public class FeriasDAO implements Icrud<IFerias>, IConsultaDeFeriasPorTipoDAO, I
 			return true;
 
 		} catch (Exception e) {
-			e.getMessage();
+			System.out.println(e.getMessage());
 			return false;
 		}
 	}
@@ -107,7 +110,6 @@ public class FeriasDAO implements Icrud<IFerias>, IConsultaDeFeriasPorTipoDAO, I
 	 * 
 	 */
 	public boolean alterar(IFerias novaFerias) {
-
 		if (!session.getTransaction().isActive()) {
 			session.beginTransaction();
 		}
@@ -156,7 +158,9 @@ public class FeriasDAO implements Icrud<IFerias>, IConsultaDeFeriasPorTipoDAO, I
 	 * 
 	 */
 	public List<IFerias> pegarTodasAsFeriasPorIDColaborador(int idUsuarioEntrada) {
-
+		if (!session.getTransaction().isActive()) {
+			session.beginTransaction();             
+		}
 		CriteriaBuilder builder = session.getCriteriaBuilder();
 		CriteriaQuery<Ferias> criteria = builder.createQuery(Ferias.class);
 
@@ -169,7 +173,9 @@ public class FeriasDAO implements Icrud<IFerias>, IConsultaDeFeriasPorTipoDAO, I
 	}
 
 	public List<IFerias> pegarTodasAsFeriasPorTipo(TiposFerias tipoEntrada) {
-
+		if (!session.getTransaction().isActive()) {
+			session.beginTransaction();             
+		}
 		CriteriaBuilder builder = session.getCriteriaBuilder();
 		CriteriaQuery<Ferias> criteria = builder.createQuery(Ferias.class);
 
@@ -183,7 +189,9 @@ public class FeriasDAO implements Icrud<IFerias>, IConsultaDeFeriasPorTipoDAO, I
 	}
 
 	public List<IFerias> pegarTodasAsFeriasPorDataInicio(LocalDate dataRecebida) {
-
+		if (!session.getTransaction().isActive()) {
+			session.beginTransaction();             
+		}
 		CriteriaBuilder builder = session.getCriteriaBuilder();
 		CriteriaQuery<Ferias> criteria = builder.createQuery(Ferias.class);
 

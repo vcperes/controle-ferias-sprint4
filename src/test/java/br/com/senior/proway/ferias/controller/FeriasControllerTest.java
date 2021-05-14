@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 
 import org.junit.FixMethodOrder;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
@@ -15,6 +16,7 @@ import br.com.senior.proway.ferias.model.FeriasDirector;
 import br.com.senior.proway.ferias.model.enums.TiposFerias;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
+@Ignore
 public class FeriasControllerTest {
 
 	FeriasController feriasController = new FeriasController();
