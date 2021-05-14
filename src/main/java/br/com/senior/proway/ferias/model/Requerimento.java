@@ -93,12 +93,13 @@ public class Requerimento implements IFeriasRequerimento{
 	@Override
 	public boolean equals(Object obj) {
 		Requerimento requerimento = (Requerimento) obj;
+		
 		if(requerimento.dataSolicitacao != this.dataSolicitacao) {
 			return false;
 		} else if (requerimento.estadoRequisicao != this.estadoRequisicao) {
 			return false;
 		} else if (requerimento.feriasRequisitada != this.feriasRequisitada){
-			
+			return false;
 		}
 		
 	}
