@@ -23,7 +23,8 @@ public class DBConnection {
 					.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect")
 					.setProperty("hibernate.show_sql", "true").setProperty("hibernate.format_sql", "false")
 					.setProperty("hibernate.hbm2ddl.auto", "create")
-					.setProperty("hibernate.connection.autocommit", "true").addAnnotatedClass(Ferias.class)
+					.setProperty("hibernate.connection.autocommit", "true")
+					.addAnnotatedClass(Ferias.class)
 					.addAnnotatedClass(Requerimento.class).buildSessionFactory();
 		} catch (Throwable e) {
 			System.err.println("Initial SessionFactory creation failed: " + e);

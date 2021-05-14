@@ -8,6 +8,7 @@ import java.util.List;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaDelete;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
@@ -46,6 +47,9 @@ public class RequerimentoDAO implements Icrud<Requerimento> {
 	 * @author Daniella Lira <dev.danilira@gmail.com>
 	 */
 	public List<Requerimento> pegarTodos() {
+		if (!session.getTransaction().isActive()) {
+			session.beginTransaction();             
+		}
 		CriteriaBuilder cb = session.getCriteriaBuilder();
 	    CriteriaQuery<Requerimento> cq = cb.createQuery(Requerimento.class);
 	    Root<Requerimento> rootEntry = cq.from(Requerimento.class);
@@ -168,6 +172,9 @@ public class RequerimentoDAO implements Icrud<Requerimento> {
 	 */
 
 	public List<Requerimento> getRequerimentoPorEstado(EstadosRequerimentos estado) {
+		if (!session.getTransaction().isActive()) {
+			session.beginTransaction();             
+		}
 		CriteriaBuilder builder = session.getCriteriaBuilder();
 		CriteriaQuery<Requerimento> criteria = builder.createQuery(Requerimento.class);
 
@@ -194,6 +201,9 @@ public class RequerimentoDAO implements Icrud<Requerimento> {
 	 */
 
 	public List<Requerimento> getRequerimentoPorData(LocalDate dataParaPesquisa) {
+		if (!session.getTransaction().isActive()) {
+			session.beginTransaction();             
+		}
 
 		CriteriaBuilder builder = session.getCriteriaBuilder();
 		CriteriaQuery<Requerimento> criteria = builder.createQuery(Requerimento.class);
@@ -206,13 +216,22 @@ public class RequerimentoDAO implements Icrud<Requerimento> {
 		return requerimentos;
 	}
 
-	public void limparTabela() {
+	public boolean limparTabela() {
 		if (!session.getTransaction().isActive()) {
-			session.beginTransaction();             
+			session.beginTransaction();
 		}
-       	String hql = String.format("truncate table requerimento");
-	    session.createSQLQuery(hql).executeUpdate();
-	    session.getTransaction().commit();
+		try {
+			CriteriaBuilder builder = session.getCriteriaBuilder();
+			CriteriaDelete<Requerimento> criteriaDelete = builder.createCriteriaDelete(Requerimento.class);
+			criteriaDelete.from(Requerimento.class);
+			Query query = session.createQuery(criteriaDelete);
+			query.executeUpdate();
+			session.getTransaction().commit();
+			return true;
+		} catch (Exception e) {
+			e.getMessage();
+			return false;
+		}
 	}
 	
 }

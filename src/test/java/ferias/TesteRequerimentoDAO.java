@@ -43,7 +43,7 @@ public class TesteRequerimentoDAO {
 	}
 
 	@Before
-	public void limparBanco() throws SQLException {
+	public void limparBanco() {
 		requerimentoDAO.limparTabela();
 		feriasDAO.limparTabela();
 	}

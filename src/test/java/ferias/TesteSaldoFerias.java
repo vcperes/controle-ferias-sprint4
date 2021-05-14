@@ -132,6 +132,5 @@ public class TesteSaldoFerias {
 		assertEquals(GroundControl.CREDITOS_FALTAS_4, saldo.getDiasDisponiveisDeFerias());	
 	}
 	
-	// Realizar testes com ISaldoFeriasDAO (inserindo ferias/requerimentos nas arrays e usar os metodos do controller)
 
 }

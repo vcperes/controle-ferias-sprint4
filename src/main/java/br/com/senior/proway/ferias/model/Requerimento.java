@@ -2,6 +2,7 @@ package br.com.senior.proway.ferias.model;
 
 import java.time.LocalDate;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -33,7 +34,7 @@ public class Requerimento implements IFeriasRequerimento{
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	
-	@OneToOne
+	@OneToOne (cascade = CascadeType.ALL)
 	private Ferias feriasRequisitada;
 	@Enumerated(EnumType.ORDINAL)
 	private EstadosRequerimentos estadoRequisicao;

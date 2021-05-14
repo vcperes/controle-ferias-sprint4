@@ -9,6 +9,7 @@ import org.hibernate.Session;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
@@ -23,6 +24,7 @@ import br.com.senior.proway.ferias.model.enums.TiposFerias;
 import br.com.senior.proway.ferias.postgresql.DBConnection;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
+@Ignore
 public class FeriasControllerTest {
 
 	private static Session session;

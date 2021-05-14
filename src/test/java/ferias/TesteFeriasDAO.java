@@ -3,154 +3,135 @@ package ferias;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
 
 import org.hibernate.Session;
 import org.junit.Before;
-import org.junit.FixMethodOrder;
-import org.junit.Ignore;
+import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.runners.MethodSorters;
 
 import br.com.senior.proway.ferias.model.Ferias;
 import br.com.senior.proway.ferias.model.DAO.FeriasDAO;
+import br.com.senior.proway.ferias.model.DAO.RequerimentoDAO;
 import br.com.senior.proway.ferias.model.enums.TiposFerias;
 import br.com.senior.proway.ferias.model.interfaces.IFerias;
 import br.com.senior.proway.ferias.postgresql.DBConnection;
 
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TesteFeriasDAO {
-	Session session = DBConnection.getSession();
+	static Session session;
 
 	FeriasDAO feriasDAO = FeriasDAO.getInstance(session);
-
-	@Ignore
-	public void limparBanco() throws SQLException {
+	RequerimentoDAO requerimentoDAO = RequerimentoDAO.getInstance(session);
+	LocalDate dataInicio = LocalDate.of(2021, 04, 01);
+	LocalDate dataFim = LocalDate.of(2021, 04, 10);
+	int diasTotaisRequisitados = 10;
+	int diasVendidos = 5;
+	TiposFerias tipo = TiposFerias.PARCIAL;
+	TiposFerias tipo2 = TiposFerias.PARCIAL;
+	
+	@BeforeClass
+	public static void iniciarInstancias() {
+		session = DBConnection.getSession();
+	}
+	
+	@Before
+	public void limparBanco() {
+		requerimentoDAO.limparTabela();
 		feriasDAO.limparTabela();
+		
 	}
 
 	@Test
-	public void testALimparBanco() {
-		feriasDAO.limparTabela();
-		IFerias ferias = new Ferias();
-		ferias.setIdentificadorUsuario(0);
-		ferias.setDataInicio(LocalDate.of(2021, 04, 01));
-		ferias.setDataFim(LocalDate.of(2021, 04, 10));
-		ferias.setDiasVendidos((short) 5);
-		ferias.setTipo(TiposFerias.VENDIDA);
+	public void testLimparBanco() {
+		IFerias ferias = new Ferias(dataInicio, dataFim, diasTotaisRequisitados, diasVendidos, tipo);
 		feriasDAO.cadastrar(ferias);
-		assertTrue(feriasDAO.pegarTodos().size() == 1);
-		feriasDAO.deletar(ferias);
+		assertEquals(1, feriasDAO.pegarTodos().size());
+		feriasDAO.limparTabela();
+		assertEquals(0, feriasDAO.pegarTodos().size());
 	}
 
 	@Test
-	public void testBPegarTodos() throws SQLException {
-		IFerias ferias = new Ferias();
-		ferias.setIdentificadorUsuario(0);
-		ferias.setDataInicio(LocalDate.of(2021, 04, 01));
-		ferias.setDataFim(LocalDate.of(2021, 04, 10));
-		ferias.setDiasVendidos((short) 5);
-		ferias.setTipo(TiposFerias.VENDIDA);
+	public void testPegarTodos() {
+		IFerias ferias = new Ferias(dataInicio, dataFim, diasTotaisRequisitados, diasVendidos, tipo);
+		IFerias ferias2 = new Ferias(dataInicio, dataFim, diasTotaisRequisitados, diasVendidos, tipo2);
 		feriasDAO.cadastrar(ferias);
+		feriasDAO.cadastrar(ferias2);
 		List<IFerias> listaFerias = feriasDAO.pegarTodos();
-		assertTrue(listaFerias.size() == 1);
-		feriasDAO.deletar(ferias);
+		assertEquals(2, listaFerias.size());
 	}
 
 	@Test
-	public void testCPegarPorID() throws SQLException {
-		IFerias ferias = new Ferias();
-		ferias.setIdentificadorUsuario(0);
-		ferias.setDataInicio(LocalDate.of(2021, 04, 01));
-		ferias.setDataFim(LocalDate.of(2021, 04, 10));
-		ferias.setDiasVendidos((short) 5);
-		ferias.setTipo(TiposFerias.VENDIDA);
+	public void testPegarPorID() {
+		IFerias ferias = new Ferias(dataInicio, dataFim, diasTotaisRequisitados, diasVendidos, tipo);
 		feriasDAO.cadastrar(ferias);
-		Ferias feriasRecebido = feriasDAO.pegarFeriasPorID(3);
-		assertEquals(3, feriasRecebido.getId());
-		feriasDAO.deletar(ferias);
+		Ferias feriasRecebido = feriasDAO.pegarFeriasPorID(feriasDAO.pegarTodos().get(0).getId());
+		assertEquals(dataInicio, feriasRecebido.getDataInicio());
 	}
 
 	@Test
-	public void testDCadastrar() {
-		IFerias ferias = new Ferias();
-		ferias.setIdentificadorUsuario(0);
-		ferias.setDataInicio(LocalDate.of(2021, 04, 01));
-		ferias.setDataFim(LocalDate.of(2021, 04, 10));
-		ferias.setDiasVendidos((short) 5);
-		ferias.setTipo(TiposFerias.VENDIDA);
-		boolean sucesso = feriasDAO.cadastrar(ferias);
-		assertTrue(sucesso);
+	public void testCadastrar() {
+		IFerias ferias = new Ferias(dataInicio, dataFim, diasTotaisRequisitados, diasVendidos, tipo);
+		assertTrue(feriasDAO.cadastrar(ferias));
 	}
 
 	@Test
-	public void testEAlterar() throws SQLException {
-		Ferias ferias = feriasDAO.pegarFeriasPorID(4);
+	public void testAlterar() {
+		IFerias ferias = new Ferias(dataInicio, dataFim, diasTotaisRequisitados, diasVendidos, tipo);
+		feriasDAO.cadastrar(ferias);
+		ferias = feriasDAO.pegarFeriasPorID(feriasDAO.pegarTodos().get(0).getId());
 		ferias.setDataFim(LocalDate.now());
-		boolean sucesso = feriasDAO.alterar(ferias);
-
-		assertTrue(sucesso);
+		assertTrue(feriasDAO.alterar(ferias));
 	}
 
 	@Test
-	public void testFDelete() throws SQLException {
-		IFerias ferias = new Ferias();
-		ferias.setIdentificadorUsuario(0);
-		ferias.setDataInicio(LocalDate.of(2021, 04, 01));
-		ferias.setDataFim(LocalDate.of(2021, 04, 10));
-		ferias.setDiasVendidos((short) 5);
-		ferias.setTipo(TiposFerias.VENDIDA);
+	public void testDelete() {
+		IFerias ferias = new Ferias(dataInicio, dataFim, diasTotaisRequisitados, diasVendidos, tipo);
 		feriasDAO.cadastrar(ferias);
 		feriasDAO.deletar(ferias);
-		assertTrue(feriasDAO.pegarTodos().size() == 1);
+		assertEquals(0, feriasDAO.pegarTodos().size());
 	}
 
 	@Test
-	public void testGPegarFeriasPorIDColaborador() throws SQLException {
-
-		IFerias ferias = new Ferias();
-		ferias.setIdentificadorUsuario(5);
-		ferias.setDataInicio(LocalDate.of(2021, 04, 01));
-		ferias.setDataFim(LocalDate.of(2021, 04, 10));
-		ferias.setDiasVendidos((short) 0);
-		ferias.setTipo(TiposFerias.PARCIAL);
+	public void testPegarFeriasPorIDColaborador() {
+		IFerias ferias = new Ferias(dataInicio, dataFim, diasTotaisRequisitados, diasVendidos, tipo);
+		IFerias ferias2 = new Ferias(dataInicio, dataFim, diasTotaisRequisitados, diasVendidos, tipo2);
+		IFerias ferias3 = new Ferias(dataInicio, dataFim, diasTotaisRequisitados, diasVendidos, tipo2);
+		ferias.setIdentificadorUsuario(0);
+		ferias2.setIdentificadorUsuario(0);
+		ferias3.setIdentificadorUsuario(1);
 		feriasDAO.cadastrar(ferias);
+		feriasDAO.cadastrar(ferias2);
+		feriasDAO.cadastrar(ferias3);
+		
 		List<IFerias> listaFerias = feriasDAO.pegarTodasAsFeriasPorIDColaborador(0);
 
-		assertTrue(listaFerias.size() == 1);
-		feriasDAO.deletar(ferias);
+		assertEquals(2, listaFerias.size());
 	}
 
 	@Test
-	public void testHPegarTodasAsFeriasPorTipo() throws SQLException {
+	public void testPegarTodasAsFeriasPorTipo() {
 
-		IFerias ferias = new Ferias();
-		ferias.setIdentificadorUsuario(5);
-		ferias.setDataInicio(LocalDate.of(2021, 04, 01));
-		ferias.setDataFim(LocalDate.of(2021, 04, 10));
-		ferias.setDiasVendidos((short) 0);
-		ferias.setTipo(TiposFerias.VENDIDA);
+		IFerias ferias = new Ferias(dataInicio, dataFim, diasTotaisRequisitados, diasVendidos, TiposFerias.VENDIDA);
+		IFerias ferias2 = new Ferias(dataInicio, dataFim, diasTotaisRequisitados, diasVendidos, TiposFerias.VENDIDA);
+		IFerias ferias3 = new Ferias(dataInicio, dataFim, diasTotaisRequisitados, diasVendidos, TiposFerias.FRACIONADA);
 		feriasDAO.cadastrar(ferias);
+		feriasDAO.cadastrar(ferias2);
+		feriasDAO.cadastrar(ferias3);
 		List<IFerias> listaFerias = feriasDAO.pegarTodasAsFeriasPorTipo(TiposFerias.VENDIDA);
 
-		assertTrue(listaFerias.size() == 1);
-		feriasDAO.deletar(ferias);
-
+		assertEquals(2, listaFerias.size());
 	}
 
 	@Test
-	public void testIPegarTodasAsFeriasPorDataInicio() throws SQLException {
-
-		IFerias ferias = new Ferias();
-		ferias.setIdentificadorUsuario(5);
-		ferias.setDataInicio(LocalDate.of(2021, 7, 10));
-		ferias.setDataFim(LocalDate.of(2021, 8, 10));
-		ferias.setDiasVendidos((short) 0);
-		ferias.setTipo(TiposFerias.TOTAL);
+	public void testPegarTodasAsFeriasPorDataInicio() {
+		IFerias ferias = new Ferias(dataInicio, dataFim, diasTotaisRequisitados, diasVendidos, tipo);
+		IFerias ferias2 = new Ferias(dataInicio, dataFim, diasTotaisRequisitados, diasVendidos, tipo);
+		IFerias ferias3 = new Ferias(LocalDate.of(2022, 01, 19), dataFim, diasTotaisRequisitados, diasVendidos, tipo);
 		feriasDAO.cadastrar(ferias);
-		List<IFerias> listaFerias = feriasDAO.pegarTodasAsFeriasPorDataInicio(LocalDate.of(2021, 7, 10));
-		assertTrue(listaFerias.size() == 1);
+		feriasDAO.cadastrar(ferias2);
+		feriasDAO.cadastrar(ferias3);
+		List<IFerias> listaFerias = feriasDAO.pegarTodasAsFeriasPorDataInicio(dataInicio);
+		assertEquals(2, listaFerias.size());
 	}
 }
