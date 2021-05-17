@@ -1,34 +1,24 @@
 package ferias;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
-import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Session;
 import org.junit.Before;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import br.com.senior.proway.ferias.model.Ferias;
-import br.com.senior.proway.ferias.model.FeriasBuilder;
-import br.com.senior.proway.ferias.model.FeriasDirector;
 import br.com.senior.proway.ferias.model.Requerimento;
-import br.com.senior.proway.ferias.model.RequerimentoBuilder;
-import br.com.senior.proway.ferias.model.RequerimentoDirector;
 import br.com.senior.proway.ferias.model.DAO.FeriasDAO;
 import br.com.senior.proway.ferias.model.DAO.RequerimentoDAO;
 import br.com.senior.proway.ferias.model.enums.EstadosRequerimentos;
 import br.com.senior.proway.ferias.model.enums.TiposFerias;
 import br.com.senior.proway.ferias.postgresql.DBConnection;
-import br.com.senior.proway.ferias.postgresql.PostgresConector;
 
 public class TesteRequerimentoDAO {
 	static RequerimentoDAO requerimentoDAO;
