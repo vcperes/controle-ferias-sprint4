@@ -1,4 +1,4 @@
-package br.com.senior.proway.ferias.model.DAO;
+package br.com.senior.proway.ferias.model.DAO.interfaces;
 
 import java.util.List;
 

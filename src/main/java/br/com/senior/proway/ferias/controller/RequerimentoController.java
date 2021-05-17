@@ -1,25 +1,19 @@
 package br.com.senior.proway.ferias.controller;
 
-import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 
-import org.hibernate.Session;
-
-import br.com.senior.proway.ferias.model.Requerimento;
+import br.com.senior.proway.ferias.model.Permissao;
 import br.com.senior.proway.ferias.model.DAO.RequerimentoDAO;
-import br.com.senior.proway.ferias.model.enums.EstadosRequerimentos;
 import br.com.senior.proway.ferias.model.interfaces.IControleDeAcesso;
+import br.com.senior.proway.ferias.model.interfaces.IRequerimento;
+import br.com.senior.proway.ferias.model.interfaces.IUsuario;
 
 public class RequerimentoController {
-	private static RequerimentoDAO requerimentoDao;
+	private static RequerimentoDAO requerimentoDAO;
 	private static RequerimentoController requerimentoController;
-	private static Session session;
-	private IControleDeAcesso controleDeAcesso;
 
-	public static RequerimentoController getInstance(Session session) {
-		requerimentoDao = RequerimentoDAO.getInstance(session);
-		RequerimentoController.session = session;
+	public static RequerimentoController getInstance() {
+		requerimentoDAO = RequerimentoDAO.getInstance();
 		if (requerimentoController == null) {
 			requerimentoController = new RequerimentoController();
 		}
@@ -35,14 +29,9 @@ public class RequerimentoController {
 	 * @return ArrayList<FeriasRequerimento>
 	 * @throws Exception
 	 */
-	public List<Requerimento> getAllRequerimentos(Integer idUsuario) throws Exception {
-		if (controleDeAcesso.validarAcesso(idUsuario)) {
-
-			List<Requerimento> feriasRequerimento = requerimentoDao.pegarTodos();
-			return feriasRequerimento;
-		} else {
-			throw new Exception("usuario não tem acesso");
-		}
+	public List<IRequerimento> buscarTodosOsRequerimentos(Class<?> classe) {
+		List<IRequerimento> requerimentosFerias = requerimentoDAO.buscarRequerimentos(classe);
+		return requerimentosFerias;
 	}
 
 	/**
@@ -55,14 +44,9 @@ public class RequerimentoController {
 	 * @return FeriasRequerimento
 	 * @throws Exception
 	 */
-	public Requerimento getRequerimentoPorId(Integer id, Integer idUsuario) throws Exception {
-		if (controleDeAcesso.validarAcesso(idUsuario)) {
-			Requerimento feriasRequerimento = requerimentoDao.pegarRequerimentoPorID(id);
-			return feriasRequerimento;
-		} else {
-			throw new Exception("usuario não tem acesso");
-		}
-
+	public IRequerimento buscarRequerimentoPorId(Class<?> tipoRequerimento, Integer id) {
+		IRequerimento requerimento = requerimentoDAO.buscarRequerimento(tipoRequerimento, id);
+		return requerimento;
 	}
 
 	/**
@@ -72,12 +56,10 @@ public class RequerimentoController {
 	 * objeto do tipo FeriasRequerimento, insere o mesmo em nossa Persistencia
 	 * atrav�s do DAO.
 	 * 
-	 * @param Requerimento requerimento
+	 * @param RequerimentoFerias requerimento
 	 */
-	public boolean createRequerimento(Requerimento requerimento) {
-		RequerimentoDAO feriasRequerimentoDAO = RequerimentoDAO.getInstance(session);
-		feriasRequerimentoDAO.cadastrar(requerimento);
-
+	public boolean createRequerimento(IRequerimento requerimento) {
+		requerimentoDAO.criarRequerimento(requerimento);
 		return true;
 	}
 
@@ -92,13 +74,9 @@ public class RequerimentoController {
 	 * @param feriasRequerimento (FeriasRequerimento)
 	 * @throws Exception
 	 */
-	public boolean updateRequerimentoPorId(Requerimento feriasRequerimento, Integer idUsuario) throws Exception {
-		if (controleDeAcesso.validarAcesso(idUsuario)) {
-			requerimentoDao.alterar(feriasRequerimento);
-			return true;
-		} else {
-			throw new Exception("usuario não tem acesso");
-		}
+	public boolean atualizarRequerimentoPorId(IRequerimento requerimento){
+		requerimentoDAO.atualizarRequerimento(requerimento);
+		return true;
 	}
 
 	/**
@@ -110,68 +88,9 @@ public class RequerimentoController {
 	 * @param id (short)
 	 * @throws Exception
 	 */
-	public void deleteRequerimento(Requerimento requerimento, Integer idUsuario) throws Exception {
-		if (controleDeAcesso.validarAcesso(idUsuario)) {
-			RequerimentoDAO feriasRequerimentoDAO = RequerimentoDAO.getInstance(session);
-			feriasRequerimentoDAO.deletar(requerimento);
-		} else {
-			throw new Exception("usuario não tem acesso");
-		}
+	public void deleteRequerimento(IRequerimento requerimento) {
+		requerimentoDAO.deletarRequerimento(requerimento);
 	}
 
-	/**
-	 * Retorna quantidade de dias
-	 * 
-	 * Retorna a quantidade de dias em formato short, a partir das datas de inicio e
-	 * termino informadas.
-	 * 
-	 * Diferente da funcao calcularPeriodoFerias da classe Ferias, essa foi definida
-	 * como static para nao depender de uma instancia da classe e poder ser usada
-	 * como "ferramenta";
-	 * 
-	 * @param inicio  (LocalDate)
-	 * @param termino (LocalDate)
-	 * 
-	 */
-	public short retornarIntervaloEmDiasEntreAsDatas(LocalDate inicio, LocalDate termino) {
-		short dias = (short) ChronoUnit.DAYS.between(inicio, termino);
-		if (inicio.isBefore(termino)) {
-			return dias;
-		}
-		return -1;
-	}
-
-	/**
-	 * Valida o Prazo da Solicitacao de Ferias.
-	 * 
-	 * Retorna um boolean obtido atraves da comparacao entre a data de inicio de
-	 * ferias e a variavel PRAZO_MINIMO_SOLICITACAO_FERIAS. Para o boolean retornar
-	 * true, o (intervalo) deve ser maior que a variavel
-	 * PRAZO_MINIMO_SOLICITACAO_FERIAS, neste caso aplicamos o short 10. Se
-	 * intervalor menor que 10, atualizamos Estados da Requisicao para INVALIDO.
-	 * 
-	 * @param dataInicioFerias
-	 * @return True/False sucesso da validacao.
-	 * 
-	 */
-	public boolean validacaoPrazoSolicitacaoDeFerias(Requerimento feriasRequerimento) {
-		int intervalo = retornarIntervaloEmDiasEntreAsDatas(feriasRequerimento.getDataSolicitacao(),
-				feriasRequerimento.getFeriasRequisitada().getDataInicio());
-		if (intervalo >= Requerimento.PRAZO_MINIMO_SOLICITACAO_FERIAS + 1) {
-			return true;
-		} else {
-			feriasRequerimento.setEstadoRequisicao(EstadosRequerimentos.INVALIDO);
-			return false;
-		}
-	}
-
-	public boolean defereRequerimento(Requerimento requerimento, EstadosRequerimentos estado, Integer idUsuario)
-			throws Exception {
-		if (controleDeAcesso.validarAcesso(idUsuario)) {
-			requerimento.setEstadoRequisicao(estado);
-			requerimentoController.updateRequerimentoPorId(requerimento, idUsuario);
-			return true;
-		}
-		return false;
-	}
+	
 }

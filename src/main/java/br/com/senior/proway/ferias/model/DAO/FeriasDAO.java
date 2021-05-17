@@ -17,23 +17,27 @@ import org.hibernate.Session;
 import org.hibernate.query.NativeQuery;
 
 import br.com.senior.proway.ferias.model.Ferias;
+import br.com.senior.proway.ferias.model.DAO.interfaces.IConsultaDeFeriasPorTipoDAO;
+import br.com.senior.proway.ferias.model.DAO.interfaces.IConsultaPorColaboradorDAO;
+import br.com.senior.proway.ferias.model.DAO.interfaces.Icrud;
 import br.com.senior.proway.ferias.model.enums.TiposFerias;
 import br.com.senior.proway.ferias.model.interfaces.IFerias;
+import br.com.senior.proway.ferias.postgresql.DBConnection;
 
 public class FeriasDAO implements Icrud<IFerias>, IConsultaDeFeriasPorTipoDAO, IConsultaPorColaboradorDAO {
 
 	private static FeriasDAO feriasDAO;
-	private Session session;
+	private static Session session;
 
-	public static FeriasDAO getInstance(Session session) {
+	public static FeriasDAO getInstance() {
 		if (feriasDAO == null) {
-			feriasDAO = new FeriasDAO(session);
+			feriasDAO = new FeriasDAO();
 		}
 		return feriasDAO;
 	}
 
-	private FeriasDAO(Session session) {
-		this.session = session;
+	private FeriasDAO() {
+		this.session = DBConnection.getSession();
 	}
 
 	/**

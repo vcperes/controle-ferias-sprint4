@@ -22,6 +22,6 @@ public class SaldoFeriasDirector {
 		builder.setProximasFerias(dataAdmissao.plusYears(1));
 		builder.setDiasDisponiveisDeFerias((short) 0);
 		builder.setHistoricoFerias(new ArrayList<Ferias>());
-		builder.setHistoricoRequerimentos(new ArrayList<Requerimento>());
+		builder.setHistoricoRequerimentos(new ArrayList<RequerimentoFerias>());
 	}
 }

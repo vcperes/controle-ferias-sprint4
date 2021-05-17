@@ -1,237 +1,124 @@
 package br.com.senior.proway.ferias.model.DAO;
 
 import java.time.LocalDate;
-
-import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.Query;
-import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaDelete;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import javax.persistence.criteria.Selection;
 
 import org.hibernate.Session;
-import br.com.senior.proway.ferias.model.Ferias;
-import br.com.senior.proway.ferias.model.Requerimento;
-import br.com.senior.proway.ferias.model.enums.EstadosRequerimentos;
 
-public class RequerimentoDAO implements Icrud<Requerimento> {
-	private Session session;
-	FeriasDAO feriasDao;
-	private static RequerimentoDAO requerimentoDAO;
-	
-	private RequerimentoDAO(Session session) {
-		this.feriasDao = FeriasDAO.getInstance(session);
-		this.session = session;
-	}
-	
-	public static RequerimentoDAO getInstance(Session session) {
-		if(requerimentoDAO == null) {
-			requerimentoDAO = new RequerimentoDAO(session);
-		}
-		return requerimentoDAO;
-	}
+import br.com.senior.proway.ferias.model.RequerimentoFerias;
+import br.com.senior.proway.ferias.model.RequerimentoSalario;
+import br.com.senior.proway.ferias.model.DAO.interfaces.IRequerimentoDAO;
+import br.com.senior.proway.ferias.model.enums.EstadoRequerimento;
+import br.com.senior.proway.ferias.model.interfaces.IRequerimento;
+import br.com.senior.proway.ferias.postgresql.DBConnection;
 
-	/**
-	 * Lista todos os objetos de Requerimento.
-	 * 
-	 * Acessa e lista todos os objetos da tabela requerimento do banco de dados,
-	 * podendo os armazenar em um array.
-	 * 
-	 * @return ArrayList com os objetos da tabela requerimento.
-	 * 
-	 * @author Vitor Peres <vitor.peres@senior.com.br>
-	 * @author Bruna Carvalho <sh4323202@gmail.com>
-	 * @author Daniella Lira <dev.danilira@gmail.com>
-	 */
-	public List<Requerimento> pegarTodos() {
-		if (!session.getTransaction().isActive()) {
-			session.beginTransaction();             
-		}
-		CriteriaBuilder cb = session.getCriteriaBuilder();
-	    CriteriaQuery<Requerimento> cq = cb.createQuery(Requerimento.class);
-	    Root<Requerimento> rootEntry = cq.from(Requerimento.class);
-	    CriteriaQuery<Requerimento> all = cq.select(rootEntry);
+public class RequerimentoDAO implements IRequerimentoDAO {
 
+    private static RequerimentoDAO requerimentoDAO;
 
-	    TypedQuery<Requerimento> allQuery = session.createQuery(all);
-	    return  allQuery.getResultList();
-	}
+    public static RequerimentoDAO getInstance() {
+        if(requerimentoDAO == null) {
+            requerimentoDAO = new RequerimentoDAO();
+        }
+        return requerimentoDAO;
+    }
 
-	/**
-	 * 
-	 * M�todo que pega um requerimento por id.
-	 * 
-	 * Pega um id da tabela requerimento do banco de dados e retorna o objeto,
-	 * RequerimentoFerias.
-	 * 
-	 * @param int id, que � o id puxado do banco de dados.
-	 * @return objeto RequerimentoFerias.
-	 * 
-	 * @author Vitor Peres <vitor.peres@senior.com.br>
-	 * @author Bruna Carvalho <sh4323202@gmail.com>
-	 * @author Daniella Lira <dev.danilira@gmail.com>
-	 * 
-	 */
-	public Requerimento pegarRequerimentoPorID(Integer id) {
-		
-		if (!session.getTransaction().isActive()) {
-			session.beginTransaction();             
-		}
-		return session.get(Requerimento.class, id);
-	}
+    private RequerimentoDAO() {
 
-	/**
-	 * @author Vitor Peres <vitor.peres@senior.com.br>
-	 * @author Bruna Carvalho <sh4323202@gmail.com>
-	 * @author Daniella Lira <dev.danilira@gmail.com>
-	 * 
-	 *         M�todo que cadastra objeto requerimento no banco de dados
-	 * 
-	 *         Recebe objeto RequerimentoFerias como parametro, separa por atributos
-	 *         e insere por expressao SQL no banco de dados
-	 * 
-	 * @param Requerimento objeto
-	 * @return boolean verdadeiro se cadastrado com sucesso.
-	 * 
-	 */
-	public boolean cadastrar(Requerimento objeto) {
-		if (!session.getTransaction().isActive()) {
-			session.beginTransaction();             
-		}
-		session.save(objeto);
-		session.getTransaction().commit();
-		return true;
-	}
+    }
 
-	/**
-	 * @author Vitor Peres <vitor.peres@senior.com.br>
-	 * @author Bruna Carvalho <sh4323202@gmail.com>
-	 * @author Daniella Lira <dev.danilira@gmail.com>
-	 * 
-	 *         M�todo que altera objeto requerimento no banco de dados
-	 * 
-	 *         Altera objeto RequerimentoFerias como parametro, separa por atributos
-	 *         e insere por expressao SQL no banco de dados
-	 * 
-	 * @param int id, RequerimentoFerias objeto
-	 * @return boolean verdadeiro se cadastrado com sucesso.
-	 * 
-	 */
+    private Session session = DBConnection.getSession();
 
-	public boolean alterar(Requerimento objeto) {
-		
-		if (!session.getTransaction().isActive()) {
-			session.beginTransaction();             
-		}
-		session.update(objeto);
-		session.getTransaction().commit();
-		return true;
-	}
+    public boolean criarRequerimento(IRequerimento requerimento) {
+        if(!session.getTransaction().isActive()) {
+            session.beginTransaction();
+        }
+        session.save(requerimento);
+        session.getTransaction().commit();
+        return true;
+    }
 
-	/**
-	 * @author Vitor Peres <vitor.peres@senior.com.br>
-	 * @author Bruna Carvalho <sh4323202@gmail.com>
-	 * @author Daniella Lira <dev.danilira@gmail.com>
-	 * 
-	 *         M�todo que deleta objeto requerimento no banco de dados
-	 * 
-	 *         Deleta objeto RequerimentoFerias atraves do id.
-	 * 
-	 * @param int id objeto
-	 * @return boolean verdadeiro se cadastrado com sucesso.
-	 * 
-	 */
+    public boolean deletarRequerimento(IRequerimento requerimento) {
+        if(!session.getTransaction().isActive()) {
+            session.beginTransaction();
+        }
+        session.delete(requerimento);
+        session.getTransaction().commit();
+        return true;
+    }
 
-	public boolean deletar(Requerimento objeto) {
+    public boolean atualizarRequerimento(IRequerimento requerimento) {
+        if(!session.getTransaction().isActive()) {
+            session.beginTransaction();
+        }
+        session.update(requerimento);
+        session.getTransaction().commit();
+        return true;
+    }
 
-		if (!session.getTransaction().isActive()) {
-			session.beginTransaction();             
-		}
-		session.delete(objeto);
-		session.getTransaction().commit();
-		return true;
-	}
-
-	/**
-	 * @author Vitor Peres <vitor.peres@senior.com.br>
-	 * @author Bruna Carvalho <sh4323202@gmail.com>
-	 * @author Daniella Lira <dev.danilira@gmail.com>
-	 * 
-	 *         M�todo que cadastra objeto requerimento no banco de dados
-	 * 
-	 *         Pega todos os objetos RequerimentoFerias que tenham o mesmo estado de
-	 *         requerimento recebido como parametro.
-	 * 
-	 * @param Estadosrequerimentos objeto
-	 * 
-	 * @return boolean verdadeiro se cadastrado com sucesso.
-	 * 
-	 */
-
-	public List<Requerimento> getRequerimentoPorEstado(EstadosRequerimentos estado) {
-		if (!session.getTransaction().isActive()) {
-			session.beginTransaction();             
-		}
-		CriteriaBuilder builder = session.getCriteriaBuilder();
-		CriteriaQuery<Requerimento> criteria = builder.createQuery(Requerimento.class);
-
-		Root<Requerimento> root = criteria.from(Requerimento.class);
-		criteria.select(root).where(builder.equal(root.get("estadoRequisicao"), estado.getValor()));
-		Query query = session.createQuery(criteria);
-		List<Requerimento> requerimentos = query.getResultList();
-		return requerimentos;
-	}
-
-	/**
-	 * @author Vitor Peres <vitor.peres@senior.com.br>
-	 * @author Bruna Carvalho <sh4323202@gmail.com>
-	 * @author Daniella Lira <dev.danilira@gmail.com>
-	 * 
-	 *         M�todo que busca o requerimento por data no banco de dados
-	 * 
-	 *         Pega todos os objetos RequerimentoFerias que tenham a mesma data de
-	 *         requerimento recebido como parametro.
-	 * 
-	 * @param LocalDate, dataParaPesquisa
-	 * 
-	 * @return ArrayList<RequerimentoFerias>
-	 */
-
-	public List<Requerimento> getRequerimentoPorData(LocalDate dataParaPesquisa) {
-		if (!session.getTransaction().isActive()) {
-			session.beginTransaction();             
-		}
-
-		CriteriaBuilder builder = session.getCriteriaBuilder();
-		CriteriaQuery<Requerimento> criteria = builder.createQuery(Requerimento.class);
-
-		Root<Requerimento> root = criteria.from(Requerimento.class);
-
-		criteria.select(root).where(builder.equal(root.get("dataSolicitacao"), dataParaPesquisa));
-		Query query = session.createQuery(criteria);
-		List<Requerimento> requerimentos = query.getResultList();
-		return requerimentos;
-	}
-
-	public boolean limparTabela() {
+    public List<IRequerimento> buscarRequerimentos(IRequerimento requerimento) {
+        if(!session.getTransaction().isActive()) {
+            session.beginTransaction();
+        }
+        CriteriaBuilder cb = session.getCriteriaBuilder();
+        CriteriaQuery<IRequerimento> cq = cb.createQuery(IRequerimento.class);
+        return session.createQuery(cq.select(cq.from(IRequerimento.class))).getResultList();
+    }
+    
+    public List<IRequerimento> buscarRequerimentos(Class<?> tipoRequerimento) {
+        if(!session.getTransaction().isActive()) {
+            session.beginTransaction();
+        }
+        CriteriaBuilder cb = session.getCriteriaBuilder();
+        CriteriaQuery<IRequerimento> cq = (CriteriaQuery<IRequerimento>) cb.createQuery(tipoRequerimento);
+        return session.createQuery(cq.select((Selection<? extends IRequerimento>) cq.from(tipoRequerimento))).getResultList();
+    }
+    
+    public List<IRequerimento> buscarRequerimentos(EstadoRequerimento estadoRequerimento) {
+        if(!session.getTransaction().isActive()) {
+            session.beginTransaction();
+        }
+        CriteriaBuilder cb = session.getCriteriaBuilder();
+        CriteriaQuery<IRequerimento> cq = cb.createQuery(IRequerimento.class);
+        Root<IRequerimento> root = cq.from(IRequerimento.class);
+        return session.createQuery(cq.select(cq.from(IRequerimento.class)).where(cb.equal(root.get("estadoRequisicao"), estadoRequerimento.getValor()))).getResultList();
+    }
+    
+    public List<IRequerimento> buscarRequerimentos(LocalDate dataDeCriacao) {
+        if(!session.getTransaction().isActive()) {
+            session.beginTransaction();
+        }
+        CriteriaBuilder cb = session.getCriteriaBuilder();
+        CriteriaQuery<IRequerimento> cq = cb.createQuery(IRequerimento.class);
+        Root<IRequerimento> root = cq.from(IRequerimento.class);
+        return session.createQuery(cq.select(cq.from(IRequerimento.class)).where(cb.equal(root.get("dataCriacaoRequerimento"), dataDeCriacao))).getResultList();
+    }
+    
+    public IRequerimento buscarRequerimento(Class<?> tipoRequerimento, int idRequerimento) {
+        if(!session.getTransaction().isActive()) {
+            session.beginTransaction();
+        }
+        return (IRequerimento) session.get(tipoRequerimento, idRequerimento);
+    }
+    
+    public boolean limparTabela() {
 		if (!session.getTransaction().isActive()) {
 			session.beginTransaction();
 		}
-		try {
-			CriteriaBuilder builder = session.getCriteriaBuilder();
-			CriteriaDelete<Requerimento> criteriaDelete = builder.createCriteriaDelete(Requerimento.class);
-			criteriaDelete.from(Requerimento.class);
-			Query query = session.createQuery(criteriaDelete);
-			query.executeUpdate();
-			session.getTransaction().commit();
-			return true;
-		} catch (Exception e) {
-			e.getMessage();
-			return false;
-		}
+		CriteriaBuilder builder = session.getCriteriaBuilder();
+		CriteriaDelete<RequerimentoFerias> criteriaDelete = builder.createCriteriaDelete(RequerimentoFerias.class);
+		criteriaDelete.from(RequerimentoFerias.class);
+		session.createQuery(criteriaDelete).executeUpdate();
+		CriteriaDelete<RequerimentoSalario> criteriaDelete2 = builder.createCriteriaDelete(RequerimentoSalario.class);
+		criteriaDelete2.from(RequerimentoSalario.class);
+		session.createQuery(criteriaDelete2).executeUpdate();
+		session.getTransaction().commit();
+		return true;
 	}
-	
 }

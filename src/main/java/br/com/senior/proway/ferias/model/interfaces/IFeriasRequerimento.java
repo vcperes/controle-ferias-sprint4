@@ -3,7 +3,7 @@ package br.com.senior.proway.ferias.model.interfaces;
 import java.time.LocalDate;
 
 import br.com.senior.proway.ferias.model.Ferias;
-import br.com.senior.proway.ferias.model.enums.EstadosRequerimentos;
+import br.com.senior.proway.ferias.model.enums.EstadoRequerimento;
 
 public interface IFeriasRequerimento {
 
@@ -15,9 +15,9 @@ public interface IFeriasRequerimento {
 
 	public void setFeriasRequisitada(Ferias feriasRequisitada);
 
-	public EstadosRequerimentos getEstadoRequisicao() ;
+	public EstadoRequerimento getEstadoRequisicao() ;
 
-	public void setEstadoRequisicao(EstadosRequerimentos estadoRequisicao);
+	public void setEstadoRequisicao(EstadoRequerimento estadoRequisicao);
 
 	public LocalDate getDataSolicitacao();
 

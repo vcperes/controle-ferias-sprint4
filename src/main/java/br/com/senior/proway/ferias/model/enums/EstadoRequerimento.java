@@ -4,7 +4,7 @@ package br.com.senior.proway.ferias.model.enums;
  * @author Jonata e Leonardo Pereira
  *
  */
-public enum EstadosRequerimentos {
+public enum EstadoRequerimento {
 	EM_ANALISE(0),
 	APROVADO(1),
 	REPROVADO(2),
@@ -12,23 +12,23 @@ public enum EstadosRequerimentos {
 	
 	private int valor;
 	
-	EstadosRequerimentos(int valor){
+	EstadoRequerimento(int valor){
 		this.valor = valor;
 	}
 	public int getValor() {
 		return valor;
 	}
 	
-	public static EstadosRequerimentos pegarPorValor(int valor) {
+	public static EstadoRequerimento pegarPorValor(int valor) {
 		switch(valor) {
 		case 0:
-			return EstadosRequerimentos.EM_ANALISE;
+			return EstadoRequerimento.EM_ANALISE;
 		case 1:
-			return EstadosRequerimentos.APROVADO;
+			return EstadoRequerimento.APROVADO;
 		case 2:
-			return EstadosRequerimentos.REPROVADO;
+			return EstadoRequerimento.REPROVADO;
 		case 3:
-			return EstadosRequerimentos.INVALIDO;
+			return EstadoRequerimento.INVALIDO;
 		default:
 			return null;
 
