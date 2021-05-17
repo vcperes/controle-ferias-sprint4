@@ -8,17 +8,16 @@ import br.com.senior.proway.ferias.model.interfaces.IRequerimentoFeriasBuilder;
 
 public class RequerimentoBuilder implements IRequerimentoFeriasBuilder {
 
-	private int identificadorUsuario;
+	private int id;
 	private Ferias feriasRequisitadas;
 	private EstadosRequerimentos estadoRequisicao;
 	private LocalDate dataSolicitacao;
 	
 	public Requerimento build() {
-		// checar as informacoes antes de montar o objeto
-		if (this.feriasRequisitadas.getTipo()==TiposFerias.INVALIDA) {
+		if (this.feriasRequisitadas.getTipo() == TiposFerias.INVALIDA) {
 			this.estadoRequisicao = EstadosRequerimentos.INVALIDO;
 		}
-		return new Requerimento(this.identificadorUsuario, this.feriasRequisitadas,this.estadoRequisicao,this.dataSolicitacao);
+		return new Requerimento(this.id, this.feriasRequisitadas,this.estadoRequisicao,this.dataSolicitacao);
 	}
 	
 	public EstadosRequerimentos getEstadoRequisicao() {
@@ -37,12 +36,12 @@ public class RequerimentoBuilder implements IRequerimentoFeriasBuilder {
 		this.dataSolicitacao = dataSolicitacao;
 	}
 
-	public void setIdentificadorUsuario(int identificadorUsuario) {
-		this.identificadorUsuario = identificadorUsuario;		
+	public void setID(int id) {
+		this.id = id;		
 	}
 	
-	public int getIdentificadorUsuario() {
-		return identificadorUsuario;
+	public int getID() {
+		return id;
 	}
 
 	public void setFeriasRequisitadas(Ferias ferias) {
