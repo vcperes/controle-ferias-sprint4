@@ -121,6 +121,9 @@ public class TesteFeriasDAO {
 		List<IFerias> listaFerias = feriasDAO.pegarTodasAsFeriasPorTipo(TiposFerias.VENDIDA);
 
 		assertEquals(2, listaFerias.size());
+
+		feriasDAO.deletar(ferias);
+
 	}
 
 	@Test

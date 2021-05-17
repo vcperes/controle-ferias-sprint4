@@ -1,6 +1,5 @@
 package br.com.senior.proway.ferias.model.DAO;
 
-import java.sql.SQLException;
 import java.util.List;
 
 public interface Icrud<T> {

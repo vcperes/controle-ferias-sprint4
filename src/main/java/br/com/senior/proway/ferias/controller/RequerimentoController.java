@@ -1,9 +1,7 @@
 package br.com.senior.proway.ferias.controller;
 
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -11,32 +9,40 @@ import org.hibernate.Session;
 import br.com.senior.proway.ferias.model.Requerimento;
 import br.com.senior.proway.ferias.model.DAO.RequerimentoDAO;
 import br.com.senior.proway.ferias.model.enums.EstadosRequerimentos;
+import br.com.senior.proway.ferias.model.interfaces.IControleDeAcesso;
 
 public class RequerimentoController {
 	private static RequerimentoDAO requerimentoDao;
 	private static RequerimentoController requerimentoController;
 	private static Session session;
-		
+	private IControleDeAcesso controleDeAcesso;
+
 	public static RequerimentoController getInstance(Session session) {
 		requerimentoDao = RequerimentoDAO.getInstance(session);
 		RequerimentoController.session = session;
-		if(requerimentoController == null) {
+		if (requerimentoController == null) {
 			requerimentoController = new RequerimentoController();
 		}
 		return requerimentoController;
-	}	
-		
+	}
+
 	/**
 	 * Get All.
 	 * 
-	 * Controlller faz contato com o RequerimentoDAO, que retorna uma lista de
-	 * todos os requerimentos de ferias.
+	 * Controlller faz contato com o RequerimentoDAO, que retorna uma lista de todos
+	 * os requerimentos de ferias.
 	 * 
 	 * @return ArrayList<FeriasRequerimento>
+	 * @throws Exception
 	 */
-	public List<Requerimento> getAllRequerimentos() {
-		List<Requerimento> feriasRequerimento = requerimentoDao.pegarTodos();
-		return feriasRequerimento;
+	public List<Requerimento> getAllRequerimentos(Integer idUsuario) throws Exception {
+		if (controleDeAcesso.validarAcesso(idUsuario)) {
+
+			List<Requerimento> feriasRequerimento = requerimentoDao.pegarTodos();
+			return feriasRequerimento;
+		} else {
+			throw new Exception("usuario não tem acesso");
+		}
 	}
 
 	/**
@@ -47,10 +53,16 @@ public class RequerimentoController {
 	 * 
 	 * @param short id
 	 * @return FeriasRequerimento
+	 * @throws Exception
 	 */
-	public Requerimento getRequerimentoPorId(Integer id) {
-		Requerimento feriasRequerimento = requerimentoDao.pegarRequerimentoPorID(id);
-		return feriasRequerimento;
+	public Requerimento getRequerimentoPorId(Integer id, Integer idUsuario) throws Exception {
+		if (controleDeAcesso.validarAcesso(idUsuario)) {
+			Requerimento feriasRequerimento = requerimentoDao.pegarRequerimentoPorID(id);
+			return feriasRequerimento;
+		} else {
+			throw new Exception("usuario não tem acesso");
+		}
+
 	}
 
 	/**
@@ -62,10 +74,11 @@ public class RequerimentoController {
 	 * 
 	 * @param Requerimento requerimento
 	 */
-	public void createRequerimento(Requerimento requerimento) {
+	public boolean createRequerimento(Requerimento requerimento) {
 		RequerimentoDAO feriasRequerimentoDAO = RequerimentoDAO.getInstance(session);
-
 		feriasRequerimentoDAO.cadastrar(requerimento);
+
+		return true;
 	}
 
 	/**
@@ -77,11 +90,15 @@ public class RequerimentoController {
 	 * 
 	 * @param id                 (int)
 	 * @param feriasRequerimento (FeriasRequerimento)
+	 * @throws Exception
 	 */
-	public boolean updateRequerimentoPorId(Requerimento feriasRequerimento) {
-
-		requerimentoDao.alterar(feriasRequerimento);
-		return true;
+	public boolean updateRequerimentoPorId(Requerimento feriasRequerimento, Integer idUsuario) throws Exception {
+		if (controleDeAcesso.validarAcesso(idUsuario)) {
+			requerimentoDao.alterar(feriasRequerimento);
+			return true;
+		} else {
+			throw new Exception("usuario não tem acesso");
+		}
 	}
 
 	/**
@@ -91,10 +108,15 @@ public class RequerimentoController {
 	 * exclusao do objeto em nossa Persistencia atraves do DAO.
 	 * 
 	 * @param id (short)
+	 * @throws Exception
 	 */
-	public void deleteRequerimento(Requerimento requerimento) {
-		RequerimentoDAO feriasRequerimentoDAO = RequerimentoDAO.getInstance(session);
-		feriasRequerimentoDAO.deletar(requerimento);
+	public void deleteRequerimento(Requerimento requerimento, Integer idUsuario) throws Exception {
+		if (controleDeAcesso.validarAcesso(idUsuario)) {
+			RequerimentoDAO feriasRequerimentoDAO = RequerimentoDAO.getInstance(session);
+			feriasRequerimentoDAO.deletar(requerimento);
+		} else {
+			throw new Exception("usuario não tem acesso");
+		}
 	}
 
 	/**
@@ -111,7 +133,7 @@ public class RequerimentoController {
 	 * @param termino (LocalDate)
 	 * 
 	 */
-	public static short retornarIntervaloEmDiasEntreAsDatas(LocalDate inicio, LocalDate termino) {
+	public short retornarIntervaloEmDiasEntreAsDatas(LocalDate inicio, LocalDate termino) {
 		short dias = (short) ChronoUnit.DAYS.between(inicio, termino);
 		if (inicio.isBefore(termino)) {
 			return dias;
@@ -133,9 +155,8 @@ public class RequerimentoController {
 	 * 
 	 */
 	public boolean validacaoPrazoSolicitacaoDeFerias(Requerimento feriasRequerimento) {
-		int intervalo = retornarIntervaloEmDiasEntreAsDatas(feriasRequerimento.
-				getDataSolicitacao(), feriasRequerimento.getFeriasRequisitada().
-				getDataInicio());
+		int intervalo = retornarIntervaloEmDiasEntreAsDatas(feriasRequerimento.getDataSolicitacao(),
+				feriasRequerimento.getFeriasRequisitada().getDataInicio());
 		if (intervalo >= Requerimento.PRAZO_MINIMO_SOLICITACAO_FERIAS + 1) {
 			return true;
 		} else {
@@ -144,4 +165,13 @@ public class RequerimentoController {
 		}
 	}
 
+	public boolean defereRequerimento(Requerimento requerimento, EstadosRequerimentos estado, Integer idUsuario)
+			throws Exception {
+		if (controleDeAcesso.validarAcesso(idUsuario)) {
+			requerimento.setEstadoRequisicao(estado);
+			requerimentoController.updateRequerimentoPorId(requerimento, idUsuario);
+			return true;
+		}
+		return false;
+	}
 }

@@ -21,4 +21,5 @@ public class RequerimentoDirector {
 		builder.setEstadoRequisicao (EstadosRequerimentos.EM_ANALISE);
 		builder.setDataSolicitacao (LocalDate.now());
 	}
+	
 }
