@@ -7,6 +7,12 @@ import br.com.senior.proway.ferias.model.enums.TiposFerias;
 /**
  * Responsavel por definir os valores que o Builder carrega para cada caso de
  * instanciamento de tipos de Ferias.
+ * 
+ * @author Vitor Nathan Goncalves <vitor.goncalves@senior.com.br>
+ * @author Guilherme Eduardo Bom Guse <gbg_bg@hotmail.com>
+ * @author Guilherme Ezequiel da Silva <ezequielguilherme002@gmail.com>
+ * @author Marcelo Schaefer Filho <marceloschaeferfilho@gmail.com>
+ * @author Vitor Cesar Peres <vitorperes1104@gmail.com>
  */
 public class FeriasDirector {
 

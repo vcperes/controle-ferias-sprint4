@@ -5,8 +5,6 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 import br.com.senior.proway.ferias.model.aumento.AumentoDeSalario;
-import br.com.senior.proway.ferias.model.controledeacesso.permissao.Permissao;
-import br.com.senior.proway.ferias.model.controledeacesso.usuario.Usuario;
 import br.com.senior.proway.ferias.model.ferias.Ferias;
 import br.com.senior.proway.ferias.model.requerimento.tipos.RequerimentoFerias;
 import br.com.senior.proway.ferias.model.requerimento.tipos.RequerimentoSalario;
@@ -29,10 +27,8 @@ public class DBConnection {
 					.setProperty("hibernate.hbm2ddl.auto", "create")
 					.setProperty("hibernate.connection.autocommit", "true")
 					.addAnnotatedClass(Ferias.class)
-					.addAnnotatedClass(Usuario.class)
 					.addAnnotatedClass(AumentoDeSalario.class)
 					.addAnnotatedClass(RequerimentoSalario.class)
-					.addAnnotatedClass(Permissao.class)
 					.addAnnotatedClass(RequerimentoFerias.class)
 					.buildSessionFactory();
 		} catch (Throwable e) {

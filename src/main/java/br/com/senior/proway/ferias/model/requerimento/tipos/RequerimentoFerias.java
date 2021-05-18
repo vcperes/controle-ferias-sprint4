@@ -27,6 +27,11 @@ import br.com.senior.proway.ferias.model.requerimento.RequerimentoFactory;
  * padronizacao dos requerimentos de ferias no programa. Recebe um objeto
  * {@link Ferias}, que contem as informacoes pertinentes as ferias em si.
  *
+ * @author Vitor Nathan Goncalves <vitor.goncalves@senior.com.br>
+ * @author Guilherme Eduardo Bom Guse <gbg_bg@hotmail.com>
+ * @author Guilherme Ezequiel da Silva <ezequielguilherme002@gmail.com>
+ * @author Marcelo Schaefer Filho <marceloschaeferfilho@gmail.com>
+ * @author Vitor Cesar Peres <vitorperes1104@gmail.com>
  */
 @Entity
 public class RequerimentoFerias extends RequerimentoFactory<Ferias> {

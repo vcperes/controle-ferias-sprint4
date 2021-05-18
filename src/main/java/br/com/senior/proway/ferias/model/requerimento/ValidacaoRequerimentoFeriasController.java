@@ -1,6 +1,7 @@
 package br.com.senior.proway.ferias.model.requerimento;
 
 import java.time.LocalDate;
+
 import java.util.List;
 
 import br.com.senior.proway.ferias.exceptions.UserDoesNotHavePermissionException;
@@ -8,6 +9,7 @@ import br.com.senior.proway.ferias.model.controledeacesso.IControleDeAcesso;
 import br.com.senior.proway.ferias.model.enums.EstadoRequerimento;
 import br.com.senior.proway.ferias.model.requerimento.tipos.RequerimentoFerias;
 import br.com.senior.proway.ferias.model.requerimento.tipos.RequerimentoFeriasController;
+
 /**
  * Classe controller verificadora do {@link RequerimentoFeriasController}
  * 
@@ -15,11 +17,12 @@ import br.com.senior.proway.ferias.model.requerimento.tipos.RequerimentoFeriasCo
  * metodo passando Id de usuario por parametro, Verificando se ele tem acesso a esse metodo
  * ou nao.
  * 
- * 
- * 
- * @author Gui Ezequiel, Marcelo.
  * @see RequerimentoFeriasController
-
+ * @author Vitor Nathan Goncalves <vitor.goncalves@senior.com.br>
+ * @author Guilherme Eduardo Bom Guse <gbg_bg@hotmail.com>
+ * @author Guilherme Ezequiel da Silva <ezequielguilherme002@gmail.com>
+ * @author Marcelo Schaefer Filho <marceloschaeferfilho@gmail.com>
+ * @author Vitor Cesar Peres <vitorperes1104@gmail.com>
  */
 public class ValidacaoRequerimentoFeriasController {
 
@@ -160,7 +163,7 @@ public class ValidacaoRequerimentoFeriasController {
 	 * @throws UserDoesNotHavePermissionException
 	 * @author Guilherme Ezequiel, Marcelo.
 	 */
-	public static short retornarIntervaloEmDiasEntreAsDatas(LocalDate inicio, LocalDate termino, Integer idUsuario) throws UserDoesNotHavePermissionException {
+	public static int retornarIntervaloEmDiasEntreAsDatas(LocalDate inicio, LocalDate termino, Integer idUsuario) throws UserDoesNotHavePermissionException {
 		if(acesso.validarAcesso(idUsuario)){	
 			return requerimentoFeriasController.retornarIntervaloEmDiasEntreAsDatas(inicio, termino);
 		}else { 

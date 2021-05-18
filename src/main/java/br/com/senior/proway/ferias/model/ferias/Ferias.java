@@ -15,14 +15,18 @@ import br.com.senior.proway.ferias.model.enums.TiposFerias;
 
 /**
  * Classe que representa a estrutura de dados de um "model" de Ferias. Para
- * instanciar uma nova Ferias, e necessario informar a data de início,
+ * instanciar uma nova Ferias, e necessario informar a data de inicio,
  * data fim e os dias totais requisitados. O construtor calcula o periodo em dias entre as datas,
  * calcula dias a serem vendidos se necessario e classifica as ferias em um
  * dos tipos disponiveis do {@link TiposFerias}.
  * 
- *@author Sprint5
- *@see FeriasBuilder
- *@see TiposFerias
+ * @author Vitor Nathan Goncalves <vitor.goncalves@senior.com.br>
+ * @author Guilherme Eduardo Bom Guse <gbg_bg@hotmail.com>
+ * @author Guilherme Ezequiel da Silva <ezequielguilherme002@gmail.com>
+ * @author Marcelo Schaefer Filho <marceloschaeferfilho@gmail.com>
+ * @author Vitor Cesar Peres <vitorperes1104@gmail.com>
+ * @see FeriasBuilder
+ * @see TiposFerias
  */
 @Entity
 public class Ferias implements IFerias {

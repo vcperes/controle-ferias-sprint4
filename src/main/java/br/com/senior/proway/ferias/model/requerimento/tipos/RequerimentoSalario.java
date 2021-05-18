@@ -19,7 +19,11 @@ import br.com.senior.proway.ferias.model.requerimento.RequerimentoFactory;
  * RequerimentoController e RequerimentoDAO, visto que dois tipos diferentes de
  * requerimento sao necessarios para verificar os metodos especificos de busca.
  * 
- * @author Senior
+ * @author Vitor Nathan Goncalves <vitor.goncalves@senior.com.br>
+ * @author Guilherme Eduardo Bom Guse <gbg_bg@hotmail.com>
+ * @author Guilherme Ezequiel da Silva <ezequielguilherme002@gmail.com>
+ * @author Marcelo Schaefer Filho <marceloschaeferfilho@gmail.com>
+ * @author Vitor Cesar Peres <vitorperes1104@gmail.com>
  *
  */
 @Entity

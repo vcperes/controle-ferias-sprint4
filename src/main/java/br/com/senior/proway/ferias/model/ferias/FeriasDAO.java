@@ -18,7 +18,7 @@ import br.com.senior.proway.ferias.model.requerimento.tipos.RequerimentoFerias;
 /**
  * Classe DAO do objeto {@link Ferias} implementacao de CRUD.
  * 
- * Classe que faz comunicação com banco de dados: criação, leitura, atualização e remoção.
+ * Classe que faz comunicacao com banco de dados: criacao, leitura, atualizacao e remocao.
  * @author Sprint 5
  *
  */
@@ -149,7 +149,7 @@ public class FeriasDAO implements IFeriasDAO<IFerias> {
 		}
 	}
 
-	/***
+	/**
 	 * Retorna uma lista de objetos do tipo {@link IFerias} com id do usuario passado como parametro.
 	 * 
 	 * @author Janaina

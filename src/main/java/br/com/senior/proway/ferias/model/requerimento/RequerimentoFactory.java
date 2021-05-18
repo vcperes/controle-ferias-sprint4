@@ -20,8 +20,11 @@ import br.com.senior.proway.ferias.model.enums.NivelUrgencia;
  * do qual o requerimento se trata.
  * 
  * @author Senior
- *
- * @param <T>
+ * @author Vitor Nathan Goncalves <vitor.goncalves@senior.com.br>
+ * @author Guilherme Eduardo Bom Guse <gbg_bg@hotmail.com>
+ * @author Guilherme Ezequiel da Silva <ezequielguilherme002@gmail.com>
+ * @author Marcelo Schaefer Filho <marceloschaeferfilho@gmail.com>
+ * @author Vitor Cesar Peres <vitorperes1104@gmail.com>
  */
 @MappedSuperclass
 public class RequerimentoFactory<T> implements IRequerimento<T> {

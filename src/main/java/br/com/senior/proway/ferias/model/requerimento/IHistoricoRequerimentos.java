@@ -1,6 +1,5 @@
 package br.com.senior.proway.ferias.model.requerimento;
 
-import br.com.senior.proway.ferias.model.enums.EstadoRequerimento;
 import br.com.senior.proway.ferias.model.requerimento.tipos.RequerimentoFerias;
 
 public interface IHistoricoRequerimentos {

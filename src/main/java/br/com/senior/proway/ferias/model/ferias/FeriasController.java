@@ -6,7 +6,7 @@ import java.util.List;
 import br.com.senior.proway.ferias.model.enums.TiposFerias;
 
 /**
- * Classe controller de objeto {@link Ferias}, métodos CRUD e get
+ * Classe controller de objeto {@link Ferias}, metodos CRUD e get
  * por atributos especificos.
  * 
  * @author Sprint 5
@@ -16,11 +16,10 @@ public class FeriasController {
 
 	private static FeriasController feriasController;
 
-
 	/**
-	 * Método singleton da classe FeriasController que retorna
-	 * a mesma instância ou cria uma nova se não instanciada ainda.
-	 * @return instância de FeriasController
+	 * Metodo singleton da classe FeriasController que retorna
+	 * a mesma instancia ou cria uma nova se nao instanciada ainda.
+	 * @return instancia de FeriasController
 	 */
 	public static FeriasController getInstance() {
 		feriasDAO = FeriasDAO.getInstance();
