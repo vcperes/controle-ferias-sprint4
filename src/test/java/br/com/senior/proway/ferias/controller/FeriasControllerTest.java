@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
-
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -26,7 +25,7 @@ public class FeriasControllerTest {
 
 	private static FeriasController feriasController;
 	private static FeriasDAO feriasDAO;		
-	private static RequerimentoDAO requerimentoDAO;
+	private static RequerimentoDAO requerimentoDAO;		
 	
 	TiposFerias tipo = TiposFerias.PARCIAL;
 	EstadoRequerimento estadoRequerimento = EstadoRequerimento.EM_ANALISE;
@@ -41,6 +40,12 @@ public class FeriasControllerTest {
 	public void limparBanco() {
 		requerimentoDAO.limparTabela();
 		feriasDAO.limparTabela();
+	}
+
+	@AfterClass
+	public static void limparBancoFim() {
+		requerimentoDAO.limparTabela();
+		feriasDAO.limparTabela();
 		
 	}
 		
@@ -48,6 +53,7 @@ public class FeriasControllerTest {
 	public static void iniciarInstancias() {
 		feriasController = FeriasController.getInstance();
 		feriasDAO = FeriasDAO.getInstance();
+		requerimentoDAO = RequerimentoDAO.getInstance();
 	}
 		
 	@Test

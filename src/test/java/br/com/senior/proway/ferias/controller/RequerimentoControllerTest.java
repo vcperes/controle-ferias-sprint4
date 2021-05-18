@@ -5,10 +5,10 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import java.sql.SQLException;
 import java.time.LocalDate;
 
 import org.hibernate.Session;
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -43,9 +43,16 @@ public class RequerimentoControllerTest {
 	LocalDate localDateSolicitacao2 = LocalDate.of(2021, 06, 03);
 	
 	@Before
-	public void limparBanco() throws SQLException {
-		requerimentoDAO.limparTabela();
-		}
+	public void limparBanco() {
+		requerimentoDAO.limparTabela();	
+		feriasDAO.limparTabela();
+	}
+	
+	@AfterClass
+	public static void limparBancoFim() {
+		requerimentoDAO.limparTabela();	
+		feriasDAO.limparTabela();
+	}
 		
 	@BeforeClass
 	public static void iniciarInstancias() {

@@ -6,7 +6,9 @@ import static org.junit.Assert.assertTrue;
 import java.time.LocalDate;
 import java.util.List;
 
+import org.junit.AfterClass;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import br.com.senior.proway.ferias.model.enums.TiposFerias;
@@ -16,8 +18,8 @@ import br.com.senior.proway.ferias.model.ferias.IFerias;
 import br.com.senior.proway.ferias.model.requerimento.RequerimentoDAO;
 
 public class FeriasDAOTeste {
-	FeriasDAO feriasDAO = FeriasDAO.getInstance();
-	RequerimentoDAO requerimentoDAO = RequerimentoDAO.getInstance();
+	static FeriasDAO feriasDAO;
+	static RequerimentoDAO requerimentoDAO;
 	LocalDate dataInicio = LocalDate.of(2021, 04, 01);
 	LocalDate dataFim = LocalDate.of(2021, 04, 10);
 	int diasTotaisRequisitados = 10;
@@ -25,11 +27,22 @@ public class FeriasDAOTeste {
 	TiposFerias tipo = TiposFerias.PARCIAL;
 	TiposFerias tipo2 = TiposFerias.PARCIAL;
 	
+	@BeforeClass
+	public static void iniciarInstancias() {
+		requerimentoDAO = RequerimentoDAO.getInstance();
+		feriasDAO = FeriasDAO.getInstance();
+	}
+	
 	@Before
 	public void limparBanco() {
+		feriasDAO.limparTabela();
+		requerimentoDAO.limparTabela();
+	}
+
+	@AfterClass
+	public static void limparBancoFim() {
 		requerimentoDAO.limparTabela();
 		feriasDAO.limparTabela();
-		
 	}
 
 	@Test
