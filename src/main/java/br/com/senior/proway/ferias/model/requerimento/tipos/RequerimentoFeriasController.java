@@ -9,11 +9,11 @@ import br.com.senior.proway.ferias.model.requerimento.RequerimentoController;
 
 public class RequerimentoFeriasController extends RequerimentoController {
 
-	private static RequerimentoController requerimentoController;
+	private static RequerimentoFeriasController requerimentoController;
 
-	public static RequerimentoController getInstance() {
+	public static RequerimentoFeriasController getInstance() {
 		if (requerimentoController == null) {
-			requerimentoController = new RequerimentoController();
+			requerimentoController = new RequerimentoFeriasController();
 		}
 		return requerimentoController;
 	}
