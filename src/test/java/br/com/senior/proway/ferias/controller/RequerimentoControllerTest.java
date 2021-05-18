@@ -49,7 +49,7 @@ public class RequerimentoControllerTest {
 	public static void iniciarInstancias() {
 		session = DBConnection.getSession();
 		requerimentoDAO = RequerimentoDAO.getInstance();
-		requerimentoController = RequerimentoFeriasController.getInstance();
+		requerimentoController = RequerimentoController.getInstance();
 		feriasDAO = FeriasDAO.getInstance();
 	}
 	
@@ -159,7 +159,7 @@ public class RequerimentoControllerTest {
 	
 	@Test
 	public void testValidacaoPrazoSolicitacaoDeFeriasInvalido() {
-		Ferias ferias = new Ferias(LocalDate.of(2022, 8, 15), 
+		Ferias ferias = new Ferias(LocalDate.now(), 
 				fim, diasTotais, diasVendidos, tipo);
 		RequerimentoFerias requerimentoFerias = new RequerimentoFerias(ferias, estadoRequerimento, 13, 17,
 				LocalDate.of(2056, 2, 5), NivelUrgencia.ALTO, "Requerimento teste 1");
