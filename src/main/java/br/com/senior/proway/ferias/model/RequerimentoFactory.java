@@ -17,7 +17,11 @@ public class RequerimentoFactory<T> implements IRequerimento<T> {
     @OneToOne
     private T objetoRequerimento;
     private LocalDate dataCriacaoRequerimento;
-    private EstadoRequerimento estadoRequerimento;
+    public void setDataCriacaoRequerimento(LocalDate dataCriacaoRequerimento) {
+		this.dataCriacaoRequerimento = dataCriacaoRequerimento;
+	}
+
+	private EstadoRequerimento estadoRequerimento;
     private int idVerificadorRequerimento;
     private int idCriadorRequerimento;
     private LocalDate prazoParaAnaliseRequerimento;
