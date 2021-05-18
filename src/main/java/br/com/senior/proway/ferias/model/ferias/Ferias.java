@@ -14,14 +14,15 @@ import javax.persistence.Transient;
 import br.com.senior.proway.ferias.model.enums.TiposFerias;
 
 /**
- * Classe que representa a estrutura de dados de uma "unidade" de F�rias. Para
- * instanciar uma nova F�rias, � necess�rio informar as datas de in�cio
- * e fim da mesma. O construtor calcula o Per�odo em dias entre as datas,
- * calcula dias a serem vendidos se necess�rio e classifica as f�rias em um
- * dos tipos dispon�veis no sistema.
+ * Classe que representa a estrutura de dados de um "model" de Ferias. Para
+ * instanciar uma nova Ferias, e necessario informar a data de início,
+ * data fim e os dias totais requisitados. O construtor calcula o periodo em dias entre as datas,
+ * calcula dias a serem vendidos se necessario e classifica as ferias em um
+ * dos tipos disponiveis do {@link TiposFerias}.
  * 
- * @author Sprint2
- *
+ *@author Sprint5
+ *@see FeriasBuilder
+ *@see TiposFerias
  */
 @Entity
 public class Ferias implements IFerias {
