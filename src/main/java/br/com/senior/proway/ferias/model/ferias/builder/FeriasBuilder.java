@@ -8,8 +8,8 @@ import br.com.senior.proway.ferias.model.ferias.Ferias;
 import br.com.senior.proway.ferias.model.ferias.IFerias;
 
 /**
- * Instancia um objeto de Ferias de acordo com os valores passados pelo
- * FeriasDirector
+ * Responsavel por instanciar um objeto de Ferias de acordo com os valores 
+ * passados pelo FeriasDirector.
  */
 public class FeriasBuilder implements IFeriasBuilder {
 	protected final int CREDITOS_MINIMOS_FERIAS_FRACIONADAS = 14;
@@ -23,9 +23,9 @@ public class FeriasBuilder implements IFeriasBuilder {
 	private int diasVendidos;
 	private TiposFerias tipoFerias;
 
-	/**
-	 * Instancia e retorna um objeto de Ferias apÃ³s realizar uma checagem nos
-	 * valores recebidos pelo FeriasDirector
+	/** 
+	 * Instancia e retorna um objeto de Ferias após realizar uma checagem nos
+	 * valores recebidos pelo FeriasDirector.
 	 * 
 	 * @param creditos Saldo disponivel de creditos para ferias
 	 */
@@ -92,15 +92,17 @@ public class FeriasBuilder implements IFeriasBuilder {
 		this.tipoFerias = tipo;
 	}
 
-	// Interface IFeriasValidacoes
-
+	/** 
+	 * Realiza a checagem de dados para realização da instanciacao de um objeto Ferias.
+	 * 
+	 * @param creditos Saldo disponivel de creditos para ferias
+	 */	
 	public boolean checarValidade(IFerias ferias, int creditos) {
 		// Checagem de creditos
 		if (ferias.getDiasTotaisRequisitados() + ferias.getDiasVendidos() > creditos) {
 			ferias.setTipo(TiposFerias.INVALIDA);
 			return false;
 		}
-
 		// Checagem especifica para ferias Vendida
 		if (ferias.getTipo() == TiposFerias.VENDIDA) {
 			if (ferias.getDiasVendidos() > 0 && ferias.getDiasTotaisRequisitados() == 0)
@@ -124,18 +126,28 @@ public class FeriasBuilder implements IFeriasBuilder {
 				}
 			}
 		}
-		// Checagens falharam, retorna falso e invalida as fï¿½rias;
+		// Checagens falharam, retorna falso e invalida as ferias;
 		ferias.setTipo(TiposFerias.INVALIDA);
 		return false;
 	}
 
+	/** 
+	 * Verifica se a data de inicio do periodo de Ferias vem antes da data de final.
+	 * 
+	 * @param dataInicio dataFim
+	 * @return periodo valido/invalido
+	 */
 	public boolean periodoFeriasValido(LocalDate dataInicio, LocalDate dataFim) {
 		boolean check = dataInicio.isBefore(dataFim) ? true : false;
 		return check;
 	}
 
-	// IFeriasCalculos
-
+	/** 
+	 * Calcula a quantidade de dias entre a data de inicio e fim das Ferias.
+	 * Caso as ferias nao tenham informacao de data, retorna 0.
+	 * 
+	 * @return int
+	 */
 	public void calcularPeriodoFerias() {
 		if (this.dataInicio == null || this.dataFim == null) {
 			this.diasTotaisRequisitados = 0;
@@ -147,7 +159,14 @@ public class FeriasBuilder implements IFeriasBuilder {
 			}
 		}
 	}
-
+	/** 
+	 * Calcula os dias a serem vendidos com base nos dias de ferias disponiveis 
+	 * ao colaborador e no tipo de Ferias. Apenas os tipos PARCIAL e VENDIDA terao
+	 * dias a ser vendidos.
+	 * 
+	 * @param diasDisponiveisParaFerias - vem da classe SaldoFerias
+	 * @return int dias a serem vendidos
+	 */
 	public void calcularDiasVendidos(int diasDisponiveisParaFerias) {
 		if (getTipo() == TiposFerias.PARCIAL || getTipo() == TiposFerias.VENDIDA) {
 			int diasAVender =  diasDisponiveisParaFerias - getDiasTotaisRequisitados();

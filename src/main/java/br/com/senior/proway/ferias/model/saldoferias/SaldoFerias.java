@@ -11,23 +11,17 @@ import br.com.senior.proway.ferias.model.requerimento.tipos.RequerimentoFerias;
 
 /**
  * A classe que representa o saldo e historico de ferias.
- * 
- * Possui métodos para calcular saldo, bem como a verificação de saldo.
- * 
- * Creditar dias de férias e controle de faltas através de ponto.
- * 
- * A classe possui constantes para melhor entendimento e manutenção do
- * código.
- * 
- * @author SENIOR
- *
+ * Possui metodos para calcular saldo, bem como a verificacao de saldo.
+ * Credita dias de ferias e controle de faltas atraves de ponto.
+ * A classe possui constantes para melhor entendimento e manutencao do
+ * codigo. 
  */
 public class SaldoFerias implements ISaldoFerias, IHistoricoFerias, IHistoricoRequerimentos, ISaldoFeriasValidacoes {
 
 	private String identificadorUsuario; // FK Foreign Key do usuario - Decidir quais classes tem
 
 	private LocalDate proximasFerias;
-	private short diasDisponiveisDeFerias; // Vai ser preenchido na data "proximasFerias"
+	private short diasDisponiveisDeFerias;
 	private ArrayList<Ferias> historicoFerias;
 	private ArrayList<RequerimentoFerias> historicoRequerimentos;
 
@@ -79,40 +73,67 @@ public class SaldoFerias implements ISaldoFerias, IHistoricoFerias, IHistoricoRe
 		this.historicoRequerimentos = historicoRequerimentos;
 	}
 
-	/*
-	 * Nao devemos substituir a lista, ela ja esta instanciada no construtor. Logo,
-	 * não vamos fazer SET para as ArrayLists
+	/**
+	 * Adiciona um item de ferias na lista de HistoricoFerias.
+	 * 
+	 * @param ferias
 	 */
-
-	// Metodos para modificar as ArrayLists
-
-	// HistoricoFerias
 	public void adicionarHistoricoFerias(Ferias ferias) {
 		this.historicoFerias.add(ferias);
 	}
 
+	/**
+	 * Remove um item de ferias na lista de HistoricoFerias.
+	 * 
+	 * @param ferias
+	 */
 	public void removerHistoricoFerias(Ferias ferias) {
 		this.historicoFerias.remove(ferias);
 	}
 
+	/**
+	 * Verificar se existem requerimentos.
+	 * 
+	 * @return quantidade de requerimentos do tipoDesejado
+	 */
 	public int verificaQuantidadeHistoricoFerias() {
 		return getHistoricoFerias().size();
 	}
 
-	// HistoricoRequerimentos
+	/**
+	 * Adiciona um item de ferias na lista de HistoricoRequerimentos.
+	 * 
+	 * @param ferias
+	 */
 	public void adicionarHistoricoRequerimentos(RequerimentoFerias req) {
 		this.historicoRequerimentos.add(req);
 	}
 
+	/**
+	 * Remove um item de ferias na lista de HistoricoFerias.
+	 * 
+	 * @param ferias
+	 */
 	public void removerHistoricoRequerimentos(RequerimentoFerias req) {
 		this.historicoRequerimentos.remove(req);
 	}
 
+	/**
+	 * Verificar se existem requerimentos.
+	 * 
+	 * @return quantidade de requerimentos do tipoDesejado
+	 */
 	public int verificaQuantiaRequerimentos() {
 		return getHistoricoRequerimentos().size();
 	}
 
-	// ISaldoFeriasValidacoes
+	/**
+	 * Verifica se possui saldo positivo.
+	 * Consulta o valor de Saldo de Ferias e verifica se ele e positivo.
+	 * 
+	 * @param saldoFerias, da estrutura de dados.
+	 * @return
+	 */
 	public boolean checarSaldoPositivo() {
 		return this.diasDisponiveisDeFerias > 0 ? true : false;
 	}

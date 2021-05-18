@@ -23,8 +23,15 @@ public class SaldoFeriasController implements ISaldoFeriasCalculos {
 	public final short CREDITOS_FALTAS_3 = 12;
 	public final short CREDITOS_FALTAS_4 = 0;
 	
-	// Interface ISaldoFeriasCalculos
-	
+	/**
+	 * Responsavel por definir a data em que os dias disponiveis para Ferias
+	 * sao creditados para os colaboradores. Quando a estrutura e iniciada, e
+	 * utilizada a informacao de admissao do colaborador para calcular o dia em que
+	 * o mesmo recebe suas primeiras Ferias. Para as proximas ferias, e utilizada a
+	 * data do ultimo credito de dias mais 365 dias.
+	 * 
+	 * @return Data dos proximos dias de ferias disponiveis
+	 */	
 	public LocalDate calcularProximasFerias(ISaldoFerias saldo) {
 		if (saldo.getProximasFerias() == null) {
 			// puxar do sistema de cadastro de funcionarios
@@ -35,11 +42,20 @@ public class SaldoFeriasController implements ISaldoFeriasCalculos {
 		}
 	}
 	
+	/**
+	 * Responsavel por promover a atualização para as proximas Ferias. 
+	 */	
 	public void atualizarProximasFerias(ISaldoFerias saldo) {
 		saldo.setProximasFerias(calcularProximasFerias(saldo));
 	}
 	
-
+	/**
+	 * Funcao responsavel por calcular os creditos de dias disponiveis para ferias. 
+	 * Essa funcao sera chamada na data definida pela variavel "proximasFerias" e 
+	 * recebe a quantidade de faltas do colaborador.
+	 * 
+	 * @return creditos de dias disponiveis 
+	 */
 	public short calcularDiasDeFerias(short faltas) {
 		short creditos = DIAS_DISPONIVEIS_PARA_FERIAS;
 
@@ -58,17 +74,35 @@ public class SaldoFeriasController implements ISaldoFeriasCalculos {
 		saldo.setDiasDisponiveisDeFerias(calcularDiasDeFerias(faltas));
 	}
 	
-	// ISaldoFeriasDAO
+	/**
+	 * Verifica se existem ferias do tipoDesejado.
+	 *
+	 * @return quantidade de ferias do tipoDesejado
+	 */
 	public int verificaQuantiaFeriasDeTipoNoHistorico(TiposFerias tipoDesejado, ISaldoFerias saldo) {
 		ArrayList<Ferias> lista = receberFeriasEmEstado(tipoDesejado, saldo);
 		return lista.size();
 	}
-		
+	
+	/**
+	 * Verifica se existem chamados do tipoDesejado.
+	 * 
+	 * @return quantidade de requerimentos do tipoDesejado
+	 */
 	public int verificaQuantiaRequerimentosDeTipo(EstadoRequerimento tipoDesejado, ISaldoFerias saldo) {
 		ArrayList<RequerimentoFerias> lista = receberRequerimentosEmEstado(tipoDesejado, saldo);
 		return lista.size();
 	}
 	
+	/**
+	 * Pega lista de chamados do tipoDesejado. O tipoDesjado tem como opções os 
+	 * termos do enum EstadosRequisicao. 
+	 * Retorna uma lista de FeriasRequerimento contendo os requerimentos que possuem 
+	 * status desejado.
+	 * 
+	 * @param listarequerimentos
+	 * @return pendentes
+	 */
 	public ArrayList<RequerimentoFerias> receberRequerimentosEmEstado(EstadoRequerimento tipoDesejado, ISaldoFerias saldo){
 		ArrayList<RequerimentoFerias> pendentes = new ArrayList<RequerimentoFerias>();
 		
@@ -79,7 +113,15 @@ public class SaldoFeriasController implements ISaldoFeriasCalculos {
 		}
 		return pendentes;
 	}
-		
+	
+	/**
+	 * Pega lista de ferias do tipoDesejado. O tipoDesjado tem como opcoes os termos 
+	 * do enum TiposFerias
+	 * Retorna uma lista de Ferias contendo os chamados que possuem status desejado.
+	 * 
+	 * @param listaChamados
+	 * @return lista
+	 */
 	public ArrayList<Ferias> receberFeriasEmEstado(TiposFerias tipoDesejado, ISaldoFerias saldo){
 		ArrayList<Ferias> lista = new ArrayList<Ferias>();
 		
