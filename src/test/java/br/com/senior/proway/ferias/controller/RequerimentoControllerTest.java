@@ -13,16 +13,18 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import br.com.senior.proway.ferias.model.AumentoDeSalario;
-import br.com.senior.proway.ferias.model.Ferias;
-import br.com.senior.proway.ferias.model.RequerimentoFerias;
-import br.com.senior.proway.ferias.model.RequerimentoSalario;
-import br.com.senior.proway.ferias.model.DAO.FeriasDAO;
-import br.com.senior.proway.ferias.model.DAO.RequerimentoDAO;
+import br.com.senior.proway.ferias.bancodedados.DBConnection;
+import br.com.senior.proway.ferias.model.aumento.AumentoDeSalario;
 import br.com.senior.proway.ferias.model.enums.EstadoRequerimento;
 import br.com.senior.proway.ferias.model.enums.NivelUrgencia;
 import br.com.senior.proway.ferias.model.enums.TiposFerias;
-import br.com.senior.proway.ferias.postgresql.DBConnection;
+import br.com.senior.proway.ferias.model.ferias.Ferias;
+import br.com.senior.proway.ferias.model.ferias.FeriasDAO;
+import br.com.senior.proway.ferias.model.requerimento.RequerimentoController;
+import br.com.senior.proway.ferias.model.requerimento.RequerimentoDAO;
+import br.com.senior.proway.ferias.model.requerimento.tipos.RequerimentoFerias;
+import br.com.senior.proway.ferias.model.requerimento.tipos.RequerimentoFeriasController;
+import br.com.senior.proway.ferias.model.requerimento.tipos.RequerimentoSalario;
 
 public class RequerimentoControllerTest {
 

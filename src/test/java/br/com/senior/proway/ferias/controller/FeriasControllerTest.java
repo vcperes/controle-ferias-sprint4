@@ -13,15 +13,16 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
-import br.com.senior.proway.ferias.model.Ferias;
-import br.com.senior.proway.ferias.model.FeriasBuilder;
-import br.com.senior.proway.ferias.model.FeriasDirector;
-import br.com.senior.proway.ferias.model.RequerimentoFerias;
-import br.com.senior.proway.ferias.model.DAO.FeriasDAO;
-import br.com.senior.proway.ferias.model.DAO.RequerimentoDAO;
+import br.com.senior.proway.ferias.bancodedados.DBConnection;
 import br.com.senior.proway.ferias.model.enums.EstadoRequerimento;
 import br.com.senior.proway.ferias.model.enums.TiposFerias;
-import br.com.senior.proway.ferias.postgresql.DBConnection;
+import br.com.senior.proway.ferias.model.ferias.Ferias;
+import br.com.senior.proway.ferias.model.ferias.FeriasController;
+import br.com.senior.proway.ferias.model.ferias.FeriasDAO;
+import br.com.senior.proway.ferias.model.ferias.builder.FeriasBuilder;
+import br.com.senior.proway.ferias.model.ferias.builder.FeriasDirector;
+import br.com.senior.proway.ferias.model.requerimento.RequerimentoDAO;
+import br.com.senior.proway.ferias.model.requerimento.tipos.RequerimentoFerias;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class FeriasControllerTest {
