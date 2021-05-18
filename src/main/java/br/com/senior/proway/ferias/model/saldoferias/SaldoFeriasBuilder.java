@@ -6,7 +6,9 @@ import java.util.ArrayList;
 import br.com.senior.proway.ferias.model.ferias.Ferias;
 import br.com.senior.proway.ferias.model.requerimento.tipos.RequerimentoFerias;
 
-/** Instancia um objeto de SaldoFerias de acordo com os valores passados pelo SaldoFeriasDirector
+/** 
+ * Instancia um objeto de SaldoFerias de acordo com os valores passados pelo 
+ * SaldoFeriasDirector.
  */
 public class SaldoFeriasBuilder implements ISaldoBuilder {
 	
@@ -15,17 +17,21 @@ public class SaldoFeriasBuilder implements ISaldoBuilder {
 	private short diasDisponiveisDeFerias;
 	private ArrayList<Ferias> historicoFerias;
 	private ArrayList<RequerimentoFerias> historicoRequerimentos;
-	
-	/** Instancia e retorna um objeto de SaldoFerias
+		
+	/** 
+	 * Instancia e retorna um objeto de SaldoFerias apos realizar uma checagem nos
+	 * valores recebidos.
+	 * 
+	 * @param creditos disponiveis de creditos para ferias
 	 */
+	
 	public SaldoFerias build() {
 		return new SaldoFerias(
 			this.identificadorUsuario,
 			this.proximasFerias,// Valor ja calculado para +1 ano apos contratacao
 			this.diasDisponiveisDeFerias,
 			this.historicoFerias,
-			this.historicoRequerimentos
-		);
+			this.historicoRequerimentos);
 	}
 	
 	// Getters and Setters
@@ -43,11 +49,10 @@ public class SaldoFeriasBuilder implements ISaldoBuilder {
 
 	public void setHistoricoFerias(ArrayList<Ferias> arrayList) {
 		this.historicoFerias = arrayList;
-		
 	}
+	
 	public void setHistoricoRequerimentos(ArrayList<RequerimentoFerias> arrayList) {
 		this.historicoRequerimentos = arrayList;
-		
 	}
 	
 }
