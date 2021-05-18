@@ -80,24 +80,24 @@ public class RequerimentoDAO implements IRequerimentoDAO {
         return session.createQuery(cq.select((Selection<? extends IRequerimento>) cq.from(tipoRequerimento))).getResultList();
     }
     
-    public List<IRequerimento> buscarRequerimentos(EstadoRequerimento estadoRequerimento) {
+    public List<IRequerimento> buscarRequerimentos(Class<?> tipoRequerimento, EstadoRequerimento estadoRequerimento) {
         if(!session.getTransaction().isActive()) {
             session.beginTransaction();
         }
         CriteriaBuilder cb = session.getCriteriaBuilder();
-        CriteriaQuery<IRequerimento> cq = cb.createQuery(IRequerimento.class);
-        Root<IRequerimento> root = cq.from(IRequerimento.class);
-        return session.createQuery(cq.select(cq.from(IRequerimento.class)).where(cb.equal(root.get("estadoRequisicao"), estadoRequerimento.getValor()))).getResultList();
+        CriteriaQuery<IRequerimento> cq = (CriteriaQuery<IRequerimento>) cb.createQuery(tipoRequerimento);
+        Root<IRequerimento> root = (Root<IRequerimento>) cq.from(tipoRequerimento);
+        return session.createQuery(cq.select((Selection<? extends IRequerimento>) cq.from(tipoRequerimento)).where(cb.equal(root.get("estadoRequerimento"), estadoRequerimento.getValor()))).getResultList();
     }
     
-    public List<IRequerimento> buscarRequerimentos(LocalDate dataDeCriacao) {
+    public List<IRequerimento> buscarRequerimentos(Class<?> tipoRequerimento, LocalDate dataDeCriacao) {
         if(!session.getTransaction().isActive()) {
             session.beginTransaction();
         }
         CriteriaBuilder cb = session.getCriteriaBuilder();
-        CriteriaQuery<IRequerimento> cq = cb.createQuery(IRequerimento.class);
-        Root<IRequerimento> root = cq.from(IRequerimento.class);
-        return session.createQuery(cq.select(cq.from(IRequerimento.class)).where(cb.equal(root.get("dataCriacaoRequerimento"), dataDeCriacao))).getResultList();
+        CriteriaQuery<IRequerimento> cq = (CriteriaQuery<IRequerimento>) cb.createQuery(tipoRequerimento);
+        Root<IRequerimento> root = (Root<IRequerimento>) cq.from(tipoRequerimento);
+        return session.createQuery(cq.select((Selection<? extends IRequerimento>) cq.from(tipoRequerimento)).where(cb.equal(root.get("dataCriacaoRequerimento"), dataDeCriacao))).getResultList();
     }
     
     public IRequerimento buscarRequerimento(Class<?> tipoRequerimento, int idRequerimento) {
