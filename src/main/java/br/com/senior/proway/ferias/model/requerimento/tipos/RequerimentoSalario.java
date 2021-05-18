@@ -12,13 +12,26 @@ import br.com.senior.proway.ferias.model.enums.EstadoRequerimento;
 import br.com.senior.proway.ferias.model.enums.NivelUrgencia;
 import br.com.senior.proway.ferias.model.requerimento.RequerimentoFactory;
 
+/**
+ * Classe RequerimentoSalario.
+ * 
+ * Essa classe existe para que seja possivel o teste dos metodos das classes
+ * RequerimentoController e RequerimentoDAO, visto que dois tipos diferentes de
+ * requerimento sao necessarios para verificar os metodos especificos de busca.
+ * 
+ * @author Senior
+ *
+ */
 @Entity
-public class RequerimentoSalario extends RequerimentoFactory <AumentoDeSalario>{
-	
+public class RequerimentoSalario extends RequerimentoFactory<AumentoDeSalario> {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	int idRequerimentoSalario;
 
+	/**
+	 * Construtor vazio (para uso do Hibernate)
+	 */
 	public RequerimentoSalario() {
 		super();
 	}

@@ -7,12 +7,11 @@ import static org.junit.Assert.assertTrue;
 import java.time.LocalDate;
 import java.util.List;
 
-import org.hibernate.Session;
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import br.com.senior.proway.ferias.bancodedados.DBConnection;
 import br.com.senior.proway.ferias.model.enums.EstadoRequerimento;
 import br.com.senior.proway.ferias.model.enums.NivelUrgencia;
 import br.com.senior.proway.ferias.model.enums.TiposFerias;
@@ -25,7 +24,6 @@ import br.com.senior.proway.ferias.model.requerimento.tipos.RequerimentoFerias;
 public class RequerimentoDAOTeste {
 	static RequerimentoDAO requerimentoDAO;
 	static FeriasDAO feriasDAO;
-	static Session session;
 
 	TiposFerias tipo = TiposFerias.PARCIAL;
 	EstadoRequerimento estadoRequerimento = EstadoRequerimento.EM_ANALISE;
@@ -38,7 +36,6 @@ public class RequerimentoDAOTeste {
 	
 	@BeforeClass
 	public static void createRequerimentoDAO() {
-		session = DBConnection.getSession();
 		requerimentoDAO = RequerimentoDAO.getInstance();
 		feriasDAO = FeriasDAO.getInstance();
 	}
@@ -49,6 +46,12 @@ public class RequerimentoDAOTeste {
 		feriasDAO.limparTabela();
 	}
 
+	@AfterClass
+	public static void limparBancoFim() {
+		requerimentoDAO.limparTabela();
+		feriasDAO.limparTabela();
+	}
+	
 	@Test
 	public void testeACreate() {
 

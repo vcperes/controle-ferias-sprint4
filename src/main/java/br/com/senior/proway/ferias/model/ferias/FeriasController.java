@@ -11,11 +11,9 @@ import br.com.senior.proway.ferias.model.enums.TiposFerias;
 public class FeriasController {
 
 	private static FeriasController feriasController;
-	private static Session session;
 
 	public static FeriasController getInstance() {
 		feriasDAO = FeriasDAO.getInstance();
-		FeriasController.session = DBConnection.getSession();
 		if (feriasController == null) {
 			feriasController = new FeriasController();
 		}
@@ -25,7 +23,6 @@ public class FeriasController {
 	private static FeriasDAO feriasDAO;
 
 	public FeriasController() {
-		session = DBConnection.getSession();
 		feriasDAO = FeriasDAO.getInstance();
 	}
 

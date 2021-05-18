@@ -20,26 +20,27 @@ import br.com.senior.proway.ferias.model.requerimento.IRequerimento;
 import br.com.senior.proway.ferias.model.requerimento.RequerimentoFactory;
 
 /**
+ * Classe RequerimentoFerias
  * 
- * @author Jonata e Leonardo Pereira A classe FeriasRequerimento e responsavel
- *         por verificar quantos dias o funcionario solicitou suas ferias
- *         antes da data pretendida (nao menor que 10 dias). Esta
- *         verificacao e feita pelo metodo
- *         validacaoPrazoSolicitacaoDeFerias e o calculo e feito pelo metodo
- *         retornarIntervaloEmDiasEntreAsDatas. A classe tambem possui o
- *         metodo de trazer o estado da requisicao que podera ser
- *         EM_ANALISE, APROVADO, REPROVADO.
+ * A classe RequerimentoFerias é um objeto requerimento que e gerenciado pelas
+ * Classes RequerimentoController e RequerimentoDAO. E responsavel por fazer a
+ * padronizacao dos requerimentos de ferias no programa. Recebe um objeto
+ * {@link Ferias}, que contem as informacoes pertinentes as ferias em si.
+ *
  */
 @Entity
 public class RequerimentoFerias extends RequerimentoFactory<Ferias> {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int idRequerimentoFerias;
-	
+
 	@Transient
 	public static short PRAZO_MINIMO_SOLICITACAO_FERIAS = 10;
-	
+
+	/**
+	 * Construtor vazio, para uso pelo Hibernate
+	 */
 	public RequerimentoFerias() {
 		super();
 	}

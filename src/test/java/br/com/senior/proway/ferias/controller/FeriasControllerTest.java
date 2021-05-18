@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 
 import org.hibernate.Session;
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
@@ -30,6 +31,7 @@ public class FeriasControllerTest {
 	private static Session session;
 	private static FeriasController feriasController;
 	private static FeriasDAO feriasDAO;		
+	private static RequerimentoDAO requerimentoDAO;		
 	
 	TiposFerias tipo = TiposFerias.PARCIAL;
 	EstadoRequerimento estadoRequerimento = EstadoRequerimento.EM_ANALISE;
@@ -42,14 +44,21 @@ public class FeriasControllerTest {
 	
 	@Before
 	public void limparBanco() {
+		requerimentoDAO.limparTabela();
+		feriasDAO.limparTabela();
+	}
+
+	@AfterClass
+	public static void limparBancoFim() {
+		requerimentoDAO.limparTabela();
 		feriasDAO.limparTabela();
 	}
 		
 	@BeforeClass
 	public static void iniciarInstancias() {
-		session = DBConnection.getSession();
 		feriasController = FeriasController.getInstance();
 		feriasDAO = FeriasDAO.getInstance();
+		requerimentoDAO = RequerimentoDAO.getInstance();
 	}
 		
 	@Test

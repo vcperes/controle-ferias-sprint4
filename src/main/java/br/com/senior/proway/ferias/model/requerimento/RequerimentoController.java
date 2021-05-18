@@ -2,14 +2,28 @@ package br.com.senior.proway.ferias.model.requerimento;
 
 import java.util.List;
 
-import br.com.senior.proway.ferias.model.controledeacesso.IControleDeAcesso;
-import br.com.senior.proway.ferias.model.controledeacesso.permissao.Permissao;
-import br.com.senior.proway.ferias.model.controledeacesso.usuario.IUsuario;
-
+/**
+ * Classe RequerimentoController.<br>
+ * <br>
+ * 
+ * Esta classe e a responsavel por fazer o controle de dados dos requerimentos.
+ * Possui metodos para alterar, criar, deletar ou buscar requerimentos.<br>
+ * <br>
+ * 
+ * @see RequerimentoDAO
+ */
 public class RequerimentoController {
 	private static RequerimentoDAO requerimentoDAO;
 	private static RequerimentoController requerimentoController;
 
+	/**
+	 * Implementacao do singleton da classe. <br>
+	 * <br>
+	 * 
+	 * E utilizado para obter uma instancia utilizavel dessa classe.
+	 * 
+	 * @return RequerimentoController
+	 */
 	public static RequerimentoController getInstance() {
 		requerimentoDAO = RequerimentoDAO.getInstance();
 		if (requerimentoController == null) {
@@ -19,13 +33,14 @@ public class RequerimentoController {
 	}
 
 	/**
-	 * Get All.
+	 * Metodo buscarTodosOsRequerimentos(Class<?> classe). <br>
+	 * <br>
 	 * 
-	 * Controlller faz contato com o RequerimentoDAO, que retorna uma lista de todos
-	 * os requerimentos de ferias.
+	 * Controller faz contato com o RequerimentoDAO, que retorna uma lista de todos
+	 * os requerimentos de um tipo.
 	 * 
-	 * @return ArrayList<FeriasRequerimento>
-	 * @throws Exception
+	 * @param classe Class<?> engloba o tipo de requerimento a ser buscado
+	 * @return List<IRequerimento>
 	 */
 	public List<IRequerimento> buscarTodosOsRequerimentos(Class<?> classe) {
 		List<IRequerimento> requerimentosFerias = requerimentoDAO.buscarRequerimentos(classe);
@@ -33,14 +48,15 @@ public class RequerimentoController {
 	}
 
 	/**
-	 * Get.
+	 * Metodo buscarRequerimentoPorId(Class<?> tipoRequerimento, Integer id). <br>
+	 * <br>
 	 * 
-	 * Controlller faz contato com o FeriasRequerimentoDAO, recebendo um id que
-	 * retornara um objeto do tipo Ferias Requerimento de acordo com o id informado.
+	 * Controller faz contato com o RequerimentoDAO, que retorna o requerimento que
+	 * possui o ID especificado.
 	 * 
-	 * @param short id
-	 * @return FeriasRequerimento
-	 * @throws Exception
+	 * @param tipoRequerimento Class<?> engloba o tipo do requerimento a ser buscado
+	 * @param id               Integer o id do requerimento
+	 * @return IRequerimento
 	 */
 	public IRequerimento buscarRequerimentoPorId(Class<?> tipoRequerimento, Integer id) {
 		IRequerimento requerimento = requerimentoDAO.buscarRequerimento(tipoRequerimento, id);
@@ -48,13 +64,14 @@ public class RequerimentoController {
 	}
 
 	/**
-	 * Create.
+	 * Metodo criarRequerimento(IRequerimento requerimento). <br>
+	 * <br>
 	 * 
-	 * Controlller faz contato com o FeriasRequerimentoDAO, recebe como parametro um
-	 * objeto do tipo FeriasRequerimento, insere o mesmo em nossa Persistencia
-	 * atrav�s do DAO.
+	 * Controller faz contato com o RequerimentoDAO, recebe como parametro um objeto
+	 * do tipo IRequerimento e o insere no banco de dados
 	 * 
 	 * @param RequerimentoFerias requerimento
+	 * @return true caso o metodo execute corretamente.
 	 */
 	public boolean createRequerimento(IRequerimento requerimento) {
 		requerimentoDAO.criarRequerimento(requerimento);
@@ -62,26 +79,27 @@ public class RequerimentoController {
 	}
 
 	/**
-	 * Update.
+	 * Metodo atualizarRequerimento(IRequerimento requerimento). <br>
+	 * <br>
 	 * 
-	 * Controlller faz contato com o FeriasRequerimentoDAO, recebe um id e um objeto
-	 * do tipo FeriasRequerimento, atraves destes dados atualiza, substituindo o
-	 * objeto da Persistencia com os dados repassados atraves do DAO.
+	 * Controller faz contato com o RequerimentoDAO, recebe um objeto que implementa
+	 * a interface IRequerimento (ou que extende uma classe que a implementa), e o
+	 * atualiza no banco de dados.
 	 * 
-	 * @param id                 (int)
-	 * @param feriasRequerimento (FeriasRequerimento)
-	 * @throws Exception
+	 * @param requerimento (IRequerimento) o requerimento atualizado
 	 */
-	public boolean atualizarRequerimentoPorId(IRequerimento requerimento){
+	public boolean atualizarRequerimentoPorId(IRequerimento requerimento) {
 		requerimentoDAO.atualizarRequerimento(requerimento);
 		return true;
 	}
 
 	/**
-	 * Delete
+	 * Metodo deletarRequerimento(IRequerimento requerimento). <br>
+	 * <br>
 	 * 
-	 * Controlller faz contato com o FeriasRequerimentoDAO, recebe um id e realiza a
-	 * exclusao do objeto em nossa Persistencia atraves do DAO.
+	 * Controller faz contato com o RequerimentoDAO, recebe um objeto que implementa
+	 * a interface IRequerimento (ou que extende uma classe que a implementa), e o
+	 * exclui do banco de dados. 
 	 * 
 	 * @param id (short)
 	 * @throws Exception
@@ -89,6 +107,4 @@ public class RequerimentoController {
 	public void deleteRequerimento(IRequerimento requerimento) {
 		requerimentoDAO.deletarRequerimento(requerimento);
 	}
-
-	
 }

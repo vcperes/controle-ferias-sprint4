@@ -7,32 +7,43 @@ import br.com.senior.proway.ferias.model.enums.EstadoRequerimento;
 import br.com.senior.proway.ferias.model.ferias.Ferias;
 import br.com.senior.proway.ferias.model.requerimento.RequerimentoController;
 
+/**
+ * Classe RequerimentoFeriasController.
+ * 
+ * Por ser uma extensao de RequerimentoController, e possivel adicionar metodos
+ * especificos para uso com os requerimentos de ferias.
+ *
+ */
 public class RequerimentoFeriasController extends RequerimentoController {
 
-	private static RequerimentoController requerimentoController;
+	private static RequerimentoFeriasController requerimentoController;
 
-	public static RequerimentoController getInstance() {
+	/**
+	 * Implementacao do singleton da classe. <br>
+	 * <br>
+	 * 
+	 * E utilizado para obter uma instancia utilizavel dessa classe.
+	 * 
+	 * @return RequerimentoFeriasController
+	 */
+	public static RequerimentoFeriasController getInstance() {
 		if (requerimentoController == null) {
-			requerimentoController = new RequerimentoController();
+			requerimentoController = new RequerimentoFeriasController();
 		}
 		return requerimentoController;
 	}
+
 	/**
 	 * Retorna quantidade de dias
 	 * 
-	 * Retorna a quantidade de dias em formato short, a partir das datas de inicio e
-	 * termino informadas.
+	 * Retorna a quantidade de dias entre as datas informadas.
 	 * 
-	 * Diferente da funcao calcularPeriodoFerias da classe Ferias, essa foi definida
-	 * como static para nao depender de uma instancia da classe e poder ser usada
-	 * como "ferramenta";
-	 * 
-	 * @param inicio  (LocalDate)
-	 * @param termino (LocalDate)
+	 * @param inicio  LocalDate
+	 * @param termino LocalDate
 	 * 
 	 */
-	public static short retornarIntervaloEmDiasEntreAsDatas(LocalDate inicio, LocalDate termino) {
-		short dias = (short) ChronoUnit.DAYS.between(inicio, termino);
+	public static int retornarIntervaloEmDiasEntreAsDatas(LocalDate inicio, LocalDate termino) {
+		int dias = (int) ChronoUnit.DAYS.between(inicio, termino);
 		if (inicio.isBefore(termino)) {
 			return dias;
 		}
@@ -42,14 +53,12 @@ public class RequerimentoFeriasController extends RequerimentoController {
 	/**
 	 * Valida o Prazo da Solicitacao de Ferias.
 	 * 
-	 * Retorna um boolean obtido atraves da comparacao entre a data de inicio de
-	 * ferias e a variavel PRAZO_MINIMO_SOLICITACAO_FERIAS. Para o boolean retornar
-	 * true, o (intervalo) deve ser maior que a variavel
-	 * PRAZO_MINIMO_SOLICITACAO_FERIAS, neste caso aplicamos o short 10. Se
-	 * intervalor menor que 10, atualizamos Estados da Requisicao para INVALIDO.
+	 * Verifica se o inicio de uma ferias se da ao menos
+	 * PRAZO_MINIMO_SOLICITACAO_FERIAS dias apos a requisicao ser criada, para
+	 * evitar que uma ferias seja pedida sem antecedencia.
 	 * 
 	 * @param dataInicioFerias
-	 * @return True/False sucesso da validacao.
+	 * @return true caso o requerimento seja criado com a antecedencia necessaria.
 	 * 
 	 */
 	public static boolean validacaoPrazoSolicitacaoDeFerias(RequerimentoFerias feriasRequerimento) {
@@ -63,6 +72,15 @@ public class RequerimentoFeriasController extends RequerimentoController {
 		}
 	}
 
+	/**
+	 * Metodo defereRequerimento.
+	 * 
+	 * E utilizado para alterar o {@link EstadoRequerimento} de um Requerimento de Ferias
+	 * @param requerimento
+	 * @param estado
+	 * @param idUsuario
+	 * @return
+	 */
 	public boolean defereRequerimento(RequerimentoFerias requerimento, EstadoRequerimento estado, Integer idUsuario) {
 		requerimento.setEstadoRequerimento(estado);
 		requerimentoController.atualizarRequerimentoPorId(requerimento);
