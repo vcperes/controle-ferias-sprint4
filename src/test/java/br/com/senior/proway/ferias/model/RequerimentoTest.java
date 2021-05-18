@@ -6,69 +6,54 @@ import java.time.LocalDate;
 
 import org.junit.Test;
 
-import br.com.senior.proway.ferias.model.enums.EstadosRequerimentos;
+import br.com.senior.proway.ferias.model.enums.EstadoRequerimento;
 
 public class RequerimentoTest {
 
 	@Test
-	public void testRequerimento() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testRequerimentoIntFeriasEstadosRequerimentosLocalDate() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testRequerimentoFeriasEstadosRequerimentosLocalDate() {
-		fail("Not yet implemented");
-	}
-
-	@Test
 	public void testGetSetId() {
-		Requerimento requerimento = new Requerimento();
-		requerimento.setId(0);
-		assertEquals(0, requerimento.getId());
+		RequerimentoFerias requerimento = new RequerimentoFerias();
+		requerimento.setIdRequerimentoFerias(0);
+		assertEquals(0, requerimento.getIdRequerimentoFerias());
 	}
 
 	@Test
-	public void testGetSetFeriasRequisitada() {
-		Requerimento requerimento = new Requerimento();
+	public void testGetSetObjetoRequerimento() {
+		RequerimentoFerias requerimento = new RequerimentoFerias();
 		Ferias ferias = new Ferias();
-		requerimento.setFeriasRequisitada(ferias);
-		assertEquals(0, requerimento.getFeriasRequisitada());
+		requerimento.setObjetoRequerimento(ferias);
+		assertEquals(ferias, requerimento.getObjetoRequerimento());
 	}
 
 	@Test
 	public void testGetSetEstadoRequisicao() {
-		Requerimento requerimento = new Requerimento();
-		requerimento.setEstadoRequisicao(EstadosRequerimentos.REPROVADO);
-		assertEquals(EstadosRequerimentos.REPROVADO, requerimento.getEstadoRequisicao());
+		RequerimentoFerias requerimento = new RequerimentoFerias();
+		requerimento.setEstadoRequerimento(EstadoRequerimento.REPROVADO);
+		assertEquals(EstadoRequerimento.REPROVADO, requerimento.getEstadoRequerimento());
 	}
 
 	@Test
 	public void testGetSetDataSolicitacao() {
-		Requerimento requerimento = new Requerimento();
-		requerimento.setDataSolicitacao(LocalDate.of(2200, 10, 23));
-		assertEquals(LocalDate.of(2200, 10, 23), requerimento.getDataSolicitacao());
+		RequerimentoFerias requerimento = new RequerimentoFerias();
+		requerimento.setDataCriacaoRequerimento(LocalDate.of(2200, 10, 23));
+		assertEquals(LocalDate.of(2200, 10, 23), requerimento.getDataCriacaoRequerimento());
 	}
 
 	@Test
 	public void testEquals() {
-		Requerimento requerimento = new Requerimento();
-		Requerimento requerimento2 = new Requerimento();
-		requerimento.setDataSolicitacao(LocalDate.of(2200, 10, 23));
-		requerimento.setDataSolicitacao(LocalDate.of(2200, 10, 23));
-		assertTrue(requerimento.equals(requerimento2));
+		RequerimentoFerias requerimento = new RequerimentoFerias();
+		RequerimentoFerias requerimento2 = new RequerimentoFerias();
+		requerimento.setDataCriacaoRequerimento(LocalDate.of(2200, 10, 23));
+		requerimento2.setDataCriacaoRequerimento(LocalDate.of(2200, 10, 23));
+		assertTrue(requerimento.getDataCriacaoRequerimento().equals(requerimento2.getDataCriacaoRequerimento()));
 	}
 	
 	@Test
 	public void testEqualsIncorreto() {
-		Requerimento requerimento = new Requerimento();
-		Requerimento requerimento2 = new Requerimento();
-		requerimento.setDataSolicitacao(LocalDate.of(2200, 10, 23));
-		requerimento2.setDataSolicitacao(LocalDate.of(2200, 10, 24));
+		RequerimentoFerias requerimento = new RequerimentoFerias();
+		RequerimentoFerias requerimento2 = new RequerimentoFerias();
+		requerimento.setDataCriacaoRequerimento(LocalDate.of(2200, 10, 23));
+		requerimento2.setDataCriacaoRequerimento(LocalDate.of(2200, 10, 24));
 		assertNotEquals(requerimento, requerimento2);
 	}
 

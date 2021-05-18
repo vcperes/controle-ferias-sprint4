@@ -2,7 +2,7 @@ package br.com.senior.proway.ferias.model;
 
 import java.time.LocalDate;
 
-import br.com.senior.proway.ferias.model.enums.EstadosRequerimentos;
+import br.com.senior.proway.ferias.model.enums.EstadoRequerimento;
 import br.com.senior.proway.ferias.model.enums.TiposFerias;
 import br.com.senior.proway.ferias.model.interfaces.IRequerimentoFeriasBuilder;
 
@@ -10,21 +10,21 @@ public class RequerimentoBuilder implements IRequerimentoFeriasBuilder {
 
 	private int id;
 	private Ferias feriasRequisitadas;
-	private EstadosRequerimentos estadoRequisicao;
+	private EstadoRequerimento estadoRequisicao;
 	private LocalDate dataSolicitacao;
 	
-	public Requerimento build() {
+	public RequerimentoFerias build() {
 		if (this.feriasRequisitadas.getTipo() == TiposFerias.INVALIDA) {
-			this.estadoRequisicao = EstadosRequerimentos.INVALIDO;
+			this.estadoRequisicao = EstadoRequerimento.INVALIDO;
 		}
-		return new Requerimento(this.id, this.feriasRequisitadas,this.estadoRequisicao,this.dataSolicitacao);
+		return new RequerimentoFerias(this.id, this.feriasRequisitadas,this.estadoRequisicao,this.dataSolicitacao);
 	}
 	
-	public EstadosRequerimentos getEstadoRequisicao() {
+	public EstadoRequerimento getEstadoRequisicao() {
 		return estadoRequisicao;
 	}
 
-	public void setEstadoRequisicao(EstadosRequerimentos estadoRequisicao) {
+	public void setEstadoRequisicao(EstadoRequerimento estadoRequisicao) {
 		this.estadoRequisicao = estadoRequisicao;
 	}
 

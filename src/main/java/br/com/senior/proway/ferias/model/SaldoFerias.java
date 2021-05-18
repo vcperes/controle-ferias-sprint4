@@ -29,10 +29,10 @@ public class SaldoFerias implements ISaldoFerias, IHistoricoFerias, IHistoricoRe
 	private LocalDate proximasFerias;
 	private short diasDisponiveisDeFerias; // Vai ser preenchido na data "proximasFerias"
 	private ArrayList<Ferias> historicoFerias;
-	private ArrayList<Requerimento> historicoRequerimentos;
+	private ArrayList<RequerimentoFerias> historicoRequerimentos;
 
 	public SaldoFerias(String identificadorUsuario, LocalDate proximasFerias, short diasDisponiveisDeFerias,
-			ArrayList<Ferias> historicoFerias, ArrayList<Requerimento> historicoRequerimentos) {
+			ArrayList<Ferias> historicoFerias, ArrayList<RequerimentoFerias> historicoRequerimentos) {
 		this.identificadorUsuario = identificadorUsuario;
 		this.proximasFerias = proximasFerias;
 		this.diasDisponiveisDeFerias = diasDisponiveisDeFerias;
@@ -72,10 +72,10 @@ public class SaldoFerias implements ISaldoFerias, IHistoricoFerias, IHistoricoRe
 		this.historicoFerias = historicoFerias;
 	}
 
-	public ArrayList<Requerimento> getHistoricoRequerimentos() {
+	public ArrayList<RequerimentoFerias> getHistoricoRequerimentos() {
 		return historicoRequerimentos;
 	}
-	public void setHistoricoRequerimentos(ArrayList<Requerimento> historicoRequerimentos) {
+	public void setHistoricoRequerimentos(ArrayList<RequerimentoFerias> historicoRequerimentos) {
 		this.historicoRequerimentos = historicoRequerimentos;
 	}
 
@@ -100,11 +100,11 @@ public class SaldoFerias implements ISaldoFerias, IHistoricoFerias, IHistoricoRe
 	}
 
 	// HistoricoRequerimentos
-	public void adicionarHistoricoRequerimentos(Requerimento req) {
+	public void adicionarHistoricoRequerimentos(RequerimentoFerias req) {
 		this.historicoRequerimentos.add(req);
 	}
 
-	public void removerHistoricoRequerimentos(Requerimento req) {
+	public void removerHistoricoRequerimentos(RequerimentoFerias req) {
 		this.historicoRequerimentos.remove(req);
 	}
 

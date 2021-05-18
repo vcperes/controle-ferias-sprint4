@@ -15,9 +15,9 @@ public class FeriasController {
 	private static FeriasController feriasController;
 	private static Session session;
 
-	public static FeriasController getInstance(Session session) {
-		feriasDAO = FeriasDAO.getInstance(session);
-		FeriasController.session = session;
+	public static FeriasController getInstance() {
+		feriasDAO = FeriasDAO.getInstance();
+		FeriasController.session = DBConnection.getSession();
 		if (feriasController == null) {
 			feriasController = new FeriasController();
 		}
@@ -28,7 +28,7 @@ public class FeriasController {
 
 	public FeriasController() {
 		session = DBConnection.getSession();
-		feriasDAO = FeriasDAO.getInstance(session);
+		feriasDAO = FeriasDAO.getInstance();
 	}
 
 	public List<IFerias> pegarTodos() {

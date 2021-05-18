@@ -4,8 +4,12 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+import br.com.senior.proway.ferias.model.AumentoDeSalario;
 import br.com.senior.proway.ferias.model.Ferias;
-import br.com.senior.proway.ferias.model.Requerimento;
+import br.com.senior.proway.ferias.model.Permissao;
+import br.com.senior.proway.ferias.model.RequerimentoFerias;
+import br.com.senior.proway.ferias.model.RequerimentoSalario;
+import br.com.senior.proway.ferias.model.Usuario;
 
 public class DBConnection {
 
@@ -25,7 +29,12 @@ public class DBConnection {
 					.setProperty("hibernate.hbm2ddl.auto", "create")
 					.setProperty("hibernate.connection.autocommit", "true")
 					.addAnnotatedClass(Ferias.class)
-					.addAnnotatedClass(Requerimento.class).buildSessionFactory();
+					.addAnnotatedClass(Usuario.class)
+					.addAnnotatedClass(AumentoDeSalario.class)
+					.addAnnotatedClass(RequerimentoSalario.class)
+					.addAnnotatedClass(Permissao.class)
+					.addAnnotatedClass(RequerimentoFerias.class)
+					.buildSessionFactory();
 		} catch (Throwable e) {
 			System.err.println("Initial SessionFactory creation failed: " + e);
 			throw new ExceptionInInitializerError(e);

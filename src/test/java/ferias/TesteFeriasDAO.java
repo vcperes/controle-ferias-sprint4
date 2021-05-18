@@ -6,9 +6,7 @@ import static org.junit.Assert.assertTrue;
 import java.time.LocalDate;
 import java.util.List;
 
-import org.hibernate.Session;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import br.com.senior.proway.ferias.model.Ferias;
@@ -16,24 +14,16 @@ import br.com.senior.proway.ferias.model.DAO.FeriasDAO;
 import br.com.senior.proway.ferias.model.DAO.RequerimentoDAO;
 import br.com.senior.proway.ferias.model.enums.TiposFerias;
 import br.com.senior.proway.ferias.model.interfaces.IFerias;
-import br.com.senior.proway.ferias.postgresql.DBConnection;
 
 public class TesteFeriasDAO {
-	static Session session;
-
-	FeriasDAO feriasDAO = FeriasDAO.getInstance(session);
-	RequerimentoDAO requerimentoDAO = RequerimentoDAO.getInstance(session);
+	FeriasDAO feriasDAO = FeriasDAO.getInstance();
+	RequerimentoDAO requerimentoDAO = RequerimentoDAO.getInstance();
 	LocalDate dataInicio = LocalDate.of(2021, 04, 01);
 	LocalDate dataFim = LocalDate.of(2021, 04, 10);
 	int diasTotaisRequisitados = 10;
 	int diasVendidos = 5;
 	TiposFerias tipo = TiposFerias.PARCIAL;
 	TiposFerias tipo2 = TiposFerias.PARCIAL;
-	
-	@BeforeClass
-	public static void iniciarInstancias() {
-		session = DBConnection.getSession();
-	}
 	
 	@Before
 	public void limparBanco() {

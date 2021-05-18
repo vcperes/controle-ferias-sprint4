@@ -1,25 +1,31 @@
 package br.com.senior.proway.ferias.model.interfaces;
-
 import java.time.LocalDate;
 
-import br.com.senior.proway.ferias.model.Ferias;
-import br.com.senior.proway.ferias.model.enums.EstadosRequerimentos;
+import br.com.senior.proway.ferias.model.enums.EstadoRequerimento;
+import br.com.senior.proway.ferias.model.enums.NivelUrgencia;
 
 public interface IRequerimento<T> {
 
-	public int getId();
+    public T getObjetoRequerimento();
+    public void setObjetoRequerimento(T objeto);
 
-	public void setId(int id);
+    public LocalDate getDataCriacaoRequerimento();
 
-	public T getFeriasRequisitada();
+    public EstadoRequerimento getEstadoRequerimento();
+    public void setEstadoRequerimento(EstadoRequerimento estadoRequerimento);
 
-	public void setFeriasRequisitada(T objeto);
+    public int getIDVerificadorRequerimento();
+    public void setIDVerificadorRequerimento(int idVerificador);
 
-	public EstadosRequerimentos getEstadoRequisicao();
+    public int getIDCriadorRequerimento();
+    public void setIDCriadorRequerimento(int idCriadorRequerimento);
 
-	public void setEstadoRequisicao(EstadosRequerimentos estadoRequisicao);
+    public LocalDate getPrazoParaAnaliseRequerimento();
+    public void setPrazoParaAnaliseRequerimento(LocalDate dataLimite);
+    
+    public NivelUrgencia getNivelUrgencia();
+    public void setNivelUrgencia(NivelUrgencia nivelUrgencia);
 
-	public LocalDate getDataSolicitacao();
-
-	public void setDataSolicitacao(LocalDate dataSolicitacao);
+    public String getMensagemRequerimento();
+    public void setMensagemRequerimento(String mensagemRequerimento);
 }

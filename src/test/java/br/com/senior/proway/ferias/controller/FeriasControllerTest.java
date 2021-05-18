@@ -16,10 +16,10 @@ import org.junit.runners.MethodSorters;
 import br.com.senior.proway.ferias.model.Ferias;
 import br.com.senior.proway.ferias.model.FeriasBuilder;
 import br.com.senior.proway.ferias.model.FeriasDirector;
-import br.com.senior.proway.ferias.model.Requerimento;
+import br.com.senior.proway.ferias.model.RequerimentoFerias;
 import br.com.senior.proway.ferias.model.DAO.FeriasDAO;
 import br.com.senior.proway.ferias.model.DAO.RequerimentoDAO;
-import br.com.senior.proway.ferias.model.enums.EstadosRequerimentos;
+import br.com.senior.proway.ferias.model.enums.EstadoRequerimento;
 import br.com.senior.proway.ferias.model.enums.TiposFerias;
 import br.com.senior.proway.ferias.postgresql.DBConnection;
 
@@ -31,7 +31,7 @@ public class FeriasControllerTest {
 	private static FeriasDAO feriasDAO;		
 	
 	TiposFerias tipo = TiposFerias.PARCIAL;
-	EstadosRequerimentos estadoRequerimento = EstadosRequerimentos.EM_ANALISE;
+	EstadoRequerimento estadoRequerimento = EstadoRequerimento.EM_ANALISE;
 	LocalDate inicio = LocalDate.of(2021, 04, 01);
 	LocalDate fim = LocalDate.of(2021, 04, 28);
 	short diasTotais = 29;
@@ -40,14 +40,15 @@ public class FeriasControllerTest {
 	LocalDate localDateSolicitacao2 = LocalDate.of(2021, 06, 03);
 	
 	@Before
-	public void limparBanco() throws SQLException {
-		feriasDAO.limparTabela();}
+	public void limparBanco() {
+		feriasDAO.limparTabela();
+	}
 		
 	@BeforeClass
 	public static void iniciarInstancias() {
 		session = DBConnection.getSession();
-		feriasController = FeriasController.getInstance(session);
-		feriasDAO = FeriasDAO.getInstance(session);
+		feriasController = FeriasController.getInstance();
+		feriasDAO = FeriasDAO.getInstance();
 	}
 		
 	@Test
