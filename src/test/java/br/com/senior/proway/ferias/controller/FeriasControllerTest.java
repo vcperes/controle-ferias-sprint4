@@ -4,17 +4,13 @@ import static org.junit.Assert.assertEquals;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
-
-import org.hibernate.Session;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
-import br.com.senior.proway.ferias.bancodedados.DBConnection;
 import br.com.senior.proway.ferias.model.enums.EstadoRequerimento;
 import br.com.senior.proway.ferias.model.enums.TiposFerias;
 import br.com.senior.proway.ferias.model.ferias.Ferias;
@@ -23,12 +19,10 @@ import br.com.senior.proway.ferias.model.ferias.FeriasDAO;
 import br.com.senior.proway.ferias.model.ferias.builder.FeriasBuilder;
 import br.com.senior.proway.ferias.model.ferias.builder.FeriasDirector;
 import br.com.senior.proway.ferias.model.requerimento.RequerimentoDAO;
-import br.com.senior.proway.ferias.model.requerimento.tipos.RequerimentoFerias;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class FeriasControllerTest {
 
-	private static Session session;
 	private static FeriasController feriasController;
 	private static FeriasDAO feriasDAO;		
 	private static RequerimentoDAO requerimentoDAO;		
@@ -52,6 +46,7 @@ public class FeriasControllerTest {
 	public static void limparBancoFim() {
 		requerimentoDAO.limparTabela();
 		feriasDAO.limparTabela();
+		
 	}
 		
 	@BeforeClass

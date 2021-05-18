@@ -26,6 +26,7 @@ public class RequerimentoFeriasController extends RequerimentoController {
 	 * 
 	 * @return RequerimentoFeriasController
 	 */
+
 	public static RequerimentoFeriasController getInstance() {
 		if (requerimentoController == null) {
 			requerimentoController = new RequerimentoFeriasController();

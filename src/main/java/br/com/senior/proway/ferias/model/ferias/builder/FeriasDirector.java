@@ -6,12 +6,14 @@ import br.com.senior.proway.ferias.model.enums.TiposFerias;
 
 /**
  * Responsavel por definir os valores que o Builder carrega para cada caso de
- * instanciamento de Ferias.
+ * instanciamento de tipos de Ferias.
  */
 public class FeriasDirector {
 
 	/**
-	 * Instancia um objeto de Ferias classificado como Ferias TOTAL
+	 * Instancia um objeto de Ferias classificado como Ferias do tipo TOTAL.
+	 * As ferias do tipo TOTAL corresponde a um periodo completo de ferias
+	 * - 30 (trinta) dias.
 	 * 
 	 * @param builder    Objeto Builder responsavel por instanciar Ferias
 	 * @param dataInicio LocalDate que representa a data de inicio das ferias
@@ -26,7 +28,8 @@ public class FeriasDirector {
 	}
 
 	/**
-	 * Instancia um objeto de Ferias classificado como Ferias FRACIONADA
+	 * Instancia um objeto de Ferias classificado como Ferias do tipo FRACIONADA.
+	 * As ferias do tipo FRACIONADA corresponde a um periodo fracionado de ferias.
 	 * 
 	 * @param builder    Objeto Builder responsavel por instanciar Ferias
 	 * @param dataInicio LocalDate que representa a data de inicio das ferias
@@ -41,7 +44,8 @@ public class FeriasDirector {
 	}
 
 	/**
-	 * Instancia um objeto de Ferias classificado como Ferias VENDIDA
+	 * Instancia um objeto de Ferias classificado como Ferias do tipo VENDIDA.
+	 * As ferias do tipo VENDIDA corresponde a um periodo de ferias vendida.
 	 * 
 	 * @param builder       Objeto Builder responsavel por instanciar Ferias
 	 * @param diasEmCredito Saldo disponivel de creditos para ferias
@@ -55,7 +59,8 @@ public class FeriasDirector {
 	}
 
 	/**
-	 * Variante que Instancia um objeto de Ferias classificado como Ferias VENDIDA
+	 * Um variacao que Instancia um objeto de Ferias classificado como Ferias
+	 * do tipo VENDIDA.
 	 * 
 	 * @param builder     Objeto Builder responsavel por instanciar Ferias
 	 * @param diasAVender Quantos creditos devem ser vendidos
@@ -69,7 +74,9 @@ public class FeriasDirector {
 	}
 
 	/**
-	 * Instancia um objeto de Ferias classificado como Ferias FRACIONADA
+	 * Instancia um objeto de Ferias classificado como Ferias do tipo PARCIAL.
+	 * As ferias do tipo PARCIAL corresponde a um periodo de ferias que excede
+	 * a um periodo vendido.
 	 * 
 	 * @param builder       Objeto Builder responsavel por instanciar Ferias
 	 * @param dataInicio    LocalDate que representa a data de inicio das ferias
@@ -84,19 +91,4 @@ public class FeriasDirector {
 		builder.calcularPeriodoFerias();
 		builder.calcularDiasVendidos(diasEmCredito);
 	}
-
-// Na Ferias Parcial não é útil especificarmos os dias a vender, pois eles sao definidos pelo restante de creditos do saldo.
-
-//	public void createFeriasParcialEspecifica(
-//			IFeriasBuilder builder, LocalDate dataInicio, LocalDate dataFim, short diasAVender
-//	) {
-//		builder.setDataInicio(dataInicio);
-//		builder.setDataFim(dataFim);
-//		builder.setTipo(TiposFerias.PARCIAL);
-//		builder.setDiasTotaisRequisitados(
-//				builder.calcularPeriodoFerias(builder.getDataInicio(), builder.getDataFim())
-//		);
-//		builder.setDiasVendidos(diasAVender);
-//	}
-
 }

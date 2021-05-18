@@ -28,7 +28,7 @@ public class RequerimentoController {
 		requerimentoDAO = RequerimentoDAO.getInstance();
 		if (requerimentoController == null) {
 			requerimentoController = new RequerimentoController();
-		}
+		}	
 		return requerimentoController;
 	}
 
